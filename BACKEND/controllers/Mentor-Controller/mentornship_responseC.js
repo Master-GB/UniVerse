@@ -96,9 +96,26 @@ const getMentorshipResponse = async (req, res) => {
     }
 }
 
+const getMentorshipResponseById = async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const response = await mentorshipResponseController.findById(id);
+
+        if (!response) {
+            return res.status(404).json({ message: "Mentorship response not found" });
+        }
+
+        res.status(200).json({ message: "Mentorship response retrieved successfully", data: response });
+    } catch (error) {
+        res.status(500).json({ message: "Error retrieving mentorship response", error: error.message });
+    }
+}
+
 module.exports = {
     getMentorshipResponse, 
     deleteMentorshipResponse, 
     updateMentorshipResponse,
-    addMentorshipResponse
+    addMentorshipResponse,
+    getMentorshipResponseById
 };
