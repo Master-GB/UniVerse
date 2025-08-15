@@ -1,6 +1,6 @@
 import React from 'react';
 import './navbar_jcj.css';
-import newlogo from './croppedimage.png';
+import newlogo from './newUniverselogo.png';
 
 function Navbar() {
   return (

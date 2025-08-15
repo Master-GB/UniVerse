@@ -1,6 +1,6 @@
 /* Navbar.css */
 .navbar {
-  background-color: #ffffff;
+  background-color: rgb(11, 43, 86);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 1rem 2rem;
 }
@@ -14,7 +14,8 @@
 }
 
 .navbar-logo img {
-  height: 40px;
+  height: 23px;
+  object-fit: contain;
 }
 
 .navbar-menu {
@@ -27,7 +28,7 @@
 
 .navbar-link {
   text-decoration: none;
-  color: #333333;
+  color: #ffffff;
   font-weight: 500;
   font-size: 1rem;
   transition: color 0.3s ease;

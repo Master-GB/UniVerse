@@ -1,4 +1,5 @@
 import React from "react";
+import GSimage from "./getstartedimage.png";
 
 const styles = {
     outer: {
@@ -56,16 +57,16 @@ const styles = {
         background: "rgba(255,255,255,0.12)",
     },
     right: {
-        flex: "0 0 360px",
-        minWidth: "220px",
+        flex: "0 0 420px",
+        minWidth: "260px",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
     },
     placeholder: {
         width: "100%",
-        maxWidth: "360px",
-        aspectRatio: "1 / 1",
+        maxWidth: "420px",
+        // aspectRatio: "1 / 1",
         background: "rgba(255,255,255,0.06)",
         borderRadius: "12px",
         border: "1px solid rgba(255,255,255,0.06)",
@@ -105,8 +106,11 @@ export default function GetStarted() {
 
                 <div style={styles.right}>
                     <div style={styles.placeholder}>
-                        {/* Image placeholder — replace with your image later */}
-                        Image placeholder
+                        <img
+                            src={GSimage}
+                            alt="Get Started"
+                            style={{ width: "100%", height: "100%", borderRadius: "12px" }}
+                        />
                     </div>
                 </div>
             </div>
