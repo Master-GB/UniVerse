@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
 /* From Uiverse.io by joe-watson-sbf (namespaced for this project) */
 .gs-cards-root {
   color: white;
   position: relative;
-  font-family: sans-serif;
+  font-family: 'Poppins', sans-serif;
   display: inline-block; /* size to content so decorations anchor near the cards */
 }
 
@@ -79,7 +81,7 @@
   width: auto;
   max-width: 70%;
   max-height: 70%;
-  height: auto;
+  height: 91px; /* this is will adjust icon sizes */
   object-fit: contain;
 }
 
@@ -87,13 +89,14 @@
   width: 100%;
   padding-top: 0.5rem;
   display: flex;
-  align-items: flex-end;
+  align-items: center;
+  justify-content: center;
 }
 
 .gs-cards__container .gs-cards__box .gs-cards__title {
-  font-size: 2rem;
+  font-size: 22px;
   font-weight: 500;
-  letter-spacing: 0.1em;
+  text-align: center;
 }
 
 .gs-cards__container .gs-cards__box div strong {
