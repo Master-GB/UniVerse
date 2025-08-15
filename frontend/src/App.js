@@ -8,6 +8,7 @@ function App() {
     <div className="App">
       <Navbar/>
       <GetStarted/>
+      {/* Add other components as needed */}
     </div>
   );
 }
