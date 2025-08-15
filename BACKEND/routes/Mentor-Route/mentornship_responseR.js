@@ -9,13 +9,13 @@ const {
     getMentorshipResponseById
 } = require('../../controllers/Mentor-Controller/mentornship_responseC');
 
-router.get('/', getMentorshipResponse);
-router.get(':id/', getMentorshipResponseById);
+router.get('/display', getMentorshipResponse);
+router.get('/getid/:id/', getMentorshipResponseById);
 
-router.post('/', addMentorshipResponse);
+router.post('/add', addMentorshipResponse);
 
-router.put('/:id', updateMentorshipResponse);
+router.put('/update/:id', updateMentorshipResponse);
 
-router.delete('/:id', deleteMentorshipResponse);
+router.delete('/delete/:id', deleteMentorshipResponse);
 
 module.exports = router;

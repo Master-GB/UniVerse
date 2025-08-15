@@ -99,6 +99,8 @@ const getMentorshipResponse = async (req, res) => {
 const getMentorshipResponseById = async (req, res) => {
     const { id } = req.params;
 
+
+
     try {
         const response = await mentorshipResponseController.findById(id);
 
@@ -106,7 +108,7 @@ const getMentorshipResponseById = async (req, res) => {
             return res.status(404).json({ message: "Mentorship response not found" });
         }
 
-        res.status(200).json({ message: "Mentorship response retrieved successfully", data: response });
+        res.status(200).json({ message: "Mentorship response retrieved successfully", response});
     } catch (error) {
         res.status(500).json({ message: "Error retrieving mentorship response", error: error.message });
     }
