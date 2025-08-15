@@ -16,6 +16,15 @@ const guidanceSchema = new schema({
     discription:{
         type:String,
         required : [true,"discription is required"]
+    },
+
+    date:{
+        type : Date,
+        default: Date.now,
+        required : [true,"date is required"],
     }
 
-}) 
+});
+
+const guidance = mongoose.model("guidances",guidanceSchema);
+module.exports = guidance;
