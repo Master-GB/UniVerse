@@ -6,10 +6,11 @@ const {
     updateMentorshipResponse,
     deleteMentorshipResponse,
     getMentorshipResponse,
+    getMentorshipResponseById
 } = require('../../controllers/Mentor-Controller/mentornship_responseC');
 
 router.get('/', getMentorshipResponse);
-router.get(':id/', getMentorshipResponse);
+router.get(':id/', getMentorshipResponseById);
 
 router.post('/', addMentorshipResponse);
 
