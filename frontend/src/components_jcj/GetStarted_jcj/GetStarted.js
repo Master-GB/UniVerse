@@ -27,7 +27,7 @@ const styles = {
     },
     title: {
         margin: 0,
-        fontSize: "clamp(28px, 5vw, 48px)",
+        fontSize: "clamp(60px, 5vw, 48px)",
         lineHeight: 1.05,
         letterSpacing: "-0.02em",
         fontWeight: 700,

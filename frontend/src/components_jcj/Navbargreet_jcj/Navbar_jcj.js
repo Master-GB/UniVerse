@@ -1,6 +1,6 @@
 import React from 'react';
 import './navbar_jcj.css';
-import newlogo from './newUniverselogo.png';
+import newlogo from './newUniverselogo.png'; // use this to change the logo
 
 function Navbar() {
   return (
