@@ -3,22 +3,22 @@ const schema = mongoose.Schema;
 
 const guidanceSchema = new schema({
 
-    name:{
+    studentGName:{
         type : String,
         required : [true,"name is required"],
     },
 
-    title:{
+    guidanceTitle:{
         type : String,
         required : [true,"title is required"],
     },
 
-    discription:{
+    guidanceDiscription:{
         type:String,
         required : [true,"discription is required"]
     },
 
-    date:{
+    guidanceDate:{
         type : Date,
         default: Date.now,
         required : [true,"date is required"],
