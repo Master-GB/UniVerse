@@ -1,0 +1,10 @@
+body{
+    background-image: url("testbgimage.png");
+    background-attachment: fixed;
+    background-size: cover; /* optional: makes it cover the screen */
+    background-repeat: no-repeat; /* optional: stops repeating */
+}
+
+.landing-bg-text{
+    height: 300px;
+}

@@ -1,12 +1,12 @@
 import React from "react";
+import "./getstarted_jcj.css"; // <-- button styles (unique)
 import GSimage from "./getstartedimage.png";
-import GScards from "../GetStartedCards/GScards";
 
 const styles = {
   outer: {
     background: "#0b2b56", // dark blue
     color: "#ffffff",
-    padding: "64px 24px",
+    padding: "64px 24px 20px 24px",
     display: "flex",
     flexDirection: "column", // column layout for section
     alignItems: "center",
@@ -85,7 +85,6 @@ export default function GetStarted() {
 
   return (
     <section style={styles.outer} aria-labelledby="getstarted-heading">
-      
       {/* Top Row: Heading + Image */}
       <div style={styles.inner}>
         <div style={styles.left}>
@@ -93,18 +92,52 @@ export default function GetStarted() {
             Academic and Career Support
           </h1>
           <p style={styles.desc}>
-            Empower your academic and professional journey with our comprehensive tools and
-            resources
+            Empower your academic and professional journey with our
+            comprehensive tools and resources
           </p>
-          <a
-            href="#"
-            style={hover ? { ...styles.cta, ...styles.ctaHover } : styles.cta}
+
+          {/* Replaced original anchor CTA with your Uiverse button (class names suffixed with -jcj). */}
+          <button
+            className="button-jcj"
+            // set CSS var --clr using React style object; use bracket notation for custom property
+            style={{ ["--clr"]: "#7808d0" }}
+            aria-label="Get Started"
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
-            aria-label="Get started"
+            // If you want to handle click navigation, replace preventDefault with your routing logic.
+            onClick={(e) => {
+              e.preventDefault();
+            }}
           >
-            Get started
-          </a>
+            <span className="button__icon-wrapper-jcj">
+              <svg
+                viewBox="0 0 14 15"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                className="button__icon-svg-jcj"
+                width="10"
+              >
+                <path
+                  d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
+                  fill="currentColor"
+                ></path>
+              </svg>
+
+              <svg
+                viewBox="0 0 14 15"
+                fill="none"
+                width="10"
+                xmlns="http://www.w3.org/2000/svg"
+                className="button__icon-svg-jcj button__icon-svg--copy-jcj"
+              >
+                <path
+                  d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"
+                  fill="currentColor"
+                ></path>
+              </svg>
+            </span>
+            Get Started
+          </button>
         </div>
 
         <div style={styles.right}>
@@ -116,11 +149,6 @@ export default function GetStarted() {
             />
           </div>
         </div>
-      </div>
-
-      {/* Bottom Row: Cards */}
-      <div style={{ width: "100%", maxWidth: "1100px" }}>
-        <GScards />
       </div>
     </section>
   );
