@@ -3,8 +3,8 @@ const guidanceModel = require("../../models/Student_model/guidance");
 const addGuidance = async(req,res) =>{
 
     if (!req.body) {
-    return res.status(400).json({ error: 'No request body found' });
-  }
+        return res.status(400).json({ error: 'No request body found' });
+    }
 
     const{
         studentGName,
@@ -54,7 +54,7 @@ const displayGuidance = async(req,res) =>{
         return res.status(200).json({guidances});
 
     }catch(error){
-        console.error("Error fetching donations:", error.message);
+        console.error("Error fetching Guidance:", error.message);
         return res.status(500).json({ message: "Internal Server Error" });
     }
 
@@ -74,7 +74,7 @@ const displayByIDGuidance = async(req,res) =>{
         return res.status(200).json({message:"Guidance find successfully",guidance});
 
     }catch(error){
-        console.log("Error fetching donations:",error.message);
+        console.log("Error fetching Guidance:",error.message);
         return res.status(500).json({message:"Internal server Error"});
     }
 
@@ -93,7 +93,7 @@ const deleteGuidance = async(req,res) =>{
 
     return res.status(200).json({message:"Guidance  found & successfully delete",deleteguidance});
     }catch(error){
-        console.log("Error fetching donations:",error.message);
+        console.log("Error fetching Guidance:",error.message);
         return res.status(500).json({message:"Internal server Error"});
     }
     
@@ -132,7 +132,7 @@ const updateGuidance = async(req,res) =>{
             .status(200)
             .json({message:"Guidance found and successfully update",updateguidance});
    }catch(error){
-        console.log("Error fetching donations:",error.message);
+        console.log("Error fetching Guidance:",error.message);
         return res.status(500).json({message:"Internal server Error"});
    }
 
