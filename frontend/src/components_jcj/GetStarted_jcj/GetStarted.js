@@ -85,7 +85,6 @@ export default function GetStarted() {
 
   return (
     <section style={styles.outer} aria-labelledby="getstarted-heading">
-      
       {/* Top Row: Heading + Image */}
       <div style={styles.inner}>
         <div style={styles.left}>
@@ -93,8 +92,8 @@ export default function GetStarted() {
             Academic and Career Support
           </h1>
           <p style={styles.desc}>
-            Empower your academic and professional journey with our comprehensive tools and
-            resources
+            Empower your academic and professional journey with our
+            comprehensive tools and resources
           </p>
           <a
             href="#"
@@ -118,10 +117,10 @@ export default function GetStarted() {
         </div>
       </div>
 
-      {/* Bottom Row: Cards */}
+      {/* Bottom Row: Cards
       <div style={{ width: "100%", maxWidth: "1100px" }}>
         <GScards />
-      </div>
+      </div> */}
     </section>
   );
 }
