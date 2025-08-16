@@ -1,16 +1,16 @@
 import React from "react";
+import "./whoarewe_jcj.css";
 
 export default function LandingBG() {
   return (
-    <div>
-      <p className="landing-bg-text">
+    <div className="jcj-landing-container">
+      <p className="jcj-landing-bg-text">
         Welcome to UniVerse, your gateway to academic and career success.
         Explore our resources and tools designed to empower your journey.
       </p>
-
-      <div>
-        <h2>Who Are We?</h2>
-        <p>
+      <div className="jcj-content-section">
+        <h2 className="jcj-section-heading">Who Are We?</h2>
+        <p className="jcj-section-text">
           UniVerse is dedicated to providing comprehensive support for students
           and professionals. Our platform offers a wide range of resources,
           including study materials, career guidance, and expert advice to help
