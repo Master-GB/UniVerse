@@ -17,7 +17,7 @@ const styles = {
     display: "flex",
     gap: "48px",
     width: "100%",
-    maxWidth: "1100px",
+    maxWidth: "1152px",
     alignItems: "center",
     justifyContent: "space-between",
     flexWrap: "wrap",
@@ -89,11 +89,12 @@ export default function GetStarted() {
       <div style={styles.inner}>
         <div style={styles.left}>
           <h1 id="getstarted-heading" style={styles.title}>
-            Academic and Career Support
+            Your Path to Success
           </h1>
           <p style={styles.desc}>
-            Empower your academic and professional journey with our
-            comprehensive tools and resources
+            Unlock your potential with tailored resources, expert guidance, and
+            innovative tools built to support your academic growth and career
+            success
           </p>
 
           {/* Replaced original anchor CTA with your Uiverse button (class names suffixed with -jcj). */}
