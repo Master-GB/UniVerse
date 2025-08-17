@@ -11,10 +11,16 @@ export default function LandingPage_jcj() {
     <div>
       {/* This file combines all components into one landing page, you change the layout here */}
 
-      <Nav />
-      <GetStarted />
-      <GScards />
-      <WhoAreWe />
+      <div className="section-1-landingpage">
+        <Nav />
+        <GetStarted />
+        <GScards />
+      </div>
+
+      <div className="wrw-section-bg">
+        <WhoAreWe />
+      </div>
+
       <Footer />
     </div>
   );

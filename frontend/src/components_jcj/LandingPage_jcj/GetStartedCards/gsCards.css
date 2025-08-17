@@ -14,7 +14,7 @@
   align-items: center;
   padding: 2rem;
   gap: 4rem; /* space between cards */
-  background: #0b2b56; /* component background */
+  /* background: #0b2b56; */
   box-sizing: border-box;
   width: 100%;
 }

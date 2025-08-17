@@ -1,5 +1,6 @@
-body{
-    background-image: url("testbgimage.png");
+/* Who are we section eke backgrond image ek dmme meken bn */
+.wrw-section-bg{
+    background-image: url("./BackgroundImages_jcj/pcnigg.png");
     background-attachment: fixed;
     background-size: cover; /* optional: makes it cover the screen */
     background-repeat: no-repeat; /* optional: stops repeating */
@@ -7,4 +8,11 @@ body{
 
 .landing-bg-text{
     height: 300px;
+}
+
+.section-1-landingpage{
+    background-image: url("./BackgroundImages_jcj/welcomeBG_jcj.png");
+    background-attachment: fixed;
+    background-size: cover; /* optional: makes it cover the screen */
+    background-repeat: no-repeat; /* optional: stops repeating */
 }

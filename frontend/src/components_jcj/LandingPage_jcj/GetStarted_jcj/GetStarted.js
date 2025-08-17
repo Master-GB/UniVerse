@@ -4,7 +4,7 @@ import GSimage from "./getstartedimage.png";
 
 const styles = {
   outer: {
-    background: "#0b2b56", // dark blue
+    // background: "#0b2b56", // removed background color for a cleaner look
     color: "#ffffff",
     padding: "64px 24px 20px 24px",
     display: "flex",

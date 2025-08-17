@@ -1,6 +1,7 @@
 /* Navbar.css */
 .navbar {
-  background-color: rgb(11, 43, 86);
+  /* Removed background color of navigation bar */
+  /* background-color: rgb(11, 43, 86); */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 1rem 2rem;
 }
