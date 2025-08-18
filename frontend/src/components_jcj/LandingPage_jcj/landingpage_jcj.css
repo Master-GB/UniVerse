@@ -14,8 +14,10 @@
 
 .section-1-landingpage{
     background-image: url("./BackgroundImages_jcj/welcomeBG_jcj.png");
-    /* switch to scroll so JS-controlled parallax can move the image */
-    background-attachment: scroll;
+     /* Keep the background fixed so the image stays still while scrolling.
+         Note: background-attachment: fixed may not behave on some mobile browsers.
+         If mobile support is needed, consider a fixed-position pseudo-element fallback. */
+     background-attachment: fixed;
     background-position: center 0px;
     background-size: cover; /* optional: makes it cover the screen */
     background-repeat: no-repeat; /* optional: stops repeating */

@@ -13,6 +13,13 @@ export default function LandingBG() {
           platform offers study materials, career guidance, and expert advice to
           help you achieve your goals.
         </p>
+        <p className="jcj-section-text">
+          Join our community of learners and professionals. Whether you're a
+          student seeking academic excellence or a professional looking to
+          advance your career, UniVerse is here to support you every step of the
+          way. Explore our resources, connect with experts, and unlock your full
+          potential.
+        </p>
       </div>
     </div>
   );
