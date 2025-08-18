@@ -40,6 +40,7 @@ export default function LandingPage_jcj() {
       <div className="section-1-landingpage" ref={sectionRef}>
         <Nav />
         <GetStarted />
+        <p className="whychooseus">Why choose us?</p>
         <GScards />
       </div>
 

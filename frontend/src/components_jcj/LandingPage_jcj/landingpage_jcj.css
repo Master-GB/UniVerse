@@ -20,3 +20,13 @@
     background-size: cover; /* optional: makes it cover the screen */
     background-repeat: no-repeat; /* optional: stops repeating */
 }
+
+.whychooseus {
+    margin: 0;
+    font-size: clamp(60px, 5vw, 48px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    color: #ffffff;
+    text-align: center;
+}
