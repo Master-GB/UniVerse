@@ -21,6 +21,7 @@ app.use(bodyParser.json());
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
+
 app.use("/guidance",guidanceRouter);
 app.use("/resource",resourcesRouter);
 // Mentorship Response Route
