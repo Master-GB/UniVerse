@@ -1,0 +1,32 @@
+/* Who are we section eke backgrond image ek dmme meken bn */
+.wrw-section-bg{
+    background-image: url("./BackgroundImages_jcj/pcnigg.png");
+    /* allow normal scrolling for this background */
+    background-attachment: scroll;
+    background-position: center top;
+    background-size: cover; /* optional: makes it cover the screen */
+    background-repeat: no-repeat; /* optional: stops repeating */
+}
+
+.landing-bg-text{
+    height: 300px;
+}
+
+.section-1-landingpage{
+    background-image: url("./BackgroundImages_jcj/welcomeBG_jcj.png");
+    /* switch to scroll so JS-controlled parallax can move the image */
+    background-attachment: scroll;
+    background-position: center 0px;
+    background-size: cover; /* optional: makes it cover the screen */
+    background-repeat: no-repeat; /* optional: stops repeating */
+}
+
+.whychooseus {
+    margin: 0;
+    font-size: clamp(60px, 5vw, 48px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+    color: #ffffff;
+    text-align: center;
+}
