@@ -4,6 +4,7 @@ import GScards from "./GetStartedCards/GScards";
 import Nav from "../Navbargreet_jcj/Navbar_jcj";
 import WhoAreWe from "./whoarewe/WhoAreWe_jcj";
 import Footer from "./Footer_jcj/Footer_jcj";
+import StudentCard from "./StudentCards_jcj/StudentCard_jcj";
 import "./landingpage_jcj.css";
 
 export default function LandingPage_jcj() {
@@ -50,6 +51,11 @@ export default function LandingPage_jcj() {
         <div className="background-gradient-jcj">
           <WhoAreWe />
         </div>
+      </div>
+
+      {/* added background color as black, thinking of adding an image later */}
+      <div className="student-cards-section-jcj">
+        <StudentCard />
       </div>
 
       <Footer />
