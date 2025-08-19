@@ -1,0 +1,236 @@
+/* Modern Header Styles with Gradient and Smooth Animations */
+.stu-header {
+  --stu-primary-color: #4361ee;
+  --stu-secondary-color: #3f37c9;
+  --stu-text-dark: #1e293b;
+  --stu-text-light: #64748b;
+  --stu-bg-light: #f8fafc;
+  --stu-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --stu-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --stu-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Body styles scoped to header */
+  font-family: 'Inter', sans-serif;
+  color: var(--stu-text-dark);
+  line-height: 1.6;
+}
+
+/* Base Styles */
+.stu-header {
+  background: rgb(27, 54, 93);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  box-shadow: var(--stu-shadow-sm);
+}
+
+.stu-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Header Content */
+.stu-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+}
+
+/* Logo Styles */
+.stu-logo a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: var(--stu-primary-color);
+  font-weight: 700;
+  font-size: 1.75rem;
+  font-family: 'Poppins', sans-serif;
+  transition: var(--stu-transition);
+}
+
+.stu-logo a:hover {
+  transform: translateY(-1px);
+}
+
+.stu-logo-img {
+  height: 60px;
+  width: 60px;
+  margin-right: 10px;
+  margin-left: -60px;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-right: 0;
+  padding-bottom: 0;
+  transition: var(--stu-transition);
+}
+
+.stu-logo-text {
+  background: linear-gradient(90deg, var( --stu-bg-light), #b9b9d3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 900;
+  letter-spacing: -0.2px;
+  font-size: 2.75rem;
+}
+
+/* Navigation Links */
+.stu-nav-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.stu-nav-link {
+  color: var( --stu-bg-light);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.75rem 0;
+  position: relative;
+  transition: var(--stu-transition);
+  font-family: 'Inter', sans-serif;
+}
+
+.stu-nav-link::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--stu-primary-color), var(--stu-secondary-color));
+  border-radius: 2px;
+  transition: var(--stu-transition);
+}
+
+.stu-nav-link:hover {
+  color: var(--stu-primary-color);
+}
+
+.stu-nav-link:hover::before {
+  width: 100%;
+}
+
+/* Active State */
+.stu-nav-link.stu-active,
+.stu-nav-link:active {
+  color: var(--stu-primary-color);
+  font-weight: 600;
+}
+
+.stu-nav-link.stu-active::before,
+.stu-nav-link:active::before {
+  width: 100%;
+}
+
+/* User Menu */
+.stu-user-menu {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.stu-user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--stu-primary-color), var(--stu-secondary-color));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--stu-transition);
+  box-shadow: 0 2px 4px rgba(67, 97, 238, 0.2);
+}
+
+.stu-user-avatar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(67, 97, 238, 0.3);
+}
+
+/* Mobile Menu Button */
+.stu-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 20px;
+  cursor: pointer;
+  z-index: 1001;
+  padding: 0.5rem;
+  margin-left: 1rem;
+}
+
+.stu-bar {
+  display: block;
+  width: 100%;
+  height: 3px;
+  background-color: var(--stu-primary-color);
+  border-radius: 2px;
+  transition: var(--stu-transition);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .stu-nav-links {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .stu-hamburger {
+    display: flex;
+  }
+
+  .stu-nav-links {
+    position: fixed;
+    top: 80px;
+    left: -100%;
+    width: 100%;
+    height: calc(100vh - 80px);
+    background: rgba(255, 255, 255, 0.98);
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 2rem 0;
+    gap: 1.5rem;
+    transition: left 0.4s ease-in-out;
+    box-shadow: var(--stu-shadow-md);
+    backdrop-filter: blur(10px);
+  }
+
+  .stu-nav-links.stu-active {
+    left: 0;
+  }
+
+  .stu-nav-link {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+  }
+
+  .stu-nav-link::before {
+    display: none;
+  }
+
+  .stu-hamburger.stu-active .stu-bar:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .stu-hamburger.stu-active .stu-bar:nth-child(2) {
+    opacity: 0;
+  }
+}
+
+/* Add spacing for fixed header */
+body {
+  margin: 0;
+  padding-top: 80px; /* To account for fixed header */
+}
