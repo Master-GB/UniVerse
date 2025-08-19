@@ -4,6 +4,8 @@ import { Route, Routes } from "react-router-dom";
 import React from "react";
 
 import LandingPage from "./components_jcj/LandingPage_jcj/LandingPage_jcj";
+import MentorDashboard  from "./mentor-components/mentor-dashboard/MentorDashboard";
+import MentorSessionCreate from "./mentor-components/mentor-session-create/MentorSessionCreate";
 
 const StudentLayout = () => (
   <div className="App">
@@ -15,10 +17,22 @@ const StudentLayout = () => (
   </div>
 );
 
+const MentorLayout = () => (
+  <div className="App">
+    <React.Fragment>
+      <Routes>
+        <Route path="/mentor-dashboard" element={<MentorDashboard />} />
+        <Route path="/mentor-session-create" element={<MentorSessionCreate />} />
+      </Routes>
+    </React.Fragment>
+  </div>
+);
+
 function App() {
   return (
     <Routes>
-      <Route path="/*" element={<StudentLayout />} />
+      <Route path="/ji" element={<StudentLayout />} />
+      <Route path="/*" element={<MentorLayout />} />
     </Routes>
   );
 }
