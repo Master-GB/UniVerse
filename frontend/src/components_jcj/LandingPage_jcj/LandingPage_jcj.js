@@ -5,6 +5,7 @@ import Nav from "../Navbargreet_jcj/Navbar_jcj";
 import WhoAreWe from "./whoarewe/WhoAreWe_jcj";
 import Footer from "./Footer_jcj/Footer_jcj";
 import StudentCard from "./StudentCards_jcj/StudentCard_jcj";
+import StatsSection_jcj from "./Statistics_jcj/StatsSection_jcj";
 import "./landingpage_jcj.css";
 
 export default function LandingPage_jcj() {
@@ -45,6 +46,7 @@ export default function LandingPage_jcj() {
         <Nav />
         <GetStarted />
         <GScards />
+        <StatsSection_jcj />
       </div>
 
       <div className="wrw-section-bg">
