@@ -1,6 +1,6 @@
-import React from 'react';
-import './navbar_jcj.css';
-import newlogo from './newUniverselogo.png'; // use this to change the logo
+import React from "react";
+import "./navbar_jcj.css";
+import newlogo from "./logotext_jcj.ico"; // use this to change the logo
 
 function Navbar() {
   return (
@@ -8,26 +8,30 @@ function Navbar() {
       <div className="navbar-container">
         {/* Logo on the left */}
         <div className="navbar-logo">
-          <img 
-            src={newlogo}
-            alt="Company Logo"
-            height="40" 
-          />
+          <img src={newlogo} alt="Company Logo" height="40" />
         </div>
 
         {/* Menu items on the right */}
         <ul className="navbar-menu">
           <li className="navbar-item">
-            <a href="/" className="navbar-link">Home</a>
+            <a href="/" className="navbar-link">
+              Home
+            </a>
           </li>
           <li className="navbar-item">
-            <a href="/resources" className="navbar-link">Resources</a>
+            <a href="/resources" className="navbar-link">
+              Resources
+            </a>
           </li>
           <li className="navbar-item">
-            <a href="/modules" className="navbar-link">Modules</a>
+            <a href="/modules" className="navbar-link">
+              Modules
+            </a>
           </li>
           <li className="navbar-item">
-            <a href="/support" className="navbar-link">Support</a>
+            <a href="/support" className="navbar-link">
+              Support
+            </a>
           </li>
         </ul>
       </div>

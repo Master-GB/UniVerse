@@ -18,7 +18,8 @@ export default function LandingPage_jcj() {
     let ticking = false;
 
     function onScroll() {
-      latestScrollY = window.scrollY;
+      // function to handle scroll events
+      latestScrollY = window.scrollY; // get the current scroll position
       if (!ticking) {
         window.requestAnimationFrame(() => {
           if (sectionRef.current && parallaxFactor !== 0) {
