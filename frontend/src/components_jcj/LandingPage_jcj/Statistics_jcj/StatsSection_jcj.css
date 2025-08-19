@@ -5,7 +5,14 @@
   max-width: 1000px;
   margin: auto;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  animation: fadeIn_jcj 0.8s ease-in-out;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease-in-out;
+}
+
+.statsSection_jcj.visible_jcj {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .statsTitle_jcj {
@@ -33,14 +40,15 @@
   border-radius: 12px;
   padding: 25px 30px;
   min-width: 220px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  animation: zoomFade_jcj 0.6s ease forwards;
+  transition: transform 0.6s ease, box-shadow 0.6s ease, opacity 0.6s ease;
+  transform: translateY(30px) scale(0.9);
   opacity: 0;
 }
 
-.statCard_jcj:nth-child(1) { animation-delay: 0.2s; }
-.statCard_jcj:nth-child(2) { animation-delay: 0.4s; }
-.statCard_jcj:nth-child(3) { animation-delay: 0.6s; }
+.statCard_jcj.show_jcj {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
 
 .statCard_jcj:hover {
   transform: translateY(-8px) scale(1.05);
@@ -57,26 +65,4 @@
 .statText_jcj {
   font-size: 1rem;
   opacity: 0.9;
-}
-
-@keyframes fadeIn_jcj {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes zoomFade_jcj {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
 }
