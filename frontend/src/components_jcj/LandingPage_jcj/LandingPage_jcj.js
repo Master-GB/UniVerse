@@ -46,7 +46,9 @@ export default function LandingPage_jcj() {
       </div>
 
       <div className="wrw-section-bg">
-        <WhoAreWe />
+        <div className="background-gradient-jcj">
+          <WhoAreWe />
+        </div>
       </div>
 
       <Footer />
