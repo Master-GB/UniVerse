@@ -36,6 +36,8 @@ const StuFooter = () => {
                             <li><Link to="/student/resources">Resources</Link></li>
                             <li><Link to="/student/interview-prep">Interview Prep</Link></li>
                             <li><Link to="/student/paper-support">Paper Support</Link></li>
+                            <li><Link to="/student/guidance">Guidance</Link></li>
+                            <li><Link to="/student/session">Session</Link></li>
                         </ul>
                     </div>
 
