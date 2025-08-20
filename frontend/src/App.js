@@ -29,6 +29,14 @@ const StudentLayout = () => (
 const MentorLayout = () => (
   <div className="App">
     <React.Fragment>
+      <Routes></Routes>
+    </React.Fragment>
+  </div>
+);
+
+const HomeLayout = () => (
+  <div className="App">
+    <React.Fragment>
       <Routes>
         <Route path="/mentor-dashboard" element={<MentorDashboard />} />
         <Route path="/mentor-session-create" element={<MentorSessionCreate />} />
@@ -41,7 +49,8 @@ function App() {
   return (
     <div className="app-container">
       <Routes>
-        <Route path="/*" element={<StudentLayout />} />
+         <Route path="/*" element={<StudentLayout />} />
+         <Route path="/hj*" element={<HomeLayout />} />
          <Route path="/jj*" element={<MentorLayout />} />
       </Routes>
     </div>
