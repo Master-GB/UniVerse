@@ -1,19 +1,27 @@
-// import logo from './logo.svg';
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import React from "react";
 
+import StuNavigation from "./components_stu/stu_header/stu_header";
+import StuFooter from "./components_stu/stu_footer/stu_footer";
+import StuDashboard from "./components_stu/stu_dashboard/stu_dashboard";
+import StuGuidance from "./components_stu/stu_guidance/stu_guidance";
 import LandingPage from "./components_jcj/LandingPage_jcj/LandingPage_jcj";
 import MentorDashboard  from "./mentor-components/mentor-dashboard/MentorDashboard";
 import MentorSessionCreate from "./mentor-components/mentor-session-create/MentorSessionCreate";
 
 const StudentLayout = () => (
-  <div className="App">
-    <React.Fragment>
+  <div className="app-layout">
+    <StuNavigation />
+    <main className="main-content">
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/i" element={<LandingPage />} />
+        <Route path="/" element={<StuDashboard />} />
+        <Route path="/student/dashboard" element={<StuDashboard />} />
+        <Route path="/student/guidance" element={<StuGuidance />} />
       </Routes>
-    </React.Fragment>
+    </main>
+    <StuFooter />
   </div>
 );
 
@@ -30,10 +38,12 @@ const MentorLayout = () => (
 
 function App() {
   return (
-    <Routes>
-      <Route path="/ji" element={<StudentLayout />} />
-      <Route path="/*" element={<MentorLayout />} />
-    </Routes>
+    <div className="app-container">
+      <Routes>
+        <Route path="/*" element={<StudentLayout />} />
+         <Route path="/*" element={<MentorLayout />} />
+      </Routes>
+    </div>
   );
 }
 

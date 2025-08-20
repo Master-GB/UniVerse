@@ -1,0 +1,77 @@
+.studentCard_jcj {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 20px;
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+  color: white; /* because background will be dark */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  animation: fadeIn_jcj 0.8s ease-in-out;
+}
+
+.studentCard_imgWrapper_jcj {
+  flex-shrink: 0;
+  border: 4px solid #ff6600;
+  border-radius: 50%;
+  padding: 5px;
+  transition: transform 0.3s ease;
+}
+
+.studentCard_imgWrapper_jcj:hover {
+  transform: scale(1.05);
+}
+
+.studentCard_img_jcj {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
+}
+
+.studentCard_content_jcj {
+  flex: 1;
+  line-height: 1.6;
+}
+
+.studentCard_quote_jcj {
+  font-size: 1.1rem;
+  font-style: italic;
+  margin-bottom: 15px;
+}
+
+.studentCard_name_jcj {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.studentCard_degree_jcj {
+  margin: 5px 0 15px 0;
+  font-size: 0.95rem;
+  opacity: 0.9;
+}
+
+.studentCard_link_jcj {
+  color: #4da6ff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.studentCard_link_jcj:hover {
+  color: #ffcc66;
+}
+
+@keyframes fadeIn_jcj {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
