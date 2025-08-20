@@ -1,14 +1,13 @@
 import React from "react";
-import "./getstarted_jcj.css"; // <-- button styles (unique)
+import "./getstarted_jcj.css"; // <-- styles + animations
 import GSimage from "./getstartedimage.png";
 
 const styles = {
   outer: {
-    // background: "#0b2b56", // removed background color for a cleaner look
     color: "#ffffff",
     padding: "64px 24px 20px 24px",
     display: "flex",
-    flexDirection: "column", // column layout for section
+    flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     boxSizing: "border-box",
@@ -21,7 +20,7 @@ const styles = {
     alignItems: "center",
     justifyContent: "space-between",
     flexWrap: "wrap",
-    marginBottom: "40px", // space before cards
+    marginBottom: "40px",
   },
   left: {
     flex: "1 1 420px",
@@ -41,22 +40,6 @@ const styles = {
     fontSize: "16px",
     lineHeight: 1.5,
     maxWidth: "48rem",
-  },
-  cta: {
-    display: "inline-block",
-    padding: "12px 20px",
-    borderRadius: "999px",
-    border: "2px solid rgba(255,255,255,0.12)",
-    background: "rgba(255,255,255,0.06)",
-    color: "#ffffff",
-    cursor: "pointer",
-    fontWeight: 600,
-    transition: "transform .15s ease, background .15s ease",
-    textDecoration: "none",
-  },
-  ctaHover: {
-    transform: "translateY(-2px)",
-    background: "rgba(255,255,255,0.12)",
   },
   right: {
     flex: "0 0 420px",
@@ -85,30 +68,28 @@ export default function GetStarted() {
 
   return (
     <section style={styles.outer} aria-labelledby="getstarted-heading">
-      {/* Top Row: Heading + Image */}
       <div style={styles.inner}>
         <div style={styles.left}>
-          <h1 id="getstarted-heading" style={styles.title}>
+          <h1
+            id="getstarted-heading"
+            style={styles.title}
+            className="fade-in-up-jcj"
+          >
             Your Path to Success
           </h1>
-          <p style={styles.desc}>
+          <p style={styles.desc} className="fade-in-up-jcj delay-1-jcj">
             Unlock your potential with tailored resources, expert guidance, and
             innovative tools built to support your academic growth and career
             success
           </p>
 
-          {/* Replaced original anchor CTA with your Uiverse button (class names suffixed with -jcj). */}
           <button
-            className="button-jcj"
-            // set CSS var --clr using React style object; use bracket notation for custom property
+            className="button-jcj fade-in-up-jcj delay-2-jcj"
             style={{ ["--clr"]: "#7808d0" }}
             aria-label="Get Started"
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
-            // If you want to handle click navigation, replace preventDefault with your routing logic.
-            onClick={(e) => {
-              e.preventDefault();
-            }}
+            onClick={(e) => e.preventDefault()}
           >
             <span className="button__icon-wrapper-jcj">
               <svg
@@ -146,6 +127,7 @@ export default function GetStarted() {
             <img
               src={GSimage}
               alt="Get Started"
+              className="float-in-jcj"
               style={{ width: "100%", height: "100%", borderRadius: "12px" }}
             />
           </div>
