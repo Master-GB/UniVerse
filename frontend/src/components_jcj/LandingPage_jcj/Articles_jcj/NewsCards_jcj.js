@@ -21,6 +21,12 @@ const NewsCardsJCJ = () => {
       link: "#",
       img: "https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg",
     },
+    {
+      title: "Community Events",
+      desc: "Join upcoming developer meetups and tech events near you.",
+      link: "#",
+      img: "https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg",
+    },
   ];
 
   return (
