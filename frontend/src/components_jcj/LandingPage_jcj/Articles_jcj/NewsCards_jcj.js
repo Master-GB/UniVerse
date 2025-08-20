@@ -16,16 +16,16 @@ const NewsCardsJCJ = () => {
       img: "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg",
     },
     {
-      title: "Community Events",
-      desc: "Join upcoming developer meetups and tech events near you.",
+      title: "Ace your next interview",
+      desc: "Master common interview questions and practice with mock sessions to build confidence.",
       link: "#",
-      img: "https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg",
+      img: "https://images.pexels.com/photos/5439148/pexels-photo-5439148.jpeg",
     },
     {
-      title: "Community Events",
-      desc: "Join upcoming developer meetups and tech events near you.",
+      title: "Build In-Demand Skills",
+      desc: "Supplement your degree with courses in Python, Data Analysis, UX Design, and more..",
       link: "#",
-      img: "https://images.pexels.com/photos/1181263/pexels-photo-1181263.jpeg",
+      img: "https://images.pexels.com/photos/5921786/pexels-photo-5921786.jpeg",
     },
   ];
 
