@@ -6,6 +6,8 @@ import WhoAreWe from "./whoarewe/WhoAreWe_jcj";
 import Footer from "./Footer_jcj/Footer_jcj";
 import StudentCard from "./StudentCards_jcj/StudentCard_jcj";
 import StatsSection_jcj from "./Statistics_jcj/StatsSection_jcj";
+import ArticleCards from "./Articles_jcj/NewsCards_jcj";
+
 import "./landingpage_jcj.css";
 
 export default function LandingPage_jcj() {
@@ -46,7 +48,13 @@ export default function LandingPage_jcj() {
         <Nav />
         <GetStarted />
         <GScards />
-        <StatsSection_jcj />
+
+        {/* this class applies the background color for the stats section */}
+        <div className="stats-section-jcj">
+          <StatsSection_jcj />
+        </div>
+
+        <ArticleCards />
       </div>
 
       <div className="wrw-section-bg">

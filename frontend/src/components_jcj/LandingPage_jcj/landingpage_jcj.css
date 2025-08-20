@@ -33,3 +33,8 @@
     padding: 2rem 0;
     background-color: black; /* Light background for contrast */
 }
+
+/* this sets the background color for the stats section of landing page */
+.stats-section-jcj{
+    background-color: rgb(4, 4, 68);
+}
