@@ -48,7 +48,12 @@ export default function LandingPage_jcj() {
         <Nav />
         <GetStarted />
         <GScards />
-        <StatsSection_jcj />
+
+        {/* this class applies the background color for the stats section */}
+        <div className="stats-section-jcj">
+          <StatsSection_jcj />
+        </div>
+
         <ArticleCards />
       </div>
 
