@@ -12,12 +12,32 @@
   align-items: center;
   max-width: 1424px;
   margin: 0 auto;
-  max-height: 37px;
+  max-height: 40px;
+}
+
+/* Logo sizing and layout */
+.navbar-logo-container-jcj {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
 }
 
 .navbar-logo img {
-  height: 140px;
+  display: block;
+  height: auto;
+  width: auto;
+  max-width: 160px;
   object-fit: contain;
+}
+
+/* specific size rules */
+.navbar-logo .logo-text {
+  max-height: 36px;
+}
+
+.navbar-logo .logo-jcj {
+  max-height: 28px; /* smaller secondary logo */
 }
 
 .navbar-menu {
@@ -44,4 +64,11 @@
 .navbar-link.active {
   color: #0066ff;
   font-weight: 600;
+}
+
+.navbar-logo-container-jcj{
+  display: flex;
+  align-items: flex-end;
+  gap: 1rem;
+  flex-direction: row;
 }
