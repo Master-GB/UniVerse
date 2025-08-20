@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from "axios";
 import { 
   MessageSquare, 
   User, 
@@ -10,14 +11,20 @@ import {
   Search,
   Filter
 } from 'lucide-react';
+import Toast from '../common/Toast';
 import "./stu_guidance.css";
 
 const StuGuidance = () => {
   const [questions, setQuestions] = useState([]);
-  const [newQuestion, setNewQuestion] = useState('');
+  const[inputs,setInputs] = useState({
+    guidanceTitle:"",
+    guidanceDiscription:"",
+    status: "pending",
+  });
   const [activeFilter, setActiveFilter] = useState('all');
   const [isQuestionFormOpen, setIsQuestionFormOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [toast, setToast] = useState({ show: false, message: '', type: '' });
 
   // Sample data - replace with actual API calls
   const sampleQuestions = [
@@ -44,28 +51,112 @@ const StuGuidance = () => {
   ];
 
   useEffect(() => {
-    // In a real app, fetch questions from your API
-    setQuestions(sampleQuestions);
+    const fetchGuidance = async () => {
+      try {
+        const response = await axios.get('http://localhost:8070/guidance/display');
+        const data = response.data;
+        
+        if (Array.isArray(data)) {
+          // Transform the data to match the component's expected format
+          const formattedQuestions = data.map(item => ({
+            id: item._id,
+            question: item.guidanceTitle,
+            details: item.guidanceDiscription,
+            date: new Date(item.guidanceDate).toISOString().split('T')[0],
+            status: item.status || 'pending',
+            mentor: item.mentorName || "",
+            response: item.response || "",
+            responseDate: item.responseDate ? new Date(item.responseDate).toISOString().split('T')[0] : ""
+          }));
+          
+          setQuestions(formattedQuestions);
+        } else {
+          console.error('Unexpected response format:', data);
+          setQuestions(sampleQuestions);
+        }
+      } catch (error) {
+        console.error('Error fetching guidance:', error);
+        // Fallback to sample data if API call fails
+        setQuestions(sampleQuestions);
+      }
+    };
+
+    fetchGuidance();
   }, []);
 
-  const handleSubmitQuestion = (e) => {
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+
+    setInputs((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+  };
+
+  const handleSubmitQuestion = async (e) => {
     e.preventDefault();
-    if (!newQuestion.trim()) return;
     
-    const question = {
-      id: questions.length + 1,
-      question: newQuestion.split('\n')[0],
-      details: newQuestion,
-      date: new Date().toISOString().split('T')[0],
-      status: "pending",
-      mentor: "",
-      response: "",
-      responseDate: ""
-    };
-    
-    setQuestions([question, ...questions]);
-    setNewQuestion('');
-    setIsQuestionFormOpen(false);
+    if (!inputs.guidanceTitle.trim() || !inputs.guidanceDiscription.trim()) {
+      setToast({
+        show: true,
+        message: 'Please fill in all required fields',
+        type: 'error'
+      });
+      return;
+    }
+
+    try {
+      // Clear any existing toasts
+      setToast({ show: false, message: '', type: '' });
+      
+      const response = await axios.post("http://localhost:8070/guidance/add", {
+        studentGName: 'Student', // You might want to get this from user context
+        guidanceTitle: inputs.guidanceTitle,
+        guidanceDiscription: inputs.guidanceDiscription,
+        guidanceDate: new Date().toISOString()
+      });
+      
+      // Show success toast
+      setToast({
+        show: true,
+        message: response.data?.message || 'Guidance submitted successfully!',
+        type: 'success'
+      });
+      
+      // Reset form
+      setInputs({
+        guidanceTitle: "",
+        guidanceDiscription: "",
+        status: "pending"
+      });
+      
+      // Close the form
+      setIsQuestionFormOpen(false);
+      
+      // Refresh the questions list
+      const questionsResponse = await axios.get("http://localhost:8070/guidance/display");
+      if (Array.isArray(questionsResponse.data)) {
+        const formattedQuestions = questionsResponse.data.map(item => ({
+          id: item._id,
+          question: item.guidanceTitle,
+          details: item.guidanceDiscription,
+          date: new Date(item.guidanceDate).toISOString().split('T')[0],
+          status: item.status || 'pending',
+          mentor: item.mentorName || "",
+          response: item.response || "",
+          responseDate: item.responseDate || ""
+        }));
+        setQuestions(formattedQuestions);
+      }
+    } catch (error) {
+      console.error('Error in handleSubmitQuestion:', error);
+      // Only show error toast if no success toast was shown
+      setToast(prev => ({
+        show: true,
+        message: error.response?.data?.error || 'Failed to submit guidance. Please try again.',
+        type: 'error'
+      }));
+    }
   };
 
   const filteredQuestions = questions.filter(q => {
@@ -75,9 +166,21 @@ const StuGuidance = () => {
     return matchesSearch && matchesFilter;
   });
 
+  // Close toast
+  const closeToast = () => {
+    setToast(prev => ({ ...prev, show: false }));
+  };
+
   return (
     <div className="stu-guidance-wrapper">
-    <div className="guidance-container">
+      {toast.show && (
+        <Toast 
+          message={toast.message} 
+          type={toast.type} 
+          onClose={closeToast} 
+        />
+      )}
+      <div className="guidance-container">
       <div className="guidance-header">
         <h1><MessageSquare size={24} /> Ask for Guidance</h1>
         <div className="search-bar">
@@ -97,7 +200,7 @@ const StuGuidance = () => {
           className={`filter-btn ${activeFilter === 'all' ? 'active' : ''}`}
           onClick={() => setActiveFilter('all')}
         >
-          All Questions
+          All Guidance
         </button>
         <button 
           className={`filter-btn ${activeFilter === 'pending' ? 'active' : ''}`}
@@ -123,10 +226,20 @@ const StuGuidance = () => {
       ) : (
         <form className="question-form" onSubmit={handleSubmitQuestion}>
           <h3>Ask Your Question</h3>
+          <input
+            type="text"
+            name="guidanceTitle"
+            value={inputs.guidanceTitle}
+            onChange={handleInputChange}
+            placeholder="Question title"
+            className="question-title-input"
+            required
+          />
           <textarea
-            value={newQuestion}
-            onChange={(e) => setNewQuestion(e.target.value)}
-            placeholder="Type your question here... Be as specific as possible to get better guidance."
+            name="guidanceDiscription"
+            value={inputs.guidanceDiscription}
+            onChange={handleInputChange}
+            placeholder="Provide details about your question... Be as specific as possible to get better guidance."
             rows={4}
             required
           />

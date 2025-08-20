@@ -4,8 +4,7 @@ const schema = mongoose.Schema;
 const guidanceSchema = new schema({
 
     studentGName:{
-        type : String,
-        required : [true,"name is required"],
+        type : String
     },
 
     guidanceTitle:{
@@ -18,11 +17,33 @@ const guidanceSchema = new schema({
         required : [true,"discription is required"]
     },
 
+    status:{
+        type:String,
+        enum: ["pending", "answered"],
+        default: "pending",
+        required: [true, "status is required"]
+    },
+
     guidanceDate:{
         type : Date,
         default: Date.now,
         required : [true,"date is required"],
-    }
+    },
+
+    mentorName: {
+        type: String,
+        default: "Not Assigned",
+    },
+
+    response: {
+        type: String,
+        default: "No response yet",
+    },
+
+    responseDate:{
+        type: Date,
+        default: Date.now,
+    } 
 
 });
 
