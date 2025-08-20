@@ -15,6 +15,7 @@ const PORT = process.env.PORT || 8070;
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 
 //Routes
 // Root Route
@@ -24,7 +25,10 @@ app.get("/", (req, res) => {
 
 app.use("/guidance",guidanceRouter);
 app.use("/resource",resourcesRouter);
+
+
 // Mentorship Response Route
+
 app.use("/mentorshipResponse", mentorshipResponseRoute);
 
 const URL = process.env.MONGODB_URL;

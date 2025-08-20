@@ -11,9 +11,20 @@ const mentorshipResponseSchema = new schema({
         type: String,
         
     },
+
     mentor_email:{
         type: String,
         required: [true, "mentor email is required"],
+    },
+
+    session_start_date:{
+        type: Date,
+        required: [true, "session start date is required"],
+    },
+
+    session_start_time:{
+        type: String,
+        required: [true, "session start time is required"]
     },
 
     session_create_date:{

@@ -1,0 +1,80 @@
+        /* Header Styles */
+        .header-md {
+          
+          position: sticky;
+          top: 0;
+          z-index: 100;
+          background: rgba(15, 20, 25, 0.8);
+          backdrop-filter: blur(20px);
+          border-bottom: 1px solid rgba(61, 90, 128, 0.2);
+          padding: 1rem 0;
+          height: 100px;
+        }
+
+        .header-content-md {
+          max-width: 1400px;
+          margin: 0 auto;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 0 2rem;
+        }
+
+        .logo-section-md {
+          display: flex;
+          align-items: center;
+        }
+
+        
+        .logo-image-md{
+          height: 50px;
+          width: 150px;
+          
+        }
+        
+
+
+        .logo-text-md {
+          font-size: 2rem;
+          font-weight: 800;
+          background: linear-gradient(135deg, #4f9cf9 0%, #7c3aed 50%, #f472b6 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          letter-spacing: -0.5px;
+          text-transform: uppercase;
+        }
+
+        .nav-md {
+          margin-right: 20rem;
+          gap: 2rem;
+          
+        }
+
+        .nav-btn-md {
+          background: transparent;
+          border: none;
+          color: rgba(255, 255, 255, 0.7);
+          font-size: 0.95rem;
+          font-weight: 600;
+          padding: 0.75rem 1.5rem;
+          border-radius: 12px;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          position: relative;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          
+        }
+
+        .nav-btn-md:hover {
+          color: white;
+          background: rgba(79, 156, 249, 0.1);
+          transform: translateY(-2px);
+        }
+
+        .nav-btn-md.active-md {
+          color: #4f9cf9;
+          background: rgba(79, 156, 249, 0.15);
+          box-shadow: 0 0 20px rgba(79, 156, 249, 0.3);
+        }
