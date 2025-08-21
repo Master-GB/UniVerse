@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MatrixEffect from './MatrixEffect';
+import { Link } from "react-router-dom";
 import { 
   BookOpen, 
   Users, 
@@ -23,13 +24,20 @@ import {
   Timer,
   BookMarked,
   Megaphone,
+  Video,
 } from 'lucide-react';
 import "./stu_dashboard.css";
+import SessionCard from './SessionCard';
 
 const StuDashboard = () => {
   const [search, setSearch] = useState("");
   const [resourceFilter, setResourceFilter] = useState('all');
   const [now, setNow] = useState(new Date());
+  const [bookedSessions, setBookedSessions] = useState(() => {
+    return JSON.parse(localStorage.getItem('bookedSessions')) || [];
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   // Announcements data
   const announcements = [
@@ -58,11 +66,38 @@ const StuDashboard = () => {
     return () => clearInterval(t);
   }, []);
 
-  const sessions = [
-    { id: 1, title: "Data Structures Clinic", mentor: "Dr. Silva", date: "Wed, 3:30 PM", seats: 6 },
-    { id: 2, title: "Calculus Booster", mentor: "Prof. Perera", date: "Fri, 10:00 AM", seats: 12 },
-    { id: 3, title: "AI Study Group", mentor: "Meera K.", date: "Sat, 9:00 AM", seats: 4 }
-  ];
+  const [sessions, setSessions] = useState([
+    { 
+      id: 1, 
+      title: "Data Structures Clinic", 
+      mentor: "Dr. Silva", 
+      date: new Date(new Date().setDate(new Date().getDate() + 1)).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }), 
+      time: "3:30 PM",
+      duration: "1h 30m",
+      startTime: new Date(new Date().setDate(new Date().getDate() + 1)).setHours(15, 30, 0, 0),
+      seats: 6 
+    },
+    { 
+      id: 2, 
+      title: "Calculus Booster", 
+      mentor: "Prof. Perera", 
+      date: new Date(new Date().setDate(new Date().getDate() + 2)).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }), 
+      time: "10:00 AM",
+      duration: "2h",
+      startTime: new Date(new Date().setDate(new Date().getDate() + 2)).setHours(10, 0, 0, 0),
+      seats: 12 
+    },
+    { 
+      id: 3, 
+      title: "AI Study Group", 
+      mentor: "Meera K.", 
+      date: new Date(new Date().setDate(new Date().getDate() + 3)).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }), 
+      time: "9:00 AM",
+      duration: "2h",
+      startTime: new Date(new Date().setDate(new Date().getDate() + 3)).setHours(9, 0, 0, 0),
+      seats: 4 
+    }
+  ]);
 
   const resources = [
     { id: 1, type: "notes", title: "OOP Cheat Sheet", author: "Mentor Team", time: "12 min read" },
@@ -85,6 +120,54 @@ const StuDashboard = () => {
 
   const filteredResources = resources.filter(r => resourceFilter === "all" || r.type === resourceFilter);
 
+  const handleBookSession = async (sessionId, bookingData) => {
+    try {
+      setIsLoading(true);
+      setError(null);
+      
+      // In a real app, you would make an API call here
+      // const response = await fetch('/api/sessions/book', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ sessionId, ...bookingData })
+      // });
+      // const result = await response.json();
+      
+      // Mock API response
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Update local state
+      const updatedBookedSessions = [...bookedSessions, sessionId];
+      setBookedSessions(updatedBookedSessions);
+      localStorage.setItem('bookedSessions', JSON.stringify(updatedBookedSessions));
+      
+      // Update available seats
+      setSessions(prevSessions => 
+        prevSessions.map(session => 
+          session.id === sessionId 
+            ? { ...session, seats: session.seats - 1 } 
+            : session
+        )
+      );
+      
+      // Show success message
+      // You can use your toast notification system here
+      console.log('Session booked successfully!');
+      
+    } catch (err) {
+      console.error('Error booking session:', err);
+      setError('Failed to book session. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleJoinSession = (sessionId) => {
+    // In a real app, this would redirect to the session or open a video call
+    console.log(`Joining session ${sessionId}`);
+    // window.open(`/session/${sessionId}`, '_blank');
+  };
+
   return (
     <div className="stu-dashboard">
       <MatrixEffect />
@@ -100,10 +183,10 @@ const StuDashboard = () => {
             <Timer size={16} />
             <span>{now.toLocaleTimeString()}</span>
           </div>
-          <button className="sd-cta">
+          <Link to="/student/guidance" className="sd-cta">
             <PlusCircle size={18} />
-            <span>Request Guidance</span>
-          </button>
+            <span className='sd-cta-text'>Request Guidance</span>
+         </Link>
         </div>
       </div>
 
@@ -118,10 +201,10 @@ const StuDashboard = () => {
           />
         </div>
         <div className="sd-actions">
-          <button className="sd-chip">
+          <Link to="/student/session" className="sd-chip">
             <Calendar size={16} />
-            Book a Session
-          </button>
+            <span className='sd-chip-text'>Book a Session</span>   
+         </Link>
           <button className="sd-chip">
             <Award size={16} />
             Take a Quiz
@@ -186,10 +269,10 @@ const StuDashboard = () => {
               <GraduationCap size={18} />
               <h2>Academic Support</h2>
             </div>
-            <button className="sd-link">
-              View all
-              <ChevronRight size={16} />
-            </button>
+             <Link to="/student/session" className="sd-link">
+                 View all
+                 <ChevronRight size={16} />
+             </Link>
           </header>
           <div className="sd-list">
             {sessions
