@@ -7,6 +7,7 @@ import StuFooter from "./components_stu/stu_footer/stu_footer";
 import StuDashboard from "./components_stu/stu_dashboard/stu_dashboard";
 import StuGuidance from "./components_stu/stu_guidance/stu_guidance";
 import StuResources from "./components_stu/stu_resources/stu_resources";
+import StuSession from "./components_stu/stu_session/stu_session";
 import LandingPage from "./components_jcj/LandingPage_jcj/LandingPage_jcj";
 import MentorDashboard  from "./mentor-components/mentor-dashboard/MentorDashboard";
 import MentorSessionCreate from "./mentor-components/mentor-session-create/MentorSessionCreate";
@@ -20,6 +21,7 @@ const StudentLayout = () => (
         <Route path="/student/dashboard" element={<StuDashboard />} />
         <Route path="/student/guidance" element={<StuGuidance />} />
         <Route path="/student/resources" element={<StuResources />} />
+        <Route path="/student/session" element={<StuSession />} />
       </Routes>
     </main>
     <StuFooter />

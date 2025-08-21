@@ -384,11 +384,13 @@
 }
 
 .btn.primary {
+ width: 15%;
   background: var(--primary);
   color: white;
 }
 
 .btn.secondary {
+     width: 15%;
   background: transparent;
   color: var(--text-muted);
   border: 1px solid var(--border);
