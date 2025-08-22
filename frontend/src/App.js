@@ -8,6 +8,8 @@ import StuDashboard from "./components_stu/stu_dashboard/stu_dashboard";
 import StuGuidance from "./components_stu/stu_guidance/stu_guidance";
 import StuResources from "./components_stu/stu_resources/stu_resources";
 import StuSession from "./components_stu/stu_session/stu_session";
+import StuArticales from "./components_stu/stu_articale/stu_articales";
+import StuFullArticle from "./components_stu/stu_articale/stu_fullArticle";
 import LandingPage from "./components_jcj/LandingPage_jcj/LandingPage_jcj";
 import MentorDashboard  from "./mentor-components/mentor-dashboard/MentorDashboard";
 import MentorSessionCreate from "./mentor-components/mentor-session-create/MentorSessionCreate";
@@ -22,6 +24,8 @@ const StudentLayout = () => (
         <Route path="/student/guidance" element={<StuGuidance />} />
         <Route path="/student/resources" element={<StuResources />} />
         <Route path="/student/session" element={<StuSession />} />
+        <Route path="/student/articales" element={<StuArticales />} />
+        <Route path="/student/articales/:id" element={<StuFullArticle />} />
       </Routes>
     </main>
     <StuFooter />
@@ -31,7 +35,9 @@ const StudentLayout = () => (
 const MentorLayout = () => (
   <div className="App">
     <React.Fragment>
-      <Routes></Routes>
+      <Routes>
+         <Route path="/" element={<MentorDashboard />} />
+      </Routes>
     </React.Fragment>
   </div>
 );
@@ -40,7 +46,7 @@ const HomeLayout = () => (
   <div className="App">
     <React.Fragment>
       <Routes>
-        <Route path="/mentor-dashboard" element={<MentorDashboard />} />
+        
         <Route path="/mentor-session-create" element={<MentorSessionCreate />} />
       </Routes>
     </React.Fragment>
@@ -51,9 +57,9 @@ function App() {
   return (
     <div className="app-container">
       <Routes>
-         <Route path="/*" element={<StudentLayout />} />
+         <Route path="/l*" element={<StudentLayout />} />
          <Route path="/hj*" element={<HomeLayout />} />
-         <Route path="/jj*" element={<MentorLayout />} />
+         <Route path="/*" element={<MentorLayout />} />
       </Routes>
     </div>
   );

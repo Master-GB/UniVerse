@@ -33,35 +33,95 @@ const StuDashboard = () => {
   const [search, setSearch] = useState("");
   const [resourceFilter, setResourceFilter] = useState('all');
   const [now, setNow] = useState(new Date());
+  const [resources, setResources] = useState([]);
+  const [isLoadingResources, setIsLoadingResources] = useState(true);
+  const [resourcesError, setResourcesError] = useState(null);
   const [bookedSessions, setBookedSessions] = useState(() => {
     return JSON.parse(localStorage.getItem('bookedSessions')) || [];
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Announcements data
-  const announcements = [
+  // Tech News state
+  const [techNews, setTechNews] = useState([
     {
       id: 1,
-      title: 'Campus Reopening Guidelines',
-      date: 'Today',
-      content: 'The campus will reopen on September 1st with new safety protocols.'
+      title: 'New AI Breakthrough in Natural Language Processing',
+      source: 'TechCrunch',
+      date: '2 hours ago',
+      url: '#',
+      image: 'https://images.unsplash.com/photo-1677442135136-760c81327412?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8YWklMjBicmVha3Rocm91Z2h8ZW58MHx8MHx8fDA%3D'
     },
     {
       id: 2,
-      title: 'Scholarship Applications Open',
-      date: '2 days ago',
-      content: 'Apply now for the Fall 2023 scholarship program. Deadline is August 30th.'
+      title: 'The Future of Web Development: What to Expect in 2024',
+      source: 'Dev.to',
+      date: '5 hours ago',
+      url: '#',
+      image: 'https://images.unsplash.com/photo-1547658719-da2b51169166?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8d2ViJTIwZGV2ZWxvcG1lbnR8ZW58MHx8MHx8fDA%3D'
     },
     {
       id: 3,
-      title: 'Library Extended Hours',
-      date: '4 days ago',
-      content: 'The library will now be open until 10 PM on weekdays.'
+      title: 'How Quantum Computing is Changing Cybersecurity',
+      source: 'Wired',
+      date: '1 day ago',
+      url: '#',
+      image: 'https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cXVhbnR1bSUyMGNvbXB1dGluZ3xlbnwwfHwwfHx8MA%3D%3D'
     }
-  ];
+  ]);
+  
+  // In a real app, you would fetch from a news API
+  // useEffect(() => {
+  //   const fetchTechNews = async () => {
+  //     try {
+  //       const response = await fetch('https://newsapi.org/v2/top-headlines?category=technology&apiKey=YOUR_API_KEY');
+  //       const data = await response.json();
+  //       setTechNews(data.articles.map((article, index) => ({
+  //         id: index,
+  //         title: article.title,
+  //         source: article.source.name,
+  //         date: new Date(article.publishedAt).toLocaleDateString(),
+  //         url: article.url,
+  //         image: article.urlToImage
+  //       })));
+  //     } catch (error) {
+  //       console.error('Error fetching tech news:', error);
+  //     }
+  //   };
+  //   fetchTechNews();
+  // }, []);
 
+  // Fetch resources from API
   useEffect(() => {
+    const fetchResources = async () => {
+      try {
+        console.log('Fetching resources from API...');
+        const response = await fetch('http://localhost:8070/resource/display');
+        console.log('Response status:', response.status);
+        const data = await response.json();
+        console.log('API Response Data:', data);
+        
+        if (!response.ok) {
+          throw new Error(data.message || `HTTP error! status: ${response.status}`);
+        }
+        
+        if (!data.resources || !Array.isArray(data.resources)) {
+          console.warn('Unexpected API response format:', data);
+          setResources([]);
+        } else {
+          console.log('Setting resources:', data.resources);
+          setResources(data.resources);
+        }
+      } catch (error) {
+        console.error('Error fetching resources:', error);
+        setResourcesError(error.message);
+      } finally {
+        setIsLoadingResources(false);
+      }
+    };
+
+    fetchResources();
+
     const t = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(t);
   }, []);
@@ -99,13 +159,6 @@ const StuDashboard = () => {
     }
   ]);
 
-  const resources = [
-    { id: 1, type: "notes", title: "OOP Cheat Sheet", author: "Mentor Team", time: "12 min read" },
-    { id: 2, type: "video", title: "SQL Joins in 10 mins", author: "TechMentor", time: "10:45" },
-    { id: 3, type: "paper", title: "Past Paper - DS 2023", author: "Exam Cell", time: "PDF" },
-    { id: 4, type: "notes", title: "Network Essentials", author: "Academy", time: "18 min read" }
-  ];
-
   const quizzes = [
     { id: 1, title: "Algorithms Warm-up", questions: 10, est: 8, level: "Beginner" },
     { id: 2, title: "DBMS Mastery", questions: 15, est: 12, level: "Intermediate" },
@@ -118,7 +171,48 @@ const StuDashboard = () => {
     { id: 3, title: "Career Accelerator: Resume to Interview", provider: "ProEdge", progress: 80, rating: 4.9 }
   ];
 
-  const filteredResources = resources.filter(r => resourceFilter === "all" || r.type === resourceFilter);
+  // Map API resource types to UI types
+  const mapResourceType = (type) => {
+    switch (type) {
+      case 'LectureVideo':
+        return 'video';
+      case 'LectureNote':
+        return 'notes';
+      case 'PastPapper':
+      case 'Papper':
+        return 'paper';
+      default:
+        return 'other';
+    }
+  };
+
+  // Format resources for display
+  const formatResource = (resource) => {
+    if (!resource) return null;
+    
+    return {
+      id: resource._id || resource.id,
+      title: resource.title || 'Untitled Resource',
+      author: resource.uploadedBy || 'Unknown',
+      time: resource.updatedAt ? new Date(resource.updatedAt).toLocaleDateString() : 'Unknown date',
+      type: mapResourceType(resource.typeOfRes || resource.type || 'other'),
+      fileUrl: resource.fileUrl || '#',
+      typeOfRes: resource.typeOfRes || 'other' // Keep original type for filtering
+    };
+  };
+
+  // Handle both direct array and object with resources property
+  const resourcesArray = Array.isArray(resources) 
+    ? resources 
+    : (resources && Array.isArray(resources.resources) ? resources.resources : []);
+
+  const filteredResources = resourcesArray
+    .filter(r => {
+      if (!r) return false;
+      return resourceFilter === "all" || mapResourceType(r.typeOfRes || r.type) === resourceFilter;
+    })
+    .map(formatResource)
+    .filter(Boolean); // Remove any null entries
 
   const handleBookSession = async (sessionId, bookingData) => {
     try {
@@ -325,27 +419,80 @@ const StuDashboard = () => {
             </div>
           </header>
           <div className="sd-list compact">
-            {filteredResources
-              .filter(r => r.title.toLowerCase().includes(search.toLowerCase()))
-              .map((r) => (
-                <div key={r.id} className="sd-list-item">
+            {isLoadingResources ? (
+              // Loading state
+              Array(3).fill(0).map((_, index) => (
+                <div key={`loading-${index}`} className="sd-list-item">
                   <div className="sd-list-left">
-                    <div className={`sd-icon-pill ${r.type}`}>
-                      {r.type === 'video' ? <Play size={14} /> : r.type === 'paper' ? <FileText size={14} /> : <BookOpen size={14} />}
-                    </div>
-                    <div>
-                      <div className="sd-item-title">{r.title}</div>
-                      <div className="sd-item-meta">{r.author} • {r.time}</div>
+                    <div className="sd-icon-pill skeleton" style={{ width: '32px', height: '32px' }}></div>
+                    <div style={{ flex: 1 }}>
+                      <div className="sd-item-title skeleton" style={{ width: '70%', height: '16px', marginBottom: '4px' }}></div>
+                      <div className="sd-item-meta skeleton" style={{ width: '50%', height: '14px' }}></div>
                     </div>
                   </div>
                   <div className="sd-list-right">
-                    <button className="sd-btn ghost">
+                    <button className="sd-btn ghost" disabled>
                       <Download size={16} />
                       Get
                     </button>
                   </div>
                 </div>
-              ))}
+              ))
+            ) : resourcesError ? (
+              // Error state
+              <div className="sd-empty-state">
+                <div className="sd-empty-icon">
+                  <Megaphone size={24} />
+                </div>
+                <div className="sd-empty-text">
+                  <p>Failed to load resources. Please try again later.</p>
+                  <button 
+                    className="sd-btn primary" 
+                    onClick={() => window.location.reload()}
+                    style={{ marginTop: '1rem' }}
+                  >
+                    Retry
+                  </button>
+                </div>
+              </div>
+            ) : filteredResources.length === 0 ? (
+              // Empty state
+              <div className="sd-empty-state">
+                <div className="sd-empty-icon">
+                  <BookOpen size={24} />
+                </div>
+                <p>No resources found. Try a different filter.</p>
+              </div>
+            ) : (
+              // Success state
+              filteredResources
+                .filter(r => r.title.toLowerCase().includes(search.toLowerCase()))
+                .map((r) => (
+                  <div key={r.id} className="sd-list-item">
+                    <div className="sd-list-left">
+                      <div className={`sd-icon-pill ${r.type}`}>
+                        {r.type === 'video' ? <Play size={14} /> : r.type === 'paper' ? <FileText size={14} /> : <BookOpen size={14} />}
+                      </div>
+                      <div>
+                        <div className="sd-item-title">{r.title}</div>
+                        <div className="sd-item-meta">{r.author} • {r.time}</div>
+                      </div>
+                    </div>
+                    <div className="sd-list-right">
+                      <a 
+                        href={r.fileUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="sd-btn ghost"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        <Download size={16} />
+                        Get
+                      </a>
+                    </div>
+                  </div>
+                ))
+            )}
           </div>
         </section>
 
@@ -468,28 +615,39 @@ const StuDashboard = () => {
           </div>
         </section>
 
-        {/* Announcements */}
+        {/* Tech News */}
         <section className="sd-card stretch">
           <header className="sd-card-header">
             <div className="sd-card-title">
-              <Megaphone size={18} />
-              <h2>Announcements</h2>
+              <Zap size={18} />
+              <h2>Articales</h2>
             </div>
-            <button className="sd-link">
-              View all
-              <ChevronRight size={16} />
-            </button>
+            <Link to="/student/articales" className="sd-link">
+                 View all
+                 <ChevronRight size={16} />
+             </Link>
           </header>
-          <div className="sd-announcements">
-            {announcements.map(announcement => (
-              <div key={announcement.id} className="sd-announcement-item">
-                <div className="sd-announcement-title">{announcement.title}</div>
-                <div className="sd-announcement-date">
-                  <Calendar size={14} />
-                  {announcement.date}
+          <div className="sd-news">
+            {techNews.map(news => (
+              <a 
+                key={news.id} 
+                href={news.url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="sd-news-item"
+              >
+                <div className="sd-news-image">
+                  <img src={news.image} alt={news.title} />
                 </div>
-                <div className="sd-announcement-content">{announcement.content}</div>
-              </div>
+                <div className="sd-news-content">
+                  <div className="sd-news-source">{news.source}</div>
+                  <h3 className="sd-news-title">{news.title}</h3>
+                  <div className="sd-news-meta">
+                    <Clock size={12} />
+                    <span>{news.date}</span>
+                  </div>
+                </div>
+              </a>
             ))}
           </div>
         </section>
