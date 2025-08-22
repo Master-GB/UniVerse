@@ -12,10 +12,11 @@
   align-items: center;
   max-width: 1424px;
   margin: 0 auto;
+  max-height: 37px;
 }
 
 .navbar-logo img {
-  height: 23px;
+  height: 140px;
   object-fit: contain;
 }
 

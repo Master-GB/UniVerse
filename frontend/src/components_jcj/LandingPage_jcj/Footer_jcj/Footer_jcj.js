@@ -3,6 +3,7 @@ import "./footer_jcj.css";
 import InstagramIcon from "./icons_jcj/insta.svg";
 import FacebookIcon from "./icons_jcj/facebook.svg";
 import YouTubeIcon from "./icons_jcj/youtube.svg";
+import footerlogo from "./icons_jcj/footerlogo_jcj.png";
 
 export default function Footer() {
   return (
@@ -12,7 +13,13 @@ export default function Footer() {
         <div className="jcj-footer-content">
           {/* Company Info */}
           <div className="jcj-footer-section">
-            <h3 className="jcj-footer-brand">UniVerse</h3>
+            {/* company logo */}
+            <img
+              src={footerlogo}
+              alt="UniVerse Logo"
+              className="jcj-footer-logo"
+            />
+
             <p className="jcj-footer-description">
               Empowering your academic and career journey with comprehensive
               resources and expert guidance.
@@ -100,7 +107,7 @@ export default function Footer() {
         <div className="jcj-footer-bottom">
           <div className="jcj-footer-bottom-content">
             <p className="jcj-footer-copyright">
-              © 2024 UniVerse. All rights reserved.
+              © 2025 UniVerse. All rights reserved.
             </p>
 
             {/* Social Media Icons */}
