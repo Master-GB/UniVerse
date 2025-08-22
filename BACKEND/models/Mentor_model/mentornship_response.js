@@ -54,11 +54,13 @@ const mentorshipResponseSchema = new schema({
         required: [true, "session link is required"],
     },
 
-    session_resources:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'fs.files'
-    }
-
+    session_resources: [{
+        filename: String,
+        originalName: String,
+        mimetype: String,
+        size: Number,
+        path: String
+    }]
 
 });
 

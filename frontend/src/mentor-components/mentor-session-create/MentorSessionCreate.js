@@ -31,7 +31,7 @@ const MentorSessionCreate = () => {
     if (name === 'session_resources') {
       setFormData(prev => ({
         ...prev,
-        [name]: files[0]
+        [name]: files
       }));
       simulateUpload();
     } else {
@@ -69,18 +69,20 @@ const MentorSessionCreate = () => {
     }
   };
 
-  const handleDrop = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      setFormData(prev => ({
-        ...prev,
-        session_resources: e.dataTransfer.files[0]
-      }));
-      simulateUpload();
-    }
-  };
+
+const handleDrop = (e) => {
+  e.preventDefault();
+  e.stopPropagation();
+  setDragActive(false);
+  if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+    setFormData(prev => ({
+      ...prev,
+      session_resources: e.dataTransfer.files
+    }));
+    simulateUpload();
+  }
+};
+
 
 
 
@@ -135,8 +137,10 @@ const MentorSessionCreate = () => {
       submitData.append('session_description', formData.session_description);
       submitData.append('session_link', formData.session_link);
       
-      if (formData.session_resources) {
-        submitData.append('session_resources', formData.session_resources);
+      if (formData.session_resources && formData.session_resources.length > 0) {
+        for (let i = 0; i < formData.session_resources.length; i++) {
+          submitData.append('session_resources', formData.session_resources[i]);
+        }
       }
 
       const response = await fetch(`${API_BASE_URL}/mentorshipResponse/add`, {
@@ -415,11 +419,13 @@ const MentorSessionCreate = () => {
                         name="session_resources"
                         onChange={handleInputChange}
                         className="file-input-md"
-                        accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,.zip"
+                        multiple
                       />
                       {formData.session_resources && (
                         <div className="uploaded-file-md">
-                          <span>📄 {formData.session_resources.name}</span>
+                          {Array.from(formData.session_resources).map((file, idx) => (
+                            <span key={idx}>📄 {file.name}</span>
+                          ))}
                           {uploadProgress < 100 && (
                             <div className="upload-progress-md">
                               <div className="progress-bar-md" style={{width: `${uploadProgress}%`}}></div>
@@ -427,7 +433,7 @@ const MentorSessionCreate = () => {
                           )}
                         </div>
                       )}
-                    </div>
+                       </div>
                     <div className="file-info-md">
                       Supported formats: PDF, DOC, PPT, TXT, ZIP (Max: 10MB)
                     </div>

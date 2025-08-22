@@ -1,5 +1,31 @@
 const mentorshipResponseController = require('../../models/Mentor_model/mentornship_response');
 const express = require('express');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const uploadPath = path.join(__dirname, "../../uploads");
+    if (!fs.existsSync(uploadPath)) {
+      fs.mkdirSync(uploadPath, { recursive: true });
+    }
+    cb(null, uploadPath);
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname);
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+    cb(null, true); // Accept all files
+};
+
+const upload = multer({
+    storage: storage,
+    fileFilter: fileFilter,
+    limits: { fileSize: 10 * 1024 * 1024 }
+});
 
 const addMentorshipResponse = async (req, res) => {
   try {
@@ -16,8 +42,16 @@ const addMentorshipResponse = async (req, res) => {
       session_link
     } = req.body;
 
-    // if file uploaded, multer puts it in req.file
-    const session_resources = req.file ? req.file.filename : null;
+    let session_resources = [];
+    if (req.files && req.files.length > 0) {
+      session_resources = req.files.map(file => ({
+        filename: file.filename,
+        originalName: file.originalname,
+        mimetype: file.mimetype,
+        size: file.size,
+        path: file.path
+      }));
+    }
 
     const newResponse = new mentorshipResponseController({
       mentor_name,
@@ -114,7 +148,6 @@ const deleteMentorshipResponse = async (req, res) => {
     }
 }
 
-// ✅ Fixed: Return the data directly, not wrapped in another object
 const getMentorshipResponse = async (req, res) => {
     try {
         const responses = await mentorshipResponseController.find();
@@ -129,7 +162,7 @@ const getMentorshipResponse = async (req, res) => {
     }
 }
 
-// ✅ Fixed: Return the data directly
+
 const getMentorshipResponseById = async (req, res) => {
     const { id } = req.params;
 
@@ -156,5 +189,6 @@ module.exports = {
     deleteMentorshipResponse, 
     updateMentorshipResponse,
     addMentorshipResponse,
-    getMentorshipResponseById
+    getMentorshipResponseById,
+    upload
 };

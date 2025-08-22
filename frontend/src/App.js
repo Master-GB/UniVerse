@@ -6,6 +6,7 @@ import React from "react";
 import LandingPage from "./components_jcj/LandingPage_jcj/LandingPage_jcj";
 import MentorDashboard  from "./mentor-components/mentor-dashboard/MentorDashboard";
 import MentorSessionCreate from "./mentor-components/mentor-session-create/MentorSessionCreate";
+import MentorshipAnnouncementForm  from "./mentor-components/mentor-announcement/MentorAnnouncement";
 
 const StudentLayout = () => (
   <div className="App">
@@ -23,6 +24,7 @@ const MentorLayout = () => (
       <Routes>
         <Route path="/mentor-dashboard" element={<MentorDashboard />} />
         <Route path="/mentor-session-create" element={<MentorSessionCreate />} />
+        <Route path="/mentor-announcement" element={<MentorshipAnnouncementForm />} />
       </Routes>
     </React.Fragment>
   </div>

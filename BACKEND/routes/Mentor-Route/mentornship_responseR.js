@@ -8,7 +8,8 @@ const {
   updateMentorshipResponse,
   deleteMentorshipResponse,
   getMentorshipResponse,
-  getMentorshipResponseById
+  getMentorshipResponseById,
+  upload // <-- import upload here
 } = require('../../controllers/Mentor-Controller/mentornship_responseC');
 
 // Make sure uploads folder exists and files are stored correctly
@@ -21,17 +22,12 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({
-  storage,
-  limits: { fileSize: 10 * 1024 * 1024 }, // limit file size (10 MB)
-});
-
 // ✅ Fixed Routes - Don't call controller functions here, let them handle the response
 router.get('/display', getMentorshipResponse);
 
 router.get('/getid/:id', getMentorshipResponseById);
 
-router.post('/add', upload.single('session_resources'), addMentorshipResponse);
+router.post('/add', upload.fields([{ name: 'session_resources', maxCount: 10 }]), addMentorshipResponse);
 
 router.put('/update/:id', upload.single('session_resources'), updateMentorshipResponse);
 

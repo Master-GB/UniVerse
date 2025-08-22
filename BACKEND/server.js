@@ -9,7 +9,7 @@ const app = express();
 const mentorshipResponseRoute= require("./routes/Mentor-Route/mentornship_responseR");
 const guidanceRouter = require("./routes/student_routes/guidanceR");
 const resourcesRouter = require("./routes/Resource_Router/resourceRouter");
-
+const mentorshipAnnouncementRoute = require("./routes/Mentor-Route/mentornship_announsmentR");
 const PORT = process.env.PORT || 8070;
 
 app.use(cors());
@@ -27,9 +27,10 @@ app.use("/guidance",guidanceRouter);
 app.use("/resource",resourcesRouter);
 
 
-// Mentorship Response Route
+// Mentorship  Routes
 
 app.use("/mentorshipResponse", mentorshipResponseRoute);
+app.use("/mentorship-announcement", mentorshipAnnouncementRoute);
 
 const URL = process.env.MONGODB_URL;
 mongoose.connect(URL);
