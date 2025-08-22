@@ -1,6 +1,4 @@
-/* From Uiverse.io by Creatlydev */
-/* All classnames have been suffixed with -jcj to avoid collisions */
-
+/* ---------- Button Styling (Uiverse.io base) ---------- */
 .button-jcj {
   line-height: 1;
   text-decoration: none;
@@ -60,4 +58,50 @@
 .button-jcj:hover .button__icon-svg--copy-jcj {
   transition: transform 0.3s ease-in-out 0.1s;
   transform: translate(0);
+}
+
+/* ---------- Fade & Slide Animations ---------- */
+.fade-in-up-jcj {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUpJCJ 0.8s ease-out forwards;
+}
+
+@keyframes fadeUpJCJ {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.delay-1-jcj {
+  animation-delay: 0.3s;
+}
+
+.delay-2-jcj {
+  animation-delay: 0.6s;
+}
+
+/* ---------- Image Animation ---------- */
+.float-in-jcj {
+  opacity: 0;
+  transform: scale(0.95);
+  animation: floatInJCJ 1s ease-out forwards, floatJCJ 6s ease-in-out infinite;
+  animation-delay: 0.9s;
+}
+
+@keyframes floatInJCJ {
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes floatJCJ {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-10px) scale(1.02);
+  }
 }
