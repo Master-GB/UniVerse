@@ -18,7 +18,7 @@ const MentorNavbar = () => {
             setActiveTab('sessions');
         } else if (currentPath.includes('messages')) {
             setActiveTab('messages');
-        } else if (currentPath.includes('announcements')) {
+        } else if (currentPath ==='/mentor-announcement') {
             setActiveTab('announcements');
         }
     }, [location.pathname]);
@@ -31,11 +31,9 @@ const MentorNavbar = () => {
         } else if (tab === 'sessions') {
             navigate('/mentor-session-create');
         } else if (tab === 'messages') {
-            // Navigate to messages page when you have the route
-            // navigate('/mentor-messages');
+            navigate('/mentor-messages');
         } else if (tab === 'announcements') {
-            // Navigate to announcements page when you have the route
-            // navigate('/mentor-announcements');
+            navigate('/mentor-announcement');
         }
     };
 
