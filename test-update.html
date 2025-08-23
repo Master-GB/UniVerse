@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Session Update</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .test { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        button { padding: 8px 16px; margin: 5px; cursor: pointer; }
+        pre { background: #f5f5f5; padding: 10px; border-radius: 5px; overflow-x: auto; }
+        .success { color: green; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Test Session Update</h1>
+        
+        <div class="test">
+            <h3>1. Get All Sessions</h3>
+            <button onclick="getSessions()">Get Sessions</button>
+            <div id="sessions"></div>
+        </div>
+        
+        <div class="test">
+            <h3>2. Test Update Endpoint</h3>
+            <div>
+                <label>Session ID: <input type="text" id="sessionId" style="width: 300px"></label>
+            </div>
+            <div>
+                <button onclick="testUpdate()">Test Update (Set status=test, seats=999)</button>
+                <button onclick="testBook()">Test Book (status=booked, seats-1)</button>
+                <button onclick="testCancel()">Test Cancel (status=book, seats+1)</button>
+            </div>
+            <div id="testResult"></div>
+        </div>
+        
+        <div class="test">
+            <h3>3. Manual API Test</h3>
+            <div>
+                <label>Endpoint: <input type="text" id="endpoint" value="http://localhost:8070/mentorshipResponse/update/" style="width: 400px"></label>
+            </div>
+            <div>
+                <label>Method: 
+                    <select id="method">
+                        <option>GET</option>
+                        <option selected>PUT</option>
+                    </select>
+                </label>
+            </div>
+            <div>
+                <label>Body: <br>
+                    <textarea id="requestBody" rows="5" style="width: 100%">{
+  "session_status": "booked",
+  "seat_count": 5
+}</textarea>
+                </label>
+            </div>
+            <button onclick="sendRequest()">Send Request</button>
+            <div id="manualResult"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8070/mentorshipResponse';
+        
+        function logToElement(elementId, message, isError = false) {
+            const element = document.getElementById(elementId);
+            const pre = document.createElement('pre');
+            pre.className = isError ? 'error' : 'success';
+            pre.textContent = message;
+            element.prepend(pre);
+        }
+        
+        async function getSessions() {
+            try {
+                const response = await axios.get(`${API_BASE}/display`);
+                const sessions = Array.isArray(response.data) ? response.data : [];
+                const sessionsHtml = sessions.map(s => 
+                    `<div style="margin: 10px 0; padding: 10px; border: 1px solid #eee;">
+                        <strong>ID:</strong> ${s._id}<br>
+                        <strong>Title:</strong> ${s.session_title}<br>
+                        <strong>Status:</strong> ${s.session_status}<br>
+                        <strong>Seats:</strong> ${s.seat_count}<br>
+                        <strong>Mentor:</strong> ${s.mentor_name}
+                    </div>`
+                ).join('');
+                
+                document.getElementById('sessions').innerHTML = sessionsHtml || 'No sessions found';
+                logToElement('sessions', 'Sessions loaded successfully');
+                
+                // Auto-fill the session ID if there are sessions
+                if (sessions.length > 0) {
+                    document.getElementById('sessionId').value = sessions[0]._id;
+                }
+            } catch (error) {
+                logToElement('sessions', `Error: ${error.message}`, true);
+                console.error('Error getting sessions:', error);
+            }
+        }
+        
+        async function testUpdate() {
+            const sessionId = document.getElementById('sessionId').value.trim();
+            if (!sessionId) {
+                alert('Please enter a session ID');
+                return;
+            }
+            
+            try {
+                const response = await axios.put(
+                    `${API_BASE}/test-update/${sessionId}`,
+                    { test: 'data' },
+                    { headers: { 'Content-Type': 'application/json' } }
+                );
+                logToElement('testResult', JSON.stringify(response.data, null, 2));
+                getSessions(); // Refresh the session list
+            } catch (error) {
+                const errorMsg = error.response 
+                    ? `Status: ${error.response.status}\n${JSON.stringify(error.response.data, null, 2)}`
+                    : error.message;
+                logToElement('testResult', `Error: ${errorMsg}`, true);
+                console.error('Test update error:', error);
+            }
+        }
+        
+        async function testBook() {
+            const sessionId = document.getElementById('sessionId').value.trim();
+            if (!sessionId) {
+                alert('Please enter a session ID');
+                return;
+            }
+            
+            try {
+                // First get the current session data
+                const { data: session } = await axios.get(`${API_BASE}/getid/${sessionId}`);
+                
+                // Prepare the update
+                const updateData = {
+                    ...session,
+                    session_status: 'booked',
+                    seat_count: Math.max(0, Number(session.seat_count || 1) - 1)
+                };
+                
+                // Send the update
+                const response = await axios.put(
+                    `${API_BASE}/update/${sessionId}`,
+                    updateData,
+                    { headers: { 'Content-Type': 'application/json' } }
+                );
+                
+                logToElement('testResult', `Booking successful!\n${JSON.stringify(response.data, null, 2)}`);
+                getSessions(); // Refresh the session list
+            } catch (error) {
+                const errorMsg = error.response 
+                    ? `Status: ${error.response.status}\n${JSON.stringify(error.response.data, null, 2)}`
+                    : error.message;
+                logToElement('testResult', `Error: ${errorMsg}`, true);
+                console.error('Book error:', error);
+            }
+        }
+        
+        async function testCancel() {
+            const sessionId = document.getElementById('sessionId').value.trim();
+            if (!sessionId) {
+                alert('Please enter a session ID');
+                return;
+            }
+            
+            try {
+                // First get the current session data
+                const { data: session } = await axios.get(`${API_BASE}/getid/${sessionId}`);
+                
+                // Prepare the update
+                const updateData = {
+                    ...session,
+                    session_status: 'book',
+                    seat_count: Number(session.seat_count || 0) + 1
+                };
+                
+                // Send the update
+                const response = await axios.put(
+                    `${API_BASE}/update/${sessionId}`,
+                    updateData,
+                    { headers: { 'Content-Type': 'application/json' } }
+                );
+                
+                logToElement('testResult', `Cancellation successful!\n${JSON.stringify(response.data, null, 2)}`);
+                getSessions(); // Refresh the session list
+            } catch (error) {
+                const errorMsg = error.response 
+                    ? `Status: ${error.response.status}\n${JSON.stringify(error.response.data, null, 2)}`
+                    : error.message;
+                logToElement('testResult', `Error: ${errorMsg}`, true);
+                console.error('Cancel error:', error);
+            }
+        }
+        
+        async function sendRequest() {
+            const endpoint = document.getElementById('endpoint').value.trim();
+            const method = document.getElementById('method').value;
+            let body;
+            
+            try {
+                body = JSON.parse(document.getElementById('requestBody').value);
+            } catch (e) {
+                alert('Invalid JSON in request body');
+                return;
+            }
+            
+            try {
+                const config = {
+                    method: method,
+                    url: endpoint,
+                    headers: { 'Content-Type': 'application/json' },
+                    data: body
+                };
+                
+                const response = await axios(config);
+                logToElement('manualResult', 
+                    `Status: ${response.status}\n` +
+                    `Headers: ${JSON.stringify(response.headers, null, 2)}\n` +
+                    `Data: ${JSON.stringify(response.data, null, 2)}`
+                );
+                getSessions(); // Refresh the session list
+            } catch (error) {
+                const errorMsg = error.response 
+                    ? `Status: ${error.response.status}\n${JSON.stringify(error.response.data, null, 2)}`
+                    : error.message;
+                logToElement('manualResult', `Error: ${errorMsg}`, true);
+                console.error('Request error:', error);
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            getSessions();
+        });
+    </script>
+</body>
+</html>
