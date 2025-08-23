@@ -9,14 +9,12 @@
   --stu-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   --stu-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   
-  /* Body styles scoped to header */
+  /* Scoped font styles */
   font-family: 'Inter', sans-serif;
   color: var(--stu-text-dark);
   line-height: 1.6;
-}
-
-/* Base Styles */
-.stu-header {
+  
+  /* Base Styles */
   background: rgb(27, 54, 93);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
@@ -229,8 +227,3 @@
   }
 }
 
-/* Add spacing for fixed header */
-/* body {
-  margin: 0;
-  padding-top: 80px; 
-} */
