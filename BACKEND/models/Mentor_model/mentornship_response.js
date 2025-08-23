@@ -77,7 +77,7 @@ const mentorshipResponseSchema = new schema({
         originalName: String,
         mimetype: String,
         size: Number,
-        path: String
+        buffer: Buffer // <-- add this
     }]
 
 });
