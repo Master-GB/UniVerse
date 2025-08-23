@@ -126,38 +126,406 @@ const StuDashboard = () => {
     return () => clearInterval(t);
   }, []);
 
-  const [sessions, setSessions] = useState([
-    { 
-      id: 1, 
-      title: "Data Structures Clinic", 
-      mentor: "Dr. Silva", 
-      date: new Date(new Date().setDate(new Date().getDate() + 1)).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }), 
-      time: "3:30 PM",
-      duration: "1h 30m",
-      startTime: new Date(new Date().setDate(new Date().getDate() + 1)).setHours(15, 30, 0, 0),
-      seats: 6 
-    },
-    { 
-      id: 2, 
-      title: "Calculus Booster", 
-      mentor: "Prof. Perera", 
-      date: new Date(new Date().setDate(new Date().getDate() + 2)).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }), 
-      time: "10:00 AM",
-      duration: "2h",
-      startTime: new Date(new Date().setDate(new Date().getDate() + 2)).setHours(10, 0, 0, 0),
-      seats: 12 
-    },
-    { 
-      id: 3, 
-      title: "AI Study Group", 
-      mentor: "Meera K.", 
-      date: new Date(new Date().setDate(new Date().getDate() + 3)).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }), 
-      time: "9:00 AM",
-      duration: "2h",
-      startTime: new Date(new Date().setDate(new Date().getDate() + 3)).setHours(9, 0, 0, 0),
-      seats: 4 
+  const [sessions, setSessions] = useState(() => {
+    console.log('Initial sessions state set');
+    return [];
+  });
+  const [bookedSessionsCount, setBookedSessionsCount] = useState(0);
+  
+  // Effect to track and count future booked sessions
+  useEffect(() => {
+    console.log('Sessions updated. Count:', sessions.length);
+    const now = new Date();
+    
+    // Filter only 'booked' status sessions
+    const bookedSessions = sessions.filter(session => {
+      // Check if session status is exactly 'booked' (case insensitive)
+      const status = String(session.status || session.session_status || '').toLowerCase().trim();
+      const isBooked = status === 'booked';
+      
+      if (!isBooked) {
+        console.log('Skipping session - not "booked":', {
+          id: session.id,
+          title: session.title,
+          status: status
+        });
+        return false;
+      }
+      
+      // Check if session is in the future
+      try {
+        let sessionDate;
+        
+        // Try to parse date from different possible fields
+        if (session.session_datetime) {
+          sessionDate = new Date(session.session_datetime);
+        } else if (session.session_start_date && session.session_start_time) {
+          sessionDate = new Date(`${session.session_start_date}T${session.session_start_time}`);
+        } else if (session.date && session.time) {
+          sessionDate = new Date(`${session.date}T${session.time}`);
+        }
+        
+        // If we couldn't parse a valid date, exclude the session
+        if (!sessionDate || isNaN(sessionDate.getTime())) {
+          console.log('Invalid date for session:', {
+            id: session.id,
+            title: session.title,
+            date: session.session_datetime || `${session.session_start_date} ${session.session_start_time}`
+          });
+          return false;
+        }
+        
+        // Check if session is in the future
+        const isFuture = sessionDate > now;
+        
+        if (isFuture) {
+          console.log('✅ Future booked session:', {
+            id: session.id,
+            title: session.title,
+            status: status,
+            sessionDate: sessionDate.toString()
+          });
+        } else {
+          console.log('⏰ Past booked session (not counted):', {
+            id: session.id,
+            title: session.title,
+            status: status,
+            sessionDate: sessionDate.toString()
+          });
+        }
+        
+        return isFuture;
+        
+      } catch (e) {
+        console.error('Error processing session date:', e);
+        return false;
+      }
+      
+    });
+    
+    console.log('All sessions:', sessions);
+    console.log('Booked sessions:', bookedSessions);
+    console.log('📋 Total booked sessions:', bookedSessions.length);
+    
+    // Update the UI with the count of booked sessions
+    if (bookedSessions.length !== bookedSessionsCount) {
+      console.log('🔄 Updating booked sessions count to:', bookedSessions.length);
+      setBookedSessionsCount(bookedSessions.length);
     }
-  ]);
+  }, [sessions]);
+
+  // Fetch all mentorship sessions from the database
+  useEffect(() => {
+    const fetchSessions = async () => {
+      try {
+        console.log('Starting to fetch sessions...');
+        // Fetch all sessions
+        const resp = await fetch('http://localhost:8070/mentorshipResponse/display');
+        const responseData = await resp.text(); // Get raw response text first
+        console.log('Raw response:', responseData);
+        
+        let data;
+        try {
+          data = JSON.parse(responseData);
+        } catch (e) {
+          console.error('Failed to parse response as JSON:', e);
+          throw new Error('Invalid JSON response from server');
+        }
+        
+        if (!resp.ok) throw new Error(data?.message || 'Failed to load sessions');
+
+        console.log('Parsed response data:', data);
+        
+        // Log the raw response type and structure
+        console.log('Response type:', typeof data);
+        console.log('Is array?', Array.isArray(data));
+        console.log('Response keys (if object):', typeof data === 'object' ? Object.keys(data) : 'N/A');
+        
+        if (!Array.isArray(data) && data.data) {
+          console.log('Data contains data property, type:', typeof data.data);
+          console.log('Is data.data array?', Array.isArray(data.data));
+          console.log('data.data keys (if object):', typeof data.data === 'object' ? Object.keys(data.data) : 'N/A');
+        }
+        
+        // Handle both array response and object with data array
+        const raw = Array.isArray(data) ? data : (Array.isArray(data?.data) ? data.data : []);
+        
+        // Log first session to check its structure
+        if (raw.length > 0) {
+          console.log('Raw session data from API (first session):', JSON.stringify(raw[0], null, 2));
+          console.log('First session keys:', Object.keys(raw[0]));
+          console.log('First session status:', raw[0].session_status);
+          console.log('First session status (alternative):', raw[0]?.status);
+        }
+        raw.forEach((session, index) => {
+          console.log(`Session ${index + 1} details:`, {
+            id: session._id,
+            title: session.session_title || session.title,
+            status: session.session_status || session.status,
+            startDate: session.session_start_date || session.date,
+            startTime: session.session_start_time || session.time,
+            allKeys: Object.keys(session)
+          });
+        });
+        
+        // Debug log full session objects
+        // Log the first session's complete data for debugging
+        if (raw.length > 0) {
+          console.log('First session data:', JSON.parse(JSON.stringify(raw[0], null, 2)));
+        }
+        
+        // Log all session statuses
+        const statusCounts = raw.reduce((acc, session) => {
+          const status = session.session_status || 'no_status';
+          acc[status] = (acc[status] || 0) + 1;
+          return acc;
+        }, {});
+        console.log('Session status counts:', statusCounts);
+        
+        // Just set the sessions, the effect will handle the counting
+        console.log('Setting sessions data');
+
+        const normalized = raw.map((s) => {
+          // Accept multiple possible field names from API
+          const dateField = s.session_start_date || s.session_date || s.date || '';
+          const timeField = s.session_start_time || s.start_time || s.time || '';
+          const isoField = s.session_datetime || s.startAt || '';
+
+          let sessionDate = null;
+          let formattedDate = 'Date not set';
+          let formattedTime = 'Time not set';
+
+          // Case A: combined ISO datetime provided
+          if (isoField && typeof isoField === 'string') {
+            const d = new Date(isoField);
+            if (!isNaN(d.getTime())) {
+              sessionDate = d;
+            }
+          }
+
+          // Case B: separate date and time
+          if (!sessionDate && typeof dateField === 'string' && dateField.length > 0) {
+            // If date contains 'T', treat as ISO string
+            if (dateField.includes('T')) {
+              const d = new Date(dateField);
+              if (!isNaN(d.getTime())) sessionDate = d;
+            } else {
+              // Expecting YYYY-MM-DD
+              const parts = dateField.split('-').map(Number);
+              if (parts.length === 3) {
+                const [year, month, day] = parts;
+                const d = new Date(year, (month || 1) - 1, day || 1);
+                if (!isNaN(d.getTime())) sessionDate = d;
+              }
+            }
+
+            // Apply time if provided (supports HH:MM, HH:MM:SS, and 12h with AM/PM)
+            if (sessionDate && typeof timeField === 'string' && timeField.length > 0) {
+              const tf = timeField.trim();
+              const ampmMatch = tf.match(/^(\d{1,2})(?::(\d{2}))?(?::(\d{2}))?\s*([AaPp][Mm])$/);
+              if (ampmMatch) {
+                let hh = parseInt(ampmMatch[1], 10);
+                const mm = parseInt(ampmMatch[2] || '0', 10);
+                const ss = parseInt(ampmMatch[3] || '0', 10);
+                const ap = ampmMatch[4].toLowerCase();
+                if (ap === 'pm' && hh < 12) hh += 12;
+                if (ap === 'am' && hh === 12) hh = 0;
+                sessionDate.setHours(hh, isNaN(mm) ? 0 : mm, isNaN(ss) ? 0 : ss, 0);
+              } else {
+                const tparts = tf.split(':').map((p) => parseInt(p, 10));
+                const [hh = 0, mm = 0, ss = 0] = tparts;
+                if (!isNaN(hh) && !isNaN(mm)) {
+                  sessionDate.setHours(hh, mm, isNaN(ss) ? 0 : ss, 0);
+                }
+              }
+            }
+          }
+
+          if (sessionDate && !isNaN(sessionDate.getTime())) {
+            formattedDate = sessionDate.toLocaleDateString();
+            formattedTime = sessionDate.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true });
+          }
+
+          return {
+            id: s?._id || s?.id,
+            title: s?.session_title || s?.title || 'Untitled Session',
+            mentor: s?.mentor_name || s?.mentor || 'Unknown',
+            date: formattedDate,
+            time: formattedTime,
+            session_status: s?.session_status || s?.status, // Make sure status is included
+            session_start_date: s?.session_start_date || s?.date, // Include raw date for filtering
+            session_start_time: s?.session_start_time || s?.time, // Include raw time for filtering
+            session_datetime: sessionDate,
+            session_duration: s?.session_duration || s?.duration || '',
+            startTime: sessionDate ? sessionDate.getTime() : null,
+            seats: Number(s?.seat_count ?? s?.seats ?? s?.available_seats ?? 0),
+            status: s?.session_status || s?.status || 'book',
+            location: s?.location || 'Online',
+            session_link: s?.session_link || s?.meeting_url || s?.link || ''
+          };
+        });
+
+        // Keep only UPCOMING sessions with a valid start time and sort by soonest
+        console.log('Normalized sessions:', JSON.stringify(normalized, null, 2)); // Debug log
+
+        const upcoming = normalized
+          .filter(n => typeof n.startTime === 'number' && n.startTime > now.getTime())
+          .sort((a, b) => a.startTime - b.startTime);
+
+        console.log('Upcoming sessions (sorted):', JSON.stringify(upcoming, null, 2)); // Debug log
+
+        // Get all sessions and sort them by start time
+        const allSessions = normalized
+          .filter(n => typeof n.startTime === 'number')
+          .sort((a, b) => a.startTime - b.startTime);
+        
+        console.log('Total sessions found:', allSessions.length);
+        
+        // Store all sessions in state for other components to use
+        setSessions(allSessions);
+        
+        // For the Academic Support section, we'll show only the top 5 upcoming sessions
+        const top5 = allSessions.slice(0, 5);
+        console.log('Displaying top 5 sessions in UI:', top5.length);
+      } catch (e) {
+        console.error('Failed to load mentorship sessions for dashboard:', e);
+        setSessions([]);
+      }
+    };
+
+    fetchSessions();
+  }, []);
+
+  // Normalize session data from the API
+  const normalizeSession = (session) => {
+    const startTime = session.session_start_time ? new Date(session.session_start_time) : null;
+    const endTime = session.session_end_time ? new Date(session.session_end_time) : null;
+    
+    return {
+      id: session._id || session.id,
+      title: session.title || 'Untitled Session',
+      mentor: session.mentor_name || session.mentor || 'Mentor not specified',
+      date: startTime ? startTime.toLocaleDateString() : 'Date not set',
+      session_start_time: startTime,
+      session_end_time: endTime,
+      session_duration: session.duration || 60, // Default to 60 minutes if not specified
+      seats: session.available_seats || 0,
+      status: session.status || 'book',
+      description: session.description || '',
+      location: session.location || 'Online',
+      ...session // Spread the rest of the properties
+    };
+  };
+
+  // Allow joining only within 1 hour before the session start time
+  const canJoinNow = (s) => {
+    try {
+      const start = s?.session_start_time
+        ? new Date(s.session_start_time)
+        : (typeof s?.startTime === 'number' ? new Date(s.startTime) : null);
+      if (!start || isNaN(start.getTime())) return false;
+      const oneHourBefore = new Date(start);
+      oneHourBefore.setHours(oneHourBefore.getHours() - 1);
+      return now >= oneHourBefore && now <= start;
+    } catch (_) {
+      return false;
+    }
+  };
+
+  // Book a mentorship session (optimistic update + backend sync)
+  const handleBook = async (sessionId) => {
+    const target = sessions.find(s => s.id === sessionId);
+    if (!target) return;
+    if (target.status === 'booked' || (target.seats ?? 0) <= 0) return;
+
+    // Save current state for potential rollback
+    const prevSessions = [...sessions];
+    
+    // 1. First update the UI optimistically
+    setSessions(prev => 
+      prev.map(s => 
+        s.id === sessionId 
+          ? { 
+              ...s, 
+              status: 'booked', 
+              session_status: 'booked',
+              seats: Math.max(0, (s.seats || 0) - 1),
+              bookedAt: new Date().toISOString(),
+              // Ensure we keep the original date/time fields
+              session_start_date: s.session_start_date,
+              session_start_time: s.session_start_time,
+              session_datetime: s.session_datetime,
+              date: s.date,
+              time: s.time
+            } 
+          : s
+      )
+    );
+    
+    try {
+      // 2. Update the backend
+      const resp = await fetch(`http://localhost:8070/mentorshipResponse/update/${sessionId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          session_status: 'booked',
+          seat_count: Math.max(0, (target.seats || 0) - 1)
+        })
+      });
+      
+      if (!resp.ok) throw new Error(`HTTP error! status: ${resp.status}`);
+      
+      // 3. Refresh the sessions list after a short delay
+      setTimeout(async () => {
+        try {
+          const updatedResp = await fetch('http://localhost:8070/mentorshipResponse/display');
+          const responseData = await updatedResp.json();
+          const updatedSessions = Array.isArray(responseData) 
+            ? responseData 
+            : (responseData?.data || []);
+          
+          if (updatedSessions.length > 0) {
+            // Only update if we have valid session data
+            const normalizedSessions = updatedSessions.map(session => ({
+              ...session,
+              id: session._id || session.id,
+              title: session.session_title || session.title,
+              status: session.session_status || session.status,
+              seats: session.seat_count || session.seats,
+              session_start_date: session.session_start_date || session.date,
+              session_start_time: session.session_start_time || session.time,
+              session_datetime: session.session_datetime || 
+                (session.session_start_date && session.session_start_time 
+                  ? `${session.session_start_date}T${session.session_start_time}` 
+                  : null)
+            }));
+            
+            // Only update if we have valid sessions
+            if (normalizedSessions.length > 0) {
+              setSessions(currentSessions => {
+                // Create a map of existing sessions for reference
+                const sessionMap = new Map(currentSessions.map(s => [s.id, s]));
+                
+                // Merge updated sessions while preserving any local state
+                return normalizedSessions.map(updated => ({
+                  ...updated,
+                  // Preserve local state if it exists
+                  ...(sessionMap.get(updated.id) || {})
+                }));
+              });
+            }
+          }
+        } catch (e) {
+          console.error('Failed to refresh sessions:', e);
+          // Don't revert on refresh failure, keep the optimistic update
+        }
+      }, 1000);
+    } catch (e) {
+      console.error('Booking failed, reverting:', e);
+      // Revert to previous state on error
+      setSessions(prevSessions);
+    }
+};
 
   const quizzes = [
     { id: 1, title: "Algorithms Warm-up", questions: 10, est: 8, level: "Beginner" },
@@ -256,10 +624,17 @@ const StuDashboard = () => {
     }
   };
 
-  const handleJoinSession = (sessionId) => {
-    // In a real app, this would redirect to the session or open a video call
-    console.log(`Joining session ${sessionId}`);
-    // window.open(`/session/${sessionId}`, '_blank');
+  const handleJoinSession = (sessionLink, sessionId) => {
+    // Open the provided session link in a new tab if available
+    if (sessionLink && typeof sessionLink === 'string') {
+      console.log(`Opening session link for ${sessionId}:`, sessionLink);
+      window.open(sessionLink, '_blank', 'noopener,noreferrer');
+    } else {
+      console.warn('No session_link available for this session. Falling back to session page.');
+      if (sessionId) {
+        window.open(`/session/${sessionId}`, '_blank', 'noopener,noreferrer');
+      }
+    }
   };
 
   return (
@@ -337,7 +712,7 @@ const StuDashboard = () => {
             <Users size={18} />
           </div>
           <div className="sd-stat-body">
-            <div className="sd-stat-value">3</div>
+            <div className="sd-stat-value">{bookedSessionsCount}</div>
             <div className="sd-stat-label">Sessions Booked</div>
           </div>
           <Calendar size={16} className="sd-stat-trend" />
@@ -370,27 +745,69 @@ const StuDashboard = () => {
           </header>
           <div className="sd-list">
             {sessions
-              .filter(s => s.title.toLowerCase().includes(search.toLowerCase()))
-              .map((s) => (
-                <div key={s.id} className="sd-list-item">
-                  <div className="sd-list-left">
-                    <div className="sd-avatar">
-                      <Users size={16} />
+              .filter(session => {
+                // Check if session has a valid date
+                let sessionDate;
+                if (session.session_datetime) {
+                  sessionDate = new Date(session.session_datetime);
+                } else if (session.session_start_date && session.session_start_time) {
+                  sessionDate = new Date(`${session.session_start_date}T${session.session_start_time}`);
+                } else if (session.date && session.time) {
+                  sessionDate = new Date(`${session.date}T${session.time}`);
+                }
+                
+                const isUpcoming = sessionDate && !isNaN(sessionDate.getTime()) && sessionDate > new Date();
+                const matchesSearch = session.title?.toLowerCase().includes(search?.toLowerCase() || '');
+                
+                return isUpcoming && matchesSearch;
+              })
+              .slice(0, 5) // Only show first 5 upcoming sessions
+              .map((s) => {
+                // Use the pre-formatted date and time from the normalized data
+                console.log('Rendering session:', s); // Debug log
+                const formattedDate = s.date || (s.session_start_time ? new Date(s.session_start_time).toLocaleDateString() : 'Date not set');
+                const formattedTime = s.time || (s.session_start_time ? new Date(s.session_start_time).toLocaleTimeString([], { 
+                  hour: '2-digit', 
+                  minute: '2-digit',
+                  hour12: true 
+                }) : 'Time not set');
+                const isBooked = s.status === 'booked';
+                const canJoin = isBooked ? canJoinNow(s) : false;
+                
+                return (
+                  <div key={s.id} className="sd-list-item">
+                    <div className="sd-list-left">
+                      <div className="sd-avatar">
+                        <Users size={16} />
+                      </div>
+                      <div>
+                        <div className="sd-item-title">{s.title || 'Untitled Session'}</div>
+                        <div className="sd-item-meta">
+                          <span>{s.mentor || 'Mentor not specified'}</span>
+                          <span className="sd-meta-separator">•</span>
+                          <span>{formattedDate} at {formattedTime}</span>
+                        </div>
+                      </div>
                     </div>
-                    <div>
-                      <div className="sd-item-title">{s.title}</div>
-                      <div className="sd-item-meta">{s.mentor} • {s.date}</div>
+                    <div className="sd-list-right">
+                      {isBooked ? (
+                        <div className="sd-badge success">Booked</div>
+                      ) : (
+                        <div className="sd-badge neutral">{s.seats || 0} seat{s.seats !== 1 ? 's' : ''} left</div>
+                      )}
+                      <button
+                        className={`sd-btn ${isBooked ? 'booked' : 'primary'}`}
+                        onClick={() => isBooked ? handleJoinSession(s.session_link, s.id) : handleBook(s.id)}
+                        disabled={isBooked ? !canJoin : (s.seats ?? 0) <= 0}
+                        title={isBooked && !canJoin ? 'Join becomes available 1 hour before session start' : ''}
+                      >
+                        <Calendar size={16} />
+                        {isBooked ? 'Join Session' : 'Book Now'}
+                      </button>
                     </div>
                   </div>
-                  <div className="sd-list-right">
-                    <div className="sd-badge neutral">{s.seats} seats</div>
-                    <button className="sd-btn primary">
-                      <Calendar size={16} />
-                      Book
-                    </button>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
           </div>
         </section>
 
