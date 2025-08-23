@@ -15,6 +15,7 @@ const MentorSessionCreate = () => {
     session_status: 'book',
     session_description: '',
     session_link: '',
+    resource_links: [], // <-- new field
     session_resources: null,
   });
 
@@ -24,6 +25,7 @@ const MentorSessionCreate = () => {
   const [dragActive, setDragActive] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [uploadComplete, setUploadComplete] = useState(false);
+  const [currentResourceLink, setCurrentResourceLink] = useState(''); // New state for current resource link input
 
   const API_BASE_URL = 'http://localhost:8070';
 
@@ -134,6 +136,8 @@ const MentorSessionCreate = () => {
           for (let i = 0; i < formData[key].length; i++) {
             submitData.append('session_resources', formData[key][i]);
           }
+        } else if (key === 'resource_links' && formData[key].length > 0) {
+          formData[key].forEach(link => submitData.append('resource_links', link));
         } else {
           submitData.append(key, formData[key]);
         }
@@ -173,6 +177,7 @@ const MentorSessionCreate = () => {
         session_status: 'book',
         session_description: '',
         session_link: '',
+        resource_links: [], // <-- reset resource links
         session_resources: null,
       });
       setCurrentStep(1);
@@ -189,6 +194,17 @@ const MentorSessionCreate = () => {
     if (step < currentStep) return '✅';
     if (step === currentStep) return step;
     return step;
+  };
+
+  // Handler to add a resource link
+  const handleAddResourceLink = () => {
+    if (currentResourceLink.trim() && /^https?:\/\/.+/.test(currentResourceLink)) {
+      setFormData(prev => ({
+        ...prev,
+        resource_links: [...prev.resource_links, currentResourceLink.trim()]
+      }));
+      setCurrentResourceLink('');
+    }
   };
 
   return (
@@ -437,8 +453,8 @@ const MentorSessionCreate = () => {
                       className="modern-select-md"
                       aria-describedby="session_status_hint"
                     >
-                      <option value="book">Open for Booking</option>
-                      <option value="booked">Fully Booked</option>
+                      <option value="book">book</option>
+                      <option value="booked">booked</option>
                     </select>
                     <span id="session_status_hint" className="input-hint-md">
                       Set the booking status for this session.
@@ -475,8 +491,8 @@ const MentorSessionCreate = () => {
                   <h2>🔗 Session Resources</h2>
                   <p>Add your meeting link and upload supporting materials</p>
                 </div>
-
                 <div className="form-grid-md">
+                  {/* Session Link input - keep this separate */}
                   <div className="input-group-md full-width-md">
                     <label className="input-label-md" htmlFor="session_link">
                       <span>Session Link</span>
@@ -497,7 +513,50 @@ const MentorSessionCreate = () => {
                       <span id="session_link_error" className="error-text-md">{errors.session_link}</span>
                     )}
                   </div>
-
+                  {/* Resource links input - new section */}
+                  <div className="input-group-md full-width-md">
+                    <label className="input-label-md" htmlFor="resource_links">
+                      <span>Resource Links</span>
+                    </label>
+                    <div className="resource-links-container-md">
+                      <input
+                        type="url"
+                        name="resource_link"
+                        value={currentResourceLink}
+                        onChange={(e) => setCurrentResourceLink(e.target.value)}
+                        className="modern-input-md"
+                        placeholder="https://example.com/resource"
+                        aria-describedby="resource_link_hint"
+                      />
+                      <button
+                        type="button"
+                        onClick={handleAddResourceLink}
+                        className="btn-md btn-secondary-md add-resource-link-md"
+                        disabled={!currentResourceLink.trim()}
+                        aria-label="Add resource link"
+                      >
+                        +
+                      </button>
+                    </div>
+                    <span id="resource_link_hint" className="input-hint-md">
+                      Add any additional links related to the session (e.g., slides, documents).
+                    </span>
+                    {formData.resource_links.length > 0 && (
+                      <div className="added-resource-links-md">
+                        <h4>Added Resource Links:</h4>
+                        <ul>
+                          {formData.resource_links.map((link, idx) => (
+                            <li key={idx} className="resource-link-item-md">
+                              <a href={link} target="_blank" rel="noopener noreferrer" className="resource-link-md">
+                                {link}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                  {/* File upload area - keep this separate */}
                   <div className="input-group-md full-width-md">
                     <label className="input-label-md" htmlFor="session_resources">Session Resources</label>
                     <div

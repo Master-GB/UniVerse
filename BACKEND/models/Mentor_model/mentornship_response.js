@@ -71,6 +71,7 @@ const mentorshipResponseSchema = new schema({
         required: [true, "session link is required"],
     },
 
+    resource_links: [String], // 
     session_resources: [{
         filename: String,
         originalName: String,
