@@ -30,7 +30,8 @@ const StudentLayout = () => (
       </Routes>
     </main>
     <StuFooter />
-  </div>
+    </div>
+
 );
 
 const MentorLayout = () => (
@@ -59,9 +60,9 @@ function App() {
   return (
     <div className="app-container">
       <Routes>
-         <Route path="/l*" element={<StudentLayout />} />
+         <Route path="/*" element={<StudentLayout />} />
          <Route path="/hj*" element={<HomeLayout />} />
-         <Route path="/*" element={<MentorLayout />} />
+         <Route path="/n*" element={<MentorLayout />} />
       </Routes>
     </div>
   );

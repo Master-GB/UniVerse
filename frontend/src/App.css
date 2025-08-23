@@ -25,7 +25,7 @@ html, body, #root {
 .main-content {
   flex: 1 0 auto;
   width: 100%;
-  padding-top: 80px; /* Space for fixed header */
+  padding-top: 158px; /* Space for fixed header */
   padding-bottom: 2rem;
   min-height: calc(100vh - 80px); /* Full viewport height minus header */
   box-sizing: border-box;
@@ -41,4 +41,16 @@ html, body, #root {
 .stu-footer {
   flex-shrink: 0;
   margin-top: auto;
+}
+
+.stu-content-wrapper {
+  padding-top: 800px; /* Match this with your header height */
+  min-height: 1000vh;
+}
+
+
+/* Add spacing for pages with fixed header */
+.stu-page-content {
+  margin: 0;
+  padding-top: 800px; /* Space for fixed header */
 }
