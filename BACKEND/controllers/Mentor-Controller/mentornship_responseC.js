@@ -37,7 +37,10 @@ const addMentorshipResponse = async (req, res) => {
       session_start_time,
       session_create_date,
       session_create_time,
+      seat_count,
+      session_duration,
       session_title,
+      session_status,
       session_description,
       session_link
     } = req.body;
@@ -61,7 +64,10 @@ const addMentorshipResponse = async (req, res) => {
       session_start_time,
       session_create_date,
       session_create_time,
+      seat_count,
+      session_duration,
       session_title,
+      session_status,
       session_description,
       session_link,
       session_resources
@@ -93,6 +99,9 @@ const updateMentorshipResponse = async (req, res) => {
         session_create_date,
         session_create_time,
         session_title,
+        session_duration,
+        seat_count,
+        session_status,
         session_description,
         session_link,
         session_resources
@@ -108,6 +117,9 @@ const updateMentorshipResponse = async (req, res) => {
             session_create_date,
             session_create_time,
             session_title,
+            session_duration,
+            seat_count,
+            session_status,
             session_description,
             session_link,
             session_resources

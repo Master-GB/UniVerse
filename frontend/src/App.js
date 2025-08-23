@@ -11,6 +11,8 @@ import StuSession from "./components_stu/stu_session/stu_session";
 import StuArticales from "./components_stu/stu_articale/stu_articales";
 import StuFullArticle from "./components_stu/stu_articale/stu_fullArticle";
 import LandingPage from "./components_jcj/LandingPage_jcj/LandingPage_jcj";
+
+
 import MentorDashboard  from "./mentor-components/mentor-dashboard/MentorDashboard";
 import MentorSessionCreate from "./mentor-components/mentor-session-create/MentorSessionCreate";
 import MentorshipAnnouncementForm  from "./mentor-components/mentor-announcement/MentorAnnouncement";
@@ -38,7 +40,9 @@ const MentorLayout = () => (
   <div className="App">
     <React.Fragment>
       <Routes>
-         <Route path="/" element={<MentorDashboard />} />
+         <Route path="/mentor-dashboard" element={<MentorDashboard />} />
+         <Route path="/mentor-session-create" element={<MentorSessionCreate />} />
+         <Route path="/mentor-announcement" element={<MentorshipAnnouncementForm />} />
       </Routes>
     </React.Fragment>
   </div>
@@ -48,7 +52,6 @@ const HomeLayout = () => (
   <div className="App">
     <React.Fragment>
       <Routes>
-        
         <Route path="/mentor-session-create" element={<MentorSessionCreate />} />
         <Route path="/mentor-announcement" element={<MentorshipAnnouncementForm />} />
       </Routes>
