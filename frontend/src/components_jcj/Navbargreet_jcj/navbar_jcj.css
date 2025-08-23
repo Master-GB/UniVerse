@@ -72,3 +72,15 @@
   gap: 1rem;
   flex-direction: row;
 }
+
+.navbar-item a {
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.navbar-item a:hover {
+  color: #0066ff;
+}
