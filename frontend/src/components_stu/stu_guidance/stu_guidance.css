@@ -57,7 +57,7 @@
   background: 
     linear-gradient(90deg, var(--border) 1px, transparent 1px) 0 0 / 40px 40px,
     linear-gradient(0deg, var(--border) 1px, transparent 1px) 0 0 / 40px 40px;
-  opacity: 0.8;
+  opacity: 1;
   z-index: 0;
   pointer-events: none;
   animation: gridMove 30s linear infinite;
@@ -224,6 +224,26 @@
   font-size: 1.1rem;
 }
 
+.question-form input[type="text"].question-title-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+  height: 48px;
+}
+
+.question-form input[type="text"].question-title-input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(91, 156, 255, 0.2);
+}
+
 .question-form textarea {
   width: 100%;
   background: rgba(255, 255, 255, 0.03);
@@ -236,6 +256,7 @@
   resize: vertical;
   min-height: 120px;
   margin-bottom: 1rem;
+  transition: all 0.3s ease;
 }
 
 .question-form textarea:focus {
