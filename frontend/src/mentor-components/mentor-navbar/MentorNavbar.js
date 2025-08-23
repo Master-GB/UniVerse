@@ -16,8 +16,8 @@ const MentorNavbar = () => {
             setActiveTab('overview');
         } else if (currentPath === '/mentor-session-create') {
             setActiveTab('sessions');
-        } else if (currentPath.includes('messages')) {
-            setActiveTab('messages');
+        } else if (currentPath === '/mentor-guidance') {
+            setActiveTab('guidance');
         } else if (currentPath ==='/mentor-announcement') {
             setActiveTab('announcements');
         }
@@ -30,8 +30,8 @@ const MentorNavbar = () => {
             navigate('/mentor-dashboard');
         } else if (tab === 'sessions') {
             navigate('/mentor-session-create');
-        } else if (tab === 'messages') {
-            navigate('/mentor-messages');
+        } else if (tab === 'guidance') {
+            navigate('/mentor-guidance');
         } else if (tab === 'announcements') {
             navigate('/mentor-announcement');
         }
@@ -58,10 +58,10 @@ const MentorNavbar = () => {
                         SESSIONS
                     </button>
                     <button
-                        className={`nav-btn-md ${activeTab === 'messages' ? 'active-md' : ''}`}
-                        onClick={() => handleTabChange('messages')}
+                        className={`nav-btn-md ${activeTab === 'guidance' ? 'active-md' : ''}`}
+                        onClick={() => handleTabChange('guidance')}
                     >
-                        MESSAGES
+                        GUIDANCE
                     </button>
                     <button
                         className={`nav-btn-md ${activeTab === 'announcements' ? 'active-md' : ''}`}

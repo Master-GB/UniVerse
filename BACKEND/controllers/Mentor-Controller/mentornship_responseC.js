@@ -5,18 +5,7 @@ const path = require('path');
 const fs = require('fs');
 const mongoose = require('mongoose');
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    const uploadPath = path.join(__dirname, "../../uploads");
-    if (!fs.existsSync(uploadPath)) {
-      fs.mkdirSync(uploadPath, { recursive: true });
-    }
-    cb(null, uploadPath);
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + "-" + file.originalname);
-  },
-});
+const storage = multer.memoryStorage();
 
 const fileFilter = (req, file, cb) => {
     cb(null, true); // Accept all files
@@ -43,17 +32,18 @@ const addMentorshipResponse = async (req, res) => {
       session_title,
       session_status,
       session_description,
-      session_link
+      session_link,
+      resource_links
     } = req.body;
 
     let session_resources = [];
-    if (req.files && req.files.length > 0) {
-      session_resources = req.files.map(file => ({
+    if (req.files && req.files.session_resources && req.files.session_resources.length > 0) {
+      session_resources = req.files.session_resources.map(file => ({
         filename: file.filename,
         originalName: file.originalname,
         mimetype: file.mimetype,
         size: file.size,
-        path: file.path
+        buffer: file.buffer // <-- store buffer
       }));
     }
 
@@ -71,6 +61,7 @@ const addMentorshipResponse = async (req, res) => {
       session_status,
       session_description,
       session_link,
+      resource_links: Array.isArray(resource_links) ? resource_links : resource_links ? [resource_links] : [],
       session_resources
     });
 

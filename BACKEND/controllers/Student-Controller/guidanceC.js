@@ -109,6 +109,8 @@ const updateGuidance = async(req,res) =>{
         guidanceTitle,
         guidanceDiscription,
         guidanceDate,
+        
+        
 
    } = req.body;
 
@@ -138,11 +140,51 @@ const updateGuidance = async(req,res) =>{
 
 };
 
+const updateGuidanceMentorside = async(req,res) =>{
+    const id = req.params.id;
+
+    const {
+ 
+         mentorName,
+         response,
+         responseDate,
+         status
+         
+ 
+    } = req.body;
+ 
+    try{
+ 
+         const updateguidance = await guidanceModel.findByIdAndUpdate(id,
+             {
+                 mentorName,
+                 response,
+                 responseDate,
+                 status
+             },
+             {new:true}
+         );
+ 
+         if(!updateguidance){
+             return res.status(404).json({message:"Guidance not found and cannot update"});
+         }
+ 
+         return res
+             .status(200)
+             .json({message:"Guidance found and successfully update",updateguidance});
+    }catch(error){
+         console.log("Error fetching Guidance:",error.message);
+         return res.status(500).json({message:"Internal server Error"});
+    }
+ 
+ }
+
 exports.addGuidance = addGuidance;
 exports.displayGuidance = displayGuidance;
 exports.displayByIDGuidance = displayByIDGuidance;
 exports.deleteGuidance = deleteGuidance;
 exports.updateGuidance = updateGuidance;
+exports.updateGuidanceMentorside = updateGuidanceMentorside;
 
 
 
