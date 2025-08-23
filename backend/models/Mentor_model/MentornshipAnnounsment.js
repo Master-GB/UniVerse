@@ -30,8 +30,8 @@ const MentorshipAnnouncementSchema = new Schema({
     },
     announcement_type: {
         type: String,
-        enum: ['academic', 'technical', 'general', 'career'],
-        default: 'academic'
+        enum: ['Tech News', 'AI', 'Tools', 'Web','Entrepreneurship', 'Engineering'],
+        default: 'Tech News'
     },
     anc_resources: [{
         filename: {

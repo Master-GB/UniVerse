@@ -39,6 +39,23 @@ const mentorshipResponseSchema = new schema({
         required: [true, "session create time is required"]
     },
 
+    session_status:{
+        type: String,
+        enum: ["book", "booked"], // only these values are allowed
+        default: "book"
+        
+    },
+
+    seat_count:{
+        type: Number,
+        default: 1
+    },
+    
+    session_duration:{
+        type: String,
+        required: [true, "session duration is required"],
+    },
+
     session_title:{
         type: String,
         required: [true, "session title is required"],
