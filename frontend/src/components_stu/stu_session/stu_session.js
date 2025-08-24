@@ -111,13 +111,38 @@ const StuSession = () => {
     });
   }, [sessions]);
 
-  // Force download of a session resource (image, pdf, etc.) via Blob
+  // Handle download of a session resource (image, pdf, etc.)
   const handleResourceDownload = async (res) => {
     try {
       const downloadName = res?.originalName || res?.originalname || res?.name || res?.filename || 'resource';
-      // Build candidate URLs to the static file
+      
+      // Check if we have the file data in the buffer (from database)
+      if (res.buffer && res.buffer.data) {
+        // Convert buffer data to Blob
+        const byteArray = new Uint8Array(res.buffer.data);
+        const blob = new Blob([byteArray], { type: res.mimetype || 'application/octet-stream' });
+        
+        // Create download link
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = downloadName;
+        document.body.appendChild(link);
+        link.click();
+        
+        // Cleanup
+        setTimeout(() => {
+          window.URL.revokeObjectURL(url);
+          document.body.removeChild(link);
+        }, 0);
+        
+        return;
+      }
+      
+      // Fallback to the original file download logic if buffer is not available
       let p = (res?.path || '').toString();
       const candidates = [];
+      
       if (p) {
         p = p.replace(/\\/g, '/').trim();
         if (/^https?:\/\//i.test(p)) {
@@ -136,7 +161,7 @@ const StuSession = () => {
         candidates.push(`${API_BASE}/uploads/${res.filename}`);
         candidates.push(`${API_BASE}/uploads/session-resources/${res.filename}`);
       } else {
-        console.error('Resource has neither path nor filename. Cannot construct URL.', res);
+        console.error('Resource has neither buffer data, path, nor filename. Cannot download.', res);
         return;
       }
 
@@ -540,7 +565,14 @@ const StuSession = () => {
                     
                     <div className="session-meta">
                       <div><User size={14} /> {session.mentor} {session.email && (<>
-                        • <a href={`mailto:${session.email}`}>{session.email}</a>
+                        • <a 
+                            href={`https://mail.google.com/mail/?view=cm&fs=1&to=${session.email}&su=${encodeURIComponent(`Regarding ${session.title}`)}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            style={{ color: '#2563eb', textDecoration: 'underline' }}
+                          >
+                            {session.email}
+                          </a>
                       </>)}</div>
                       <div><Calendar size={14} /> {new Date(session.date).toLocaleDateString('en-US', { 
                         weekday: 'short', 
@@ -553,22 +585,69 @@ const StuSession = () => {
                         <div>Seats left: {session.seats}</div>
                       )}
                       {Array.isArray(session.resources) && session.resources.length > 0 && (
-                        <div>
-                          Resources: {session.resources.map((res, idx) => {
-                            const label = res.originalName || res.name || `Resource ${idx + 1}`;
-                            return (
-                              <span key={idx}>
+                        <div style={{ marginTop: '8px', display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                          <div style={{ 
+                            display: 'flex', 
+                            alignItems: 'center',
+                            gap: '4px',
+                            color: '#4b5563',
+                            fontSize: '14px',
+                            marginRight: '8px'
+                          }}>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                              <polyline points="7 10 12 15 17 10"></polyline>
+                              <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                            <span>Resources:</span>
+                          </div>
+                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', fontSize: '13px' }}>
+                            {session.resources.map((res, idx) => {
+                              const label = res.originalName || res.name || `Resource ${idx + 1}`;
+                              return (
                                 <a
+                                  key={idx}
                                   href="#"
-                                  onClick={(e) => { e.preventDefault(); handleResourceDownload(res); }}
-                                  rel="noopener noreferrer"
+                                  onClick={(e) => { 
+                                    e.preventDefault(); 
+                                    handleResourceDownload(res); 
+                                  }}
+                                  style={{
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '4px',
+                                    padding: '2px 8px',
+                                    backgroundColor: '#f3f4f6',
+                                    borderRadius: '4px',
+                                    color: '#1e40af',
+                                    textDecoration: 'none',
+                                    border: '1px solid #d1d5db',
+                                    transition: 'all 0.15s ease',
+                                    ':hover': {
+                                      backgroundColor: '#e5e7eb',
+                                      textDecoration: 'underline'
+                                    }
+                                  }}
+                                  title={`Download ${label}`}
                                 >
-                                  {label}
+                                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                    <polyline points="14 2 14 8 20 8"></polyline>
+                                    <line x1="12" y1="18" x2="12" y2="12"></line>
+                                    <line x1="9" y1="15" x2="15" y2="15"></line>
+                                  </svg>
+                                  <span style={{
+                                    whiteSpace: 'nowrap',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
+                                    maxWidth: '120px'
+                                  }}>
+                                    {label}
+                                  </span>
                                 </a>
-                                {idx < session.resources.length - 1 ? ', ' : ''}
-                              </span>
-                            );
-                          })}
+                              );
+                            })}
+                          </div>
                         </div>
                       )}
                     </div>
