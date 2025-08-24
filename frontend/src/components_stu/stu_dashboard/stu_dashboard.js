@@ -27,7 +27,7 @@ import {
   Video,
 } from 'lucide-react';
 import "./stu_dashboard.css";
-import SessionCard from './SessionCard';
+
 
 const StuDashboard = () => {
   const [search, setSearch] = useState("");

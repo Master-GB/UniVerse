@@ -66,9 +66,9 @@ function App() {
   return (
     <div className="app-container">
       <Routes>
-         <Route path="/o*" element={<StudentLayout />} />
+         <Route path="/*" element={<StudentLayout />} />
          <Route path="/hj*" element={<HomeLayout />} />
-         <Route path="/*" element={<MentorLayout />} />
+         <Route path="/0*" element={<MentorLayout />} />
       </Routes>
     </div>
   );
