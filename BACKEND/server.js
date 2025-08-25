@@ -2,42 +2,42 @@ const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
-const bodyParser = require("body-parser");
-require("dotenv").config();
+const path = require("path");
+
+dotenv.config();
 const app = express();
 
-const mentorshipResponseRoute= require("./routes/Mentor-Route/mentornship_responseR");
-const guidanceRouter = require("./routes/student_routes/guidanceR");
-const resourcesRouter = require("./routes/Resource_Router/resourceRouter");
-
-const PORT = process.env.PORT || 8070;
-
+// Middleware
 app.use(cors());
 app.use(express.json());
-app.use(bodyParser.json());
 
-//Routes
-// Root Route
+// 👉 Serve uploads folder as static
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// Routes
+const mentorshipResponseRoute = require("./routes/Mentor-Route/mentornship_responseR");
+const guidanceRouter = require("./routes/student_routes/guidanceR");
+const resourcesRouter = require("./routes/Resource_Router/resourceRouter");
+const courseRouter = require("./routes/Course_routes/courseRoutes");
+
+app.use("/api/courses", courseRouter);
+app.use("/guidance", guidanceRouter);
+app.use("/resource", resourcesRouter);
+app.use("/mentorshipResponse", mentorshipResponseRoute);
+
+// Root route
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-app.use("/guidance",guidanceRouter);
-app.use("/resource",resourcesRouter);
-// Mentorship Response Route
-app.use("/mentorshipResponse", mentorshipResponseRoute);
-
+// MongoDB connection
 const URL = process.env.MONGODB_URL;
-mongoose.connect(URL);
+mongoose.connect(URL)
+  .then(() => console.log("Mongo-DB Connection Successful!"))
+  .catch((err) => console.log("MongoDB Connection Error:", err));
 
-
-const connection = mongoose.connection;
-connection.once("open",()=>{
-    console.log("Mongo-DB Connection Successful!");
+// Start server
+const PORT = process.env.PORT || 8070;
+app.listen(PORT, () => {
+  console.log(`Server is up and running on port no ${PORT}`);
 });
-
-
-app.listen(PORT,() =>{
-    console.log(`Server is up and running on port no ${PORT}`);
-})
-
