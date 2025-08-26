@@ -26,61 +26,41 @@ const StuGuidance = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [toast, setToast] = useState({ show: false, message: '', type: '' });
 
-  // Sample data - replace with actual API calls
-  const sampleQuestions = [
-    {
-      id: 1,
-      question: "How to improve my programming logic skills?",
-      details: "I've been practicing basic problems but struggling with complex algorithms. Any specific resources or strategies?",
-      date: "2023-08-20",
-      status: "answered",
-      mentor: "Dr. Smith",
-      response: "I recommend starting with platforms like LeetCode and HackerRank. Focus on understanding patterns rather than just solving problems. Also, try to implement data structures from scratch.",
-      responseDate: "2023-08-21"
-    },
-    {
-      id: 2,
-      question: "Best approach for final year project?",
-      details: "I'm interested in AI but not sure what would be a good scope for a final year project.",
-      date: "2023-08-22",
-      status: "pending",
-      mentor: "",
-      response: "",
-      responseDate: ""
-    }
-  ];
 
+  const fetchGuidance = async () => {
+  try {
+    const res = await axios.get('http://localhost:8070/guidance/display');
+    const raw = Array.isArray(res.data)
+      ? res.data
+      : Array.isArray(res.data?.guidances)
+        ? res.data.guidances
+        : [];
+
+    const mapped = raw.map(item => ({
+      id: item._id,
+      // Keep both naming styles so current UI and filters work
+      question: item.guidanceTitle,
+      guidanceTitle: item.guidanceTitle,
+      details: item.guidanceDiscription,
+      guidanceDiscription: item.guidanceDiscription,
+      date: item.guidanceDate ? new Date(item.guidanceDate).toISOString().split('T')[0] : '',
+      guidanceDate: item.guidanceDate ? new Date(item.guidanceDate).toISOString().split('T')[0] : '',
+      status: (item.status || 'pending').toLowerCase(),
+      mentor: item.mentorName || '',
+      mentorName: item.mentorName || '',
+      response: item.response || '',
+      responseDate: item.responseDate ? new Date(item.responseDate).toISOString().split('T')[0] : ''
+    }));
+
+    setQuestions(mapped);
+  } catch (e) {
+    console.error('Error fetching guidance:', e);
+    setQuestions([]); // no dummy fallback
+  }
+};
+
+  // Fetch on mount
   useEffect(() => {
-    const fetchGuidance = async () => {
-      try {
-        const response = await axios.get('http://localhost:8070/guidance/display');
-        const data = response.data;
-        
-        if (Array.isArray(data)) {
-          // Transform the data to match the component's expected format
-          const formattedQuestions = data.map(item => ({
-            id: item._id,
-            question: item.guidanceTitle,
-            details: item.guidanceDiscription,
-            date: new Date(item.guidanceDate).toISOString().split('T')[0],
-            status: item.status || 'pending',
-            mentor: item.mentorName || "",
-            response: item.response || "",
-            responseDate: item.responseDate ? new Date(item.responseDate).toISOString().split('T')[0] : ""
-          }));
-          
-          setQuestions(formattedQuestions);
-        } else {
-          console.error('Unexpected response format:', data);
-          setQuestions(sampleQuestions);
-        }
-      } catch (error) {
-        console.error('Error fetching guidance:', error);
-        // Fallback to sample data if API call fails
-        setQuestions(sampleQuestions);
-      }
-    };
-
     fetchGuidance();
   }, []);
 
@@ -135,16 +115,21 @@ const StuGuidance = () => {
       
       // Refresh the questions list
       const questionsResponse = await axios.get("http://localhost:8070/guidance/display");
-      if (Array.isArray(questionsResponse.data)) {
-        const formattedQuestions = questionsResponse.data.map(item => ({
+      if (Array.isArray(questionsResponse.data) || Array.isArray(questionsResponse.data?.guidances)) {
+        const raw2 = Array.isArray(questionsResponse.data) ? questionsResponse.data : questionsResponse.data.guidances;
+        const formattedQuestions = raw2.map(item => ({
           id: item._id,
           question: item.guidanceTitle,
+          guidanceTitle: item.guidanceTitle,
           details: item.guidanceDiscription,
-          date: new Date(item.guidanceDate).toISOString().split('T')[0],
-          status: item.status || 'pending',
+          guidanceDiscription: item.guidanceDiscription,
+          date: item.guidanceDate ? new Date(item.guidanceDate).toISOString().split('T')[0] : '',
+          guidanceDate: item.guidanceDate ? new Date(item.guidanceDate).toISOString().split('T')[0] : '',
+          status: (item.status || 'pending').toLowerCase(),
           mentor: item.mentorName || "",
+          mentorName: item.mentorName || "",
           response: item.response || "",
-          responseDate: item.responseDate || ""
+          responseDate: item.responseDate ? new Date(item.responseDate).toISOString().split('T')[0] : ""
         }));
         setQuestions(formattedQuestions);
       }
@@ -160,8 +145,10 @@ const StuGuidance = () => {
   };
 
   const filteredQuestions = questions.filter(q => {
-    const matchesSearch = q.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                         q.details.toLowerCase().includes(searchQuery.toLowerCase());
+    const title = (q.guidanceTitle || q.question || '').toLowerCase();
+    const desc = (q.guidanceDiscription || q.details || '').toLowerCase();
+    const query = searchQuery.toLowerCase();
+    const matchesSearch = title.includes(query) || desc.includes(query);
     const matchesFilter = activeFilter === 'all' || q.status === activeFilter;
     return matchesSearch && matchesFilter;
   });
@@ -272,18 +259,18 @@ const StuGuidance = () => {
                   <span>{q.status === 'answered' ? 'Answered' : 'Pending'}</span>
                 </div>
                 <div className="question-date">
-                  <Calendar size={14} /> {q.date}
+                  <Calendar size={14} /> {q.guidanceDate}
                 </div>
               </div>
               
-              <h3>{q.question}</h3>
-              <p className="question-details">{q.details}</p>
+              <h3>{q.guidanceTitle}</h3>
+              <p className="question-details">{q.guidanceDiscription}</p>
               
               {q.status === 'answered' && (
                 <div className="mentor-response">
                   <div className="mentor-info">
                     <User size={14} />
-                    <span>Response from {q.mentor} • {q.responseDate}</span>
+                    <span>Response from {q.mentorName} • {q.responseDate}</span>
                   </div>
                   <p>{q.response}</p>
                 </div>
