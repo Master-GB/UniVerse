@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./navbar_jcj.css";
 import newlogo from "./universelogo_jcj.png"; // use this to change the logo
 
@@ -29,9 +30,19 @@ function Navbar() {
             </a>
           </li>
           <li className="navbar-item">
-            <a href="/support" className="navbar-link">
+            <Link to="/support" className="navbar-link">
               Support
+            </Link>
+          </li>
+          <li className="navbar-item">
+            <a href="/signup" className="navbar-link">
+              Sign Up
             </a>
+          </li>
+          <li className="navbar-item">
+            <Link to="/about" className="navbar-link">
+              About Us
+            </Link>
           </li>
         </ul>
       </div>

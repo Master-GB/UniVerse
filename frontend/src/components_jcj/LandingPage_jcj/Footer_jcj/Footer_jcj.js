@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./footer_jcj.css";
 import InstagramIcon from "./icons_jcj/insta.svg";
 import FacebookIcon from "./icons_jcj/facebook.svg";
@@ -31,9 +32,7 @@ export default function Footer() {
             <h4 className="jcj-footer-heading">Quick Links</h4>
             <ul className="jcj-footer-links">
               <li>
-                <a href="/about" className="jcj-footer-link">
-                  About Us
-                </a>
+                <Link to="/about">About Us</Link>
               </li>
               <li>
                 <a href="/resources" className="jcj-footer-link">

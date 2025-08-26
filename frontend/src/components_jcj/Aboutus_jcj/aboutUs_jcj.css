@@ -1,23 +1,27 @@
 /* ---------- Container ---------- */
 .aboutus-container-jcj {
-  max-width: 1152px;
-  margin: 0 auto;
   padding: 40px 20px;
   font-family: Arial, sans-serif;
-  color: #333;
+  /* Dark mode page background and default text color */
+  background-color: #0b1220;
+  color: #ffffff;
 }
 
 /* ---------- Header ---------- */
 .aboutus-title-jcj {
   font-size: 2.5rem;
   font-weight: bold;
-  color: #e63946;
+  color: #ffffff;
   margin-bottom: 16px;
+}
+
+.aboutus-navbar-jcj{
+  background-color: #0b1220;
 }
 
 .aboutus-intro-jcj {
   font-size: 1rem;
-  color: #555;
+  color: #e6eef8;
   margin-bottom: 12px;
   line-height: 1.6;
 }
@@ -27,7 +31,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #123c66;
+  background-color: #123c66; /* keep the dark blue as-is */
   color: white;
   border-radius: 8px;
   margin: 40px 0;
@@ -80,12 +84,12 @@
 }
 
 .aboutus-card-jcj {
-  background: white;
+  background: #0f1724; /* dark card background */
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.6);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border-top: 5px solid #123c66;
+  border-top: 5px solid #123c66; /* keep dark blue accent */
 }
 
 .aboutus-card-jcj:hover {
@@ -96,23 +100,24 @@
 .aboutus-card-jcj h3 {
   font-size: 1.2rem;
   margin-bottom: 12px;
-  color: #123c66;
+  color: #ffffff;
 }
 
 .aboutus-card-jcj p {
   font-size: 0.95rem;
-  color: #555;
+  color: #d7e6f5;
   margin-bottom: 16px;
   line-height: 1.5;
 }
 
 .aboutus-card-jcj a {
   font-weight: bold;
-  color: #e63946;
+  color: #ffffff;
   text-decoration: none;
 }
 
 .aboutus-card-jcj a:hover {
+  color: #e63946;
   text-decoration: underline;
 }
 
