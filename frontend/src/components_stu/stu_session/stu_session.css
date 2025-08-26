@@ -1,0 +1,191 @@
+/* stu_session.css */
+:root {
+  --primary: #5b9cff;
+  --text: #e8eef7;
+  --bg: #0c0f14;
+  --card-bg: #11161d;
+  --border: rgba(255, 255, 255, 0.08);
+  --success: #38d39f;
+}
+
+.session-wrapper {
+  min-height: 100vh;
+  background: radial-gradient(1000px 600px at 10% -10%, 
+    rgba(127, 91, 255, 0.1), transparent),
+    var(--bg);
+  padding: 2rem;
+  margin-top: -80px;
+  margin-bottom: -35px;
+}
+
+/* Animated Grid Overlay */
+@keyframes gridMove {
+  0% {
+    background-position: 0 0, 0 0;
+  }
+  100% {
+    background-position: 40px 40px, 40px 40px;
+  }
+}
+
+.session-wrapper::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(90deg, var(--border) 1px, transparent 1px) 0 0 / 40px 40px,
+    linear-gradient(0deg, var(--border) 1px, transparent 1px) 0 0 / 40px 40px;
+  opacity: 1;
+  z-index: 0;
+  pointer-events: none;
+  animation: gridMove 30s linear infinite;
+  will-change: background-position;
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.1),
+    rgba(0,0,0,0.2) 20%,
+    rgba(0,0,0,0.2) 80%,
+    rgba(0,0,0,0.1)
+  );
+}
+
+.session-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.session-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.tab {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.tab.active {
+  background: var(--primary);
+}
+
+.controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.search-box {
+  flex: 1;
+  max-width: 400px;
+  position: relative;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 0.5rem 1rem 0.5rem 2rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+}
+
+.sessions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.session-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.25rem;
+  transition: all 0.2s;
+}
+
+.session-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.session-card h3 {
+  margin: 0 0 0.5rem 0;
+}
+
+.session-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 1rem 0;
+  color: #8b97a8;
+  font-size: 0.9rem;
+}
+
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  width: 100%;
+  margin-top: 0.75rem;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+
+/* Add to stu_session.css */
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-muted);
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+.session-status {
+  font-size: 0.8rem;
+  color: var(--success);
+  font-weight: 500;
+}
+
+.session-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.session-actions .btn {
+  margin: 0;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.session-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}

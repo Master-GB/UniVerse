@@ -24,8 +24,8 @@ const StuNavigation = () => {
                         <Link to="/student/dashboard" className="stu-nav-link">Dashboard</Link>
                         <Link to="/student/courses" className="stu-nav-link">Courses</Link>
                         <Link to="/student/resources" className="stu-nav-link">Resources</Link>
-                        <Link to="/student/interview-prep" className="stu-nav-link">Interview Prep</Link>
-                        <Link to="/student/paper-support" className="stu-nav-link">Paper Support</Link>
+                        <Link to="/student/Career & Skills" className="stu-nav-link">Career & Skills</Link>
+                        <Link to="/student/exam-support" className="stu-nav-link">Exam Support</Link>
                         <Link to="/student/guidance" className="stu-nav-link">Guidance</Link>
                         <Link to="/student/session" className="stu-nav-link">Session</Link>
                     </div>

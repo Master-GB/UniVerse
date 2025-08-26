@@ -5,17 +5,21 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 const app = express();
+const path = require("path");
 
 const mentorshipResponseRoute= require("./routes/Mentor-Route/mentornship_responseR");
 const guidanceRouter = require("./routes/student_routes/guidanceR");
 const resourcesRouter = require("./routes/Resource_Router/resourceRouter");
-
+const mentorshipAnnouncementRoute = require("./routes/Mentor-Route/mentornship_announsmentR");
 const PORT = process.env.PORT || 8070;
 
 app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Serve uploaded files statically for download/access
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 //Routes
 // Root Route
@@ -27,9 +31,10 @@ app.use("/guidance",guidanceRouter);
 app.use("/resource",resourcesRouter);
 
 
-// Mentorship Response Route
+// Mentorship  Routes
 
 app.use("/mentorshipResponse", mentorshipResponseRoute);
+app.use("/mentorship-announcement", mentorshipAnnouncementRoute);
 
 const URL = process.env.MONGODB_URL;
 mongoose.connect(URL);
