@@ -25,9 +25,9 @@ function Navbar() {
             </a>
           </li>
           <li className="navbar-item">
-            <a href="/modules" className="navbar-link">
-              Modules
-            </a>
+            <Link to="/courses_jcj" className="navbar-link">
+              Courses
+            </Link>
           </li>
           <li className="navbar-item">
             <Link to="/support" className="navbar-link">
