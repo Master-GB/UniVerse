@@ -30,9 +30,9 @@ function Navbar() {
             </a>
           </li>
           <li className="navbar-item">
-            <a href="/support" className="navbar-link">
+            <Link to="/support" className="navbar-link">
               Support
-            </a>
+            </Link>
           </li>
           <li className="navbar-item">
             <a href="/signup" className="navbar-link">

@@ -1,0 +1,12 @@
+.support-page-hero-section-backGradient{
+    /* dark-to-transparent vertical gradient; alpha uses 0-1 */
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.97) 0%, rgba(222, 222, 222, 0) 99%);
+}
+
+.support-page-navabar-bgcolor{
+    background-color: rgb(11, 43, 87);
+}
+
+.hero-bg-image{
+    
+}
