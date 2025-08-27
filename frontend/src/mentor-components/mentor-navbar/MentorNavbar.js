@@ -39,39 +39,42 @@ const MentorNavbar = () => {
 
     return (
         // Header
-        <header className="header-md">
-            <div className="header-content-md">
-                <div className="logo-section-md">
-                    <img src={UniVerseLogo} alt="Logo" className="logo-image-md" />
+        <div className="mentor-navbar-container">
+
+            <header className="header-md">
+                <div className="header-content-md">
+                    <div className="logo-section-md">
+                        <img src={UniVerseLogo} alt="Logo" className="logo-image-md" />
+                    </div>
+                    <nav className="nav-md">
+                        <button
+                            className={`nav-btn-md ${activeTab === 'overview' ? 'active-md' : ''}`}
+                            onClick={() => handleTabChange('overview')}
+                        >
+                            OVERVIEW
+                        </button>
+                        <button
+                            className={`nav-btn-md ${activeTab === 'sessions' ? 'active-md' : ''}`}
+                            onClick={() => handleTabChange('sessions')}
+                        >
+                            SESSIONS
+                        </button>
+                        <button
+                            className={`nav-btn-md ${activeTab === 'guidance' ? 'active-md' : ''}`}
+                            onClick={() => handleTabChange('guidance')}
+                        >
+                            GUIDANCE
+                        </button>
+                        <button
+                            className={`nav-btn-md ${activeTab === 'announcements' ? 'active-md' : ''}`}
+                            onClick={() => handleTabChange('announcements')}
+                        >
+                            ANNOUNCEMENTS
+                        </button>
+                    </nav>
                 </div>
-                <nav className="nav-md">
-                    <button
-                        className={`nav-btn-md ${activeTab === 'overview' ? 'active-md' : ''}`}
-                        onClick={() => handleTabChange('overview')}
-                    >
-                        OVERVIEW
-                    </button>
-                    <button
-                        className={`nav-btn-md ${activeTab === 'sessions' ? 'active-md' : ''}`}
-                        onClick={() => handleTabChange('sessions')}
-                    >
-                        SESSIONS
-                    </button>
-                    <button
-                        className={`nav-btn-md ${activeTab === 'guidance' ? 'active-md' : ''}`}
-                        onClick={() => handleTabChange('guidance')}
-                    >
-                        GUIDANCE
-                    </button>
-                    <button
-                        className={`nav-btn-md ${activeTab === 'announcements' ? 'active-md' : ''}`}
-                        onClick={() => handleTabChange('announcements')}
-                    >
-                        ANNOUNCEMENTS
-                    </button>
-                </nav>
-            </div>
-        </header>
+            </header>
+        </div>
     );
 };
 
