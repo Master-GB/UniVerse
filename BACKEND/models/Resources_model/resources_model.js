@@ -24,7 +24,7 @@ const AcadamicVideoSchema = new schema({
 
     typeOfRes:{
         type:String,
-         enum: ["LectureVideo", "LectureNote", "PastPapper", "Papper", "Other"], 
+         enum: ["LectureVideo", "LectureNote", "PastPaper", "Paper", "Other"], 
     },
 
     contentType: { 

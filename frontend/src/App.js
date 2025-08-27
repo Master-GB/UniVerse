@@ -17,6 +17,9 @@ import MentorDashboard  from "./mentor-components/mentor-dashboard/MentorDashboa
 import MentorSessionCreate from "./mentor-components/mentor-session-create/MentorSessionCreate";
 import MentorshipAnnouncementForm  from "./mentor-components/mentor-announcement/MentorAnnouncement";
 import MentorGuidance from "./mentor-components/mentor-guidance/MentorGuidance";
+import MentorResourcehub from "./mentor-components/mentor-resourcehub/MentorResourcehub";
+import MentorManageResourses from "./mentor-components/mentor-resourcehub/MentorResourceManage";
+
 
 const StudentLayout = () => (
   <div className="app-layout">
@@ -40,11 +43,14 @@ const StudentLayout = () => (
 const MentorLayout = () => (
   <div className="App">
     <React.Fragment>
-      <Routes>
+      <Routes>manage-resources
          <Route path="/mentor-dashboard" element={<MentorDashboard />} />
          <Route path="/mentor-session-create" element={<MentorSessionCreate />} />
          <Route path="/mentor-guidance" element={<MentorGuidance />} />
          <Route path="/mentor-announcement" element={<MentorshipAnnouncementForm />} />
+         <Route path="/mentor-resourcehub" element={<MentorResourcehub />} />
+         <Route path="/mentor-manage-resources" element={<MentorManageResourses />} />
+
       </Routes>
     </React.Fragment>
   </div>
