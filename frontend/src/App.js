@@ -15,6 +15,7 @@ import LandingPage from "./components_jcj/LandingPage_jcj/LandingPage_jcj";
 import AboutUs_jcj from "./components_jcj/Aboutus_jcj/AboutUs_jcj";
 import SupportPage_jcj from "./components_jcj/SupportPage_jcj/SupportPage_jcj";
 import Courses_jcj from "./components_jcj/Courses_jcj/Courses_jcj";
+import LoginPageJCJ from "./components_jcj/LoginPage_jcj/LoginPageJCJ";
 
 import MentorDashboard from "./mentor-components/mentor-dashboard/MentorDashboard";
 import MentorSessionCreate from "./mentor-components/mentor-session-create/MentorSessionCreate";
@@ -67,6 +68,7 @@ const LandingPageLayout = () => (
         <Route path="about" element={<AboutUs_jcj />} />
         <Route path="support" element={<SupportPage_jcj />} />
         <Route path="courses_jcj" element={<Courses_jcj />} />
+        <Route path="login" element={<LoginPageJCJ />} />
       </Routes>
     </React.Fragment>
   </div>
