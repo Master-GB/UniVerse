@@ -5,6 +5,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 const app = express();
+const path = require("path");
 
 const mentorshipResponseRoute= require("./routes/Mentor-Route/mentornship_responseR");
 const guidanceRouter = require("./routes/student_routes/guidanceR");
@@ -17,6 +18,9 @@ app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Serve uploaded files statically for download/access
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 //Routes
 // Root Route

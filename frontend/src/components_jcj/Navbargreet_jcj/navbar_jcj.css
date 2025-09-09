@@ -43,9 +43,29 @@
 .navbar-menu {
   display: flex;
   list-style: none;
-  gap: 2rem;
+  gap: 3rem; /* Gap between main navigation and auth buttons */
   margin: 0;
   padding: 0;
+  align-items: center;
+}
+
+/* Main navigation links container */
+.navbar-main-links-jcj {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Auth links container */
+.navbar-auth-links-jcj {
+  display: flex;
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
 }
 
 .navbar-link {
@@ -60,6 +80,36 @@
   color: #0066ff;
 }
 
+/* Auth link styling - different from regular navbar links */
+.navbar-auth-link-jcj {
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.navbar-auth-link-jcj:hover {
+  color: #0066ff;
+  border-color: #0066ff;
+}
+
+/* Sign up button - more prominent styling */
+.navbar-signup-jcj {
+  background-color: #0066ff;
+  color: #ffffff !important;
+  border-color: #0066ff;
+}
+
+.navbar-signup-jcj:hover {
+  background-color: #0052cc;
+  border-color: #0052cc;
+  color: #ffffff !important;
+}
+
 /* Optional: Add active state for current page */
 .navbar-link.active {
   color: #0066ff;
@@ -71,4 +121,16 @@
   align-items: flex-end;
   gap: 1rem;
   flex-direction: row;
+}
+
+.navbar-item a {
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.navbar-item a:hover {
+  color: #0066ff;
 }

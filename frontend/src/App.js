@@ -10,12 +10,16 @@ import StuResources from "./components_stu/stu_resources/stu_resources";
 import StuSession from "./components_stu/stu_session/stu_session";
 import StuArticales from "./components_stu/stu_articale/stu_articales";
 import StuFullArticle from "./components_stu/stu_articale/stu_fullArticle";
+
 import LandingPage from "./components_jcj/LandingPage_jcj/LandingPage_jcj";
+import AboutUs_jcj from "./components_jcj/Aboutus_jcj/AboutUs_jcj";
+import SupportPage_jcj from "./components_jcj/SupportPage_jcj/SupportPage_jcj";
+import Courses_jcj from "./components_jcj/Courses_jcj/Courses_jcj";
+import LoginPageJCJ from "./components_jcj/LoginPage_jcj/LoginPageJCJ";
 
-
-import MentorDashboard  from "./mentor-components/mentor-dashboard/MentorDashboard";
+import MentorDashboard from "./mentor-components/mentor-dashboard/MentorDashboard";
 import MentorSessionCreate from "./mentor-components/mentor-session-create/MentorSessionCreate";
-import MentorshipAnnouncementForm  from "./mentor-components/mentor-announcement/MentorAnnouncement";
+import MentorshipAnnouncementForm from "./mentor-components/mentor-announcement/MentorAnnouncement";
 import MentorGuidance from "./mentor-components/mentor-guidance/MentorGuidance";
 import MentorResourcehub from "./mentor-components/mentor-resourcehub/MentorResourcehub";
 import MentorManageResourses from "./mentor-components/mentor-resourcehub/MentorResourceManage";
@@ -36,8 +40,7 @@ const StudentLayout = () => (
       </Routes>
     </main>
     <StuFooter />
-    </div>
-
+  </div>
 );
 
 const MentorLayout = () => (
@@ -56,13 +59,16 @@ const MentorLayout = () => (
   </div>
 );
 
-const HomeLayout = () => (
+// jcj
+const LandingPageLayout = () => (
   <div className="App">
     <React.Fragment>
       <Routes>
-
-        <Route path="/mentor-session-create" element={<MentorSessionCreate />} />
-        <Route path="/mentor-announcement" element={<MentorshipAnnouncementForm />} />
+        <Route path="/" element={<LandingPage />} />
+        <Route path="about" element={<AboutUs_jcj />} />
+        <Route path="support" element={<SupportPage_jcj />} />
+        <Route path="courses_jcj" element={<Courses_jcj />} />
+        <Route path="login" element={<LoginPageJCJ />} />
       </Routes>
     </React.Fragment>
   </div>
@@ -72,9 +78,9 @@ function App() {
   return (
     <div className="app-container">
       <Routes>
-         <Route path="/o*" element={<StudentLayout />} />
-         <Route path="/hj*" element={<HomeLayout />} />
-         <Route path="/*" element={<MentorLayout />} />
+        <Route path="/*" element={<LandingPageLayout />} />
+        <Route path="/*" element={<StudentLayout />} />
+        <Route path="/0*" element={<MentorLayout />} />
       </Routes>
     </div>
   );

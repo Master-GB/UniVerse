@@ -1,0 +1,347 @@
+/* Import professional fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght rivalidad@300;400;500;600;700&display=swap');
+
+/* Main container */
+.academic-support-container-jcj {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: linear-gradient(to bottom, #ffffff, #f8f9fa);
+  min-height: 100vh;
+}
+
+/* Header section */
+.header-section-jcj {
+  text-align: center;
+  margin-bottom: 80px;
+  animation: fadeInDown-jcj 0.8s ease-out;
+}
+
+.main-title-jcj {
+  font-size: 48px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 20px;
+  letter-spacing: -0.5px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.main-subtitle-jcj {
+  font-size: 20px;
+  color: #6c757d;
+  font-weight: 400;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Support cards wrapper */
+.support-cards-wrapper-jcj {
+  display: flex;
+  flex-direction: column;
+  gap: 120px;
+  margin-bottom: 80px;
+}
+
+/* Individual support card */
+.support-card-jcj {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.support-card-jcj.visible-jcj {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.support-card-jcj.reverse-jcj {
+  grid-template-columns: 1fr 1fr;
+  direction: rtl;
+}
+
+.support-card-jcj.reverse-jcj .card-content-jcj {
+  direction: ltr;
+}
+
+.support-card-jcj.reverse-jcj .card-image-wrapper-jcj {
+  direction: ltr;
+}
+
+/* Card content */
+.card-content-jcj {
+  padding: 40px;
+}
+
+/* Icon wrapper */
+.icon-wrapper-jcj {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.icon-wrapper-jcj:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(102, 126, 234, 0.3);
+}
+
+.service-icon-jcj {
+  font-size: 28px;
+  filter: grayscale(0%) brightness(1.2);
+}
+
+/* Card title and description */
+.card-title-jcj {
+  font-size: 32px;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 20px;
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: -0.3px;
+}
+
+.card-description-jcj {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #5a6c7d;
+  margin-bottom: 32px;
+  font-weight: 400;
+}
+
+/* CTA Button */
+.cta-button-jcj {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff8787 100%);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 30px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-button-jcj::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
+}
+
+.cta-button-jcj:hover::before {
+  left: 100%;
+}
+
+.cta-button-jcj:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+}
+
+.button-icon-jcj {
+  font-size: 18px;
+  transition: transform 0.3s ease;
+}
+
+.cta-button-jcj:hover .button-icon-jcj {
+  transform: translateX(3px);
+}
+
+.button-text-jcj {
+  font-weight: 500;
+}
+
+/* Card image wrapper */
+.card-image-wrapper-jcj {
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+}
+
+.card-image-wrapper-jcj:hover {
+  transform: scale(1.02);
+}
+
+.card-image-jcj {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Back to top button */
+.back-to-top-jcj {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 10;
+}
+
+.back-to-top-button-jcj {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #2c3e50;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-to-top-button-jcj:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Ask AU bubble */
+.ask-au-bubble-jcj {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  animation: pulse-jcj 2s infinite;
+}
+
+/* Footer section */
+.footer-section-jcj {
+  text-align: center;
+  padding: 40px 20px;
+  border-top: 1px solid #e9ecef;
+  margin-top: 80px;
+}
+
+.footer-text-jcj {
+  font-size: 16px;
+  color: #6c757d;
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* Animations */
+@keyframes fadeInDown-jcj {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-jcj {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+  .support-card-jcj,
+  .support-card-jcj.reverse-jcj {
+    grid-template-columns: 1fr;
+    direction: ltr;
+    gap: 40px;
+  }
+
+  .card-image-wrapper-jcj {
+    order: -1;
+  }
+
+  .main-title-jcj {
+    font-size: 36px;
+  }
+
+  .card-title-jcj {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  .academic-support-container-jcj {
+    padding: 40px 15px;
+  }
+
+  .main-title-jcj {
+    font-size: 28px;
+  }
+
+  .main-subtitle-jcj {
+    font-size: 16px;
+  }
+
+  .card-content-jcj {
+    padding: 20px;
+  }
+
+  .card-title-jcj {
+    font-size: 24px;
+  }
+
+  .card-description-jcj {
+    font-size: 14px;
+  }
+
+  .cta-button-jcj {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+
+  .support-cards-wrapper-jcj {
+    gap: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .main-title-jcj {
+    font-size: 24px;
+  }
+
+  .card-image-jcj {
+    height: 250px;
+  }
+
+  .icon-wrapper-jcj {
+    width: 50px;
+    height: 50px;
+  }
+
+  .service-icon-jcj {
+    font-size: 24px;
+  }
+}
