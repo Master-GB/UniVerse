@@ -24,13 +24,13 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 const mentorshipResponseRoute = require("./routes/Mentor-Route/mentornship_responseR");
 const guidanceRouter = require("./routes/student_routes/guidanceR");
 const resourcesRouter = require("./routes/Resource_Router/resourceRouter");
-const courseRouter = require("./routes/Course_routes/courseRoutes");
+const courseRoutes = require('./routes/student_routes/course');
 const enrollmentRouter = require("./routes/enrollmentR");
-const interviewQuizRoutes = require("./routes/Interview_routes/interviewQuizRoutes"); // ✅ keep require, remove import
+const interviewQuizRoutes = require("./routes/student_routes/interviewQuizRoutes"); // ✅ keep require, remove import
 const PORT = process.env.PORT || 8070;  
 
 app.use("/api/interview-quizzes", interviewQuizRoutes);
-app.use("/api/courses", courseRouter);
+app.use("/api/courses", courseRoutes);
 app.use("/guidance", guidanceRouter);
 app.use("/resource", resourcesRouter);
 app.use("/mentorshipResponse", mentorshipResponseRoute);
