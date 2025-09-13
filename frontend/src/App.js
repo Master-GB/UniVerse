@@ -44,6 +44,7 @@ const MentorLayout = () => (
   <div className="App">
     <React.Fragment>
       <Routes>
+        <Route path="/" element={<MentorDashboard />} />
         <Route path="/mentor-dashboard" element={<MentorDashboard />} />
         <Route
           path="/mentor-session-create"
@@ -79,8 +80,8 @@ function App() {
     <div className="app-container">
       <Routes>
         <Route path="/*" element={<LandingPageLayout />} />
-        <Route path="/*" element={<StudentLayout />} />
-        <Route path="/0*" element={<MentorLayout />} />
+        <Route path="/sdsdf*" element={<StudentLayout />} />
+        <Route path="/hsd*" element={<MentorLayout />} />
       </Routes>
     </div>
   );
