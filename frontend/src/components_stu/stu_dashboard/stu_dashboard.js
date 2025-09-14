@@ -881,9 +881,10 @@ const StuDashboard = () => {
                 <p>No resources found. Try a different filter.</p>
               </div>
             ) : (
-              // Success state
+              // Success state - Show 5 resources per category
               filteredResources
                 .filter(r => r.title.toLowerCase().includes(search.toLowerCase()))
+                .slice(0, 5) // Limit to 5 resources per category
                 .map((r) => (
                   <div key={r.id} className="sd-list-item">
                     <div className="sd-list-left">
