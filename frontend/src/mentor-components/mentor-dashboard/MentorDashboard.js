@@ -86,7 +86,13 @@ const MentorDashboard = () => {
               <div className="card-glow-md"></div>
             </div>
             
-            <div className="action-card-md secondary-card-md">
+
+
+            <div
+            className="action-card-md secondary-card-md"
+            onClick={() => navigate("/mentor-resourcehub")}
+            style={{cursor:"pointer"}}
+            >
               <div className="card-icon-md">
                 <BookOpen size={32} />
               </div>
