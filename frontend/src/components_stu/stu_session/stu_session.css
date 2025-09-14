@@ -57,21 +57,49 @@
   margin: 0 auto;
 }
 
+.acdamic-res-title {
+  margin-bottom: 20px;
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
 .session-tabs {
   display: flex;
   gap: 1rem;
   margin-bottom: 1.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.session-tabs::-webkit-scrollbar {
+  display: none;
 }
 
 .tab {
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1.5rem;
   cursor: pointer;
-  border-radius: 6px;
+  border-radius: 8px;
   font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  font-size: 0.95rem;
+}
+
+.tab:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .tab.active {
   background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+  box-shadow: 0 2px 8px rgba(91, 156, 255, 0.2);
 }
 
 .controls {
