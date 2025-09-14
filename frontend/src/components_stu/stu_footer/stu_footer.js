@@ -33,11 +33,11 @@ const StuFooter = () => {
                         <ul className="stu-footer-links">
                             <li><Link to="/student/dashboard">Dashboard</Link></li>
                             <li><Link to="/student/courses">Courses</Link></li>
-                            <li><Link to="/student/resources">Resources</Link></li>
+                            <li><Link to="/student/academic-resources">Resources</Link></li>
                             <li><Link to="/student/Career & Skills">Career & Skills</Link></li>
                             <li><Link to="/student/exam-support">Exam Support</Link></li>
                             <li><Link to="/student/guidance">Guidance</Link></li>
-                            <li><Link to="/student/session">Session</Link></li>
+                            <li><Link to="/student/academic-session">Session</Link></li>
                         </ul>
                     </div>
 
@@ -45,7 +45,7 @@ const StuFooter = () => {
                     <div className="stu-footer-section">
                         <h3 className="stu-footer-title">Contact Us</h3>
                         <ul className="stu-contact-info">
-                            <li><FaMapMarkerAlt /> 123 University Ave, City, Country</li>
+                            <li><FaMapMarkerAlt /> 123 University, Malabe, Sri Lanka</li>
                             <li><FaPhone /> +94 76 123 4567</li>
                             <li><FaEnvelope /> info@university.ac.lk</li>
                         </ul>
