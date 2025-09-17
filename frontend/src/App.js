@@ -16,6 +16,8 @@ import AboutUs_jcj from "./components_jcj/Aboutus_jcj/AboutUs_jcj";
 import SupportPage_jcj from "./components_jcj/SupportPage_jcj/SupportPage_jcj";
 import Courses_jcj from "./components_jcj/Courses_jcj/Courses_jcj";
 import LoginPageJCJ from "./components_jcj/LoginPage_jcj/LoginPageJCJ";
+import MIPage from "./components_jcj/mockInterviewPage_jcj/MI_LandingPage_jcj/MI_LandingPage_jcj";
+import MIDash from "./components_jcj/mockInterviewPage_jcj/MI_LandingPage_jcj/MI_Dashboard_jcj/MockInterview";
 
 import MentorDashboard from "./mentor-components/mentor-dashboard/MentorDashboard";
 import MentorSessionCreate from "./mentor-components/mentor-session-create/MentorSessionCreate";
@@ -75,6 +77,18 @@ const LandingPageLayout = () => (
   </div>
 );
 
+// Mock interview page layout
+const MIPageLayout = () => (
+  <div className="App">
+    <React.Fragment>
+      <Routes>
+        <Route path="/milanding" element={<MIPage />} />
+        <Route path="/mockinterview" element={<MIDash />} />
+      </Routes>
+    </React.Fragment>
+  </div>
+);
+
 function App() {
   return (
     <div className="app-container">
@@ -82,6 +96,7 @@ function App() {
         <Route path="/*" element={<LandingPageLayout />} />
         <Route path="/sdsdf*" element={<StudentLayout />} />
         <Route path="/hsd*" element={<MentorLayout />} />
+        <Route path="/MIPage*" element={<MIPageLayout />} />
       </Routes>
     </div>
   );

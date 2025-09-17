@@ -35,57 +35,36 @@ const MockInterview = () => {
     }, 2000);
   };
 
-  const submitAnswer = () => {
+  const submitAnswer = async () => {
     if (!userAnswer.trim()) return;
-
     setIsLoading(true);
 
-    // Add user answer to chat history
+    // Add user answer
     const updatedHistory = [
       ...chatHistory,
-      {
-        type: "user",
-        message: userAnswer,
-        timestamp: new Date(),
-      },
+      { type: "user", message: userAnswer, timestamp: new Date() },
     ];
     setChatHistory(updatedHistory);
 
-    // Simulate API call delay
-    setTimeout(() => {
-      setIsTyping(true);
+    try {
+      const res = await fetch("http://localhost:8070/api/interview/ask", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userAnswer, chatHistory: updatedHistory }),
+      });
 
-      setTimeout(() => {
-        if (questionCount < mockQuestions.length) {
-          const nextQuestion = mockQuestions[questionCount];
-          setCurrentQuestion(nextQuestion);
-          setChatHistory((prev) => [
-            ...prev,
-            {
-              type: "ai",
-              message: nextQuestion,
-              timestamp: new Date(),
-            },
-          ]);
-          setQuestionCount(questionCount + 1);
-        } else {
-          const finalMessage =
-            "Thank you for completing the mock interview! I'll now evaluate your responses and provide feedback.";
-          setCurrentQuestion(finalMessage);
-          setChatHistory((prev) => [
-            ...prev,
-            {
-              type: "ai",
-              message: finalMessage,
-              timestamp: new Date(),
-            },
-          ]);
-        }
-        setIsTyping(false);
-        setIsLoading(false);
-        setUserAnswer("");
-      }, 1500);
-    }, 1000);
+      const data = await res.json();
+
+      setChatHistory((prev) => [
+        ...prev,
+        { type: "ai", message: data.reply, timestamp: new Date() },
+      ]);
+    } catch (err) {
+      console.error(err);
+    }
+
+    setIsLoading(false);
+    setUserAnswer("");
   };
 
   const handleKeyPress = (e) => {
