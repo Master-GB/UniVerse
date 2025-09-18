@@ -7,5 +7,4 @@ const router = express.Router();
 
 router.post("/ask", askAI);
 
-// mek GPT kypu ekak bn, wada kre nh
 module.exports = router;

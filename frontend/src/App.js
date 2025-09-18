@@ -28,8 +28,6 @@ import MentorResourcehub from "./mentor-components/mentor-resourcehub/MentorReso
 import MentorManageResourses from "./mentor-components/mentor-resourcehub/MentorResourceManage";
 import MentorArticle from "./mentor-components/mentor-article/MentorArticle";
 
-
-
 const StudentLayout = () => (
   <div className="app-layout">
     <StuNavigation />
@@ -53,13 +51,22 @@ const MentorLayout = () => (
   <div className="App">
     <React.Fragment>
       <Routes>
-         <Route path="/mentor-dashboard" element={<MentorDashboard />} />
-         <Route path="/mentor-session-create" element={<MentorSessionCreate />} />
-         <Route path="/mentor-guidance" element={<MentorGuidance />} />
-         <Route path="/mentor-announcement" element={<MentorshipAnnouncementForm />} />
-         <Route path="/mentor-resourcehub" element={<MentorResourcehub />} />
-         <Route path="/mentor-manage-resources" element={<MentorManageResourses />} />
-         <Route path="/mentor-article" element={<MentorArticle />} />
+        <Route path="/mentor-dashboard" element={<MentorDashboard />} />
+        <Route
+          path="/mentor-session-create"
+          element={<MentorSessionCreate />}
+        />
+        <Route path="/mentor-guidance" element={<MentorGuidance />} />
+        <Route
+          path="/mentor-announcement"
+          element={<MentorshipAnnouncementForm />}
+        />
+        <Route path="/mentor-resourcehub" element={<MentorResourcehub />} />
+        <Route
+          path="/mentor-manage-resources"
+          element={<MentorManageResourses />}
+        />
+        <Route path="/mentor-article" element={<MentorArticle />} />
       </Routes>
     </React.Fragment>
   </div>
@@ -85,8 +92,9 @@ const MIPageLayout = () => (
   <div className="App">
     <React.Fragment>
       <Routes>
-        <Route path="/milanding" element={<MIPage />} />
-        <Route path="/mockinterview" element={<MIDash />} />
+        <Route path="/" element={<MIPage />} />
+        <Route path="milanding" element={<MIPage />} />
+        <Route path="mockinterview" element={<MIDash />} />
       </Routes>
     </React.Fragment>
   </div>
