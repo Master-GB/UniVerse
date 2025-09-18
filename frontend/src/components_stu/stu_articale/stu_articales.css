@@ -10,7 +10,7 @@
 }
 
 .articles-wrapper {
-   margin: 0;
+  margin: 0;
   min-height: 100vh;
   background: radial-gradient(1000px 600px at 10% -10%, rgba(127, 91, 255, 0.1), transparent),
               radial-gradient(1000px 600px at 100% 0%, rgba(91, 156, 255, 0.08), transparent),
@@ -23,12 +23,8 @@
 
 /* Animated Grid Overlay */
 @keyframes gridMove {
-  0% {
-    background-position: 0 0, 0 0;
-  }
-  100% {
-    background-position: 40px 40px, 40px 40px;
-  }
+  0% { background-position: 0 0, 0 0; }
+  100% { background-position: 40px 40px, 40px 40px; }
 }
 
 .articles-wrapper::before {
@@ -46,13 +42,7 @@
   pointer-events: none;
   animation: gridMove 30s linear infinite;
   will-change: background-position;
-  mask-image: linear-gradient(
-    to bottom,
-    rgba(0,0,0,0.1),
-    rgba(0,0,0,0.2) 20%,
-    rgba(0,0,0,0.2) 80%,
-    rgba(0,0,0,0.1)
-  );
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.2) 20%, rgba(0,0,0,0.2) 80%, rgba(0,0,0,0.1));
 }
 
 .articles-header {
@@ -72,7 +62,7 @@
 .articles-header .title h1 {
   margin: 0 0 .25rem 0;
   font-size: 1.75rem;
-  color : white
+  color: white;
 }
 .articles-header .subtitle {
   margin: 0;
@@ -187,12 +177,26 @@
 .article-card .title {
   margin: .25rem 0 .4rem;
   font-size: 1.05rem;
+  color: var(--text);
 }
+
+/* FIXED: Allow Quill HTML to preserve styles */
 .article-card .excerpt {
   margin: 0 0 .8rem 0;
   color: var(--text-muted);
   line-height: 1.55;
 }
+.article-card .excerpt * {
+  color: inherit; /* preserves color inline styles */
+  font-weight: normal; /* reset default if needed */
+}
+.article-card .excerpt strong { font-weight: bold; }
+.article-card .excerpt em { font-style: italic; }
+.article-card .excerpt u { text-decoration: underline; }
+.article-card .excerpt span { color: inherit; font-size: inherit; }
+.article-card .excerpt p { margin: 0 0 10px 0; }
+
+/* Meta info */
 .article-card .meta {
   display: flex;
   align-items: center;

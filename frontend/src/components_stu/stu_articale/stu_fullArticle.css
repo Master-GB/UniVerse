@@ -27,7 +27,7 @@
 
 .article-wrapper {
   margin: 0;
-  min-height: 100vh;
+  
   background: radial-gradient(1000px 600px at 10% -10%, rgba(127, 91, 255, 0.1), transparent),
               radial-gradient(1000px 600px at 100% 0%, rgba(91, 156, 255, 0.08), transparent),
               var(--bg);

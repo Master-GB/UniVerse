@@ -14,8 +14,11 @@ const AcadamicVideoSchema = new schema({
 
     category: { 
         type: String,
+        enum: ["Computing", "Engineering", "Business"], 
         required: [true,"category is required"],
     },
+
+
 
     sub_category :{
         type: String,
@@ -24,7 +27,7 @@ const AcadamicVideoSchema = new schema({
 
     typeOfRes:{
         type:String,
-         enum: ["LectureVideo", "LectureNote", "PastPapper", "Papper", "Other"], 
+         enum: ["LectureVideo", "LectureNote", "PastPaper", "Paper", "Other"], 
     },
 
     contentType: { 

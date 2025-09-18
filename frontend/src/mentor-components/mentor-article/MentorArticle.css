@@ -1,0 +1,763 @@
+.mar-full-contaner {
+    position: relative;
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 30%, #334155 60%, #0f172a 100%);
+    overflow: hidden;
+    min-height: 100vh;
+}
+
+/* Starfield layers */
+.mar-full-contaner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        /* Large bright stars */
+        radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.9), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(147, 197, 253, 0.8), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 1), transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(196, 181, 253, 0.9), transparent),
+        radial-gradient(2px 2px at 160px 30px, rgba(255, 255, 255, 0.8), transparent),
+        
+        /* Medium stars */
+        radial-gradient(1px 1px at 200px 50px, rgba(255, 255, 255, 0.7), transparent),
+        radial-gradient(1px 1px at 230px 90px, rgba(147, 197, 253, 0.6), transparent),
+        radial-gradient(1px 1px at 270px 20px, rgba(255, 255, 255, 0.8), transparent),
+        radial-gradient(1px 1px at 300px 60px, rgba(196, 181, 253, 0.7), transparent),
+        radial-gradient(1px 1px at 350px 100px, rgba(255, 255, 255, 0.6), transparent),
+        
+        /* Small stars scattered */
+        radial-gradient(0.5px 0.5px at 80px 10px, rgba(255, 255, 255, 0.5), transparent),
+        radial-gradient(0.5px 0.5px at 120px 25px, rgba(147, 197, 253, 0.4), transparent),
+        radial-gradient(0.5px 0.5px at 180px 15px, rgba(255, 255, 255, 0.6), transparent),
+        radial-gradient(0.5px 0.5px at 250px 35px, rgba(196, 181, 253, 0.5), transparent),
+        radial-gradient(0.5px 0.5px at 320px 5px, rgba(255, 255, 255, 0.4), transparent);
+    
+    background-repeat: repeat;
+    background-size: 400px 150px;
+    animation: starsTwinkle 4s ease-in-out infinite alternate;
+    z-index: 1;
+}
+
+@keyframes starsTwinkle {
+    0% { opacity: 1; }
+    100% { opacity: 0.7; }
+}
+
+/* Additional star layers for depth */
+.mar-full-contaner::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        /* Tiny distant stars */
+        radial-gradient(0.3px 0.3px at 50px 60px, rgba(255, 255, 255, 0.3), transparent),
+        radial-gradient(0.3px 0.3px at 110px 30px, rgba(147, 197, 253, 0.2), transparent),
+        radial-gradient(0.3px 0.3px at 170px 80px, rgba(255, 255, 255, 0.4), transparent),
+        radial-gradient(0.3px 0.3px at 220px 10px, rgba(196, 181, 253, 0.3), transparent),
+        radial-gradient(0.3px 0.3px at 280px 70px, rgba(255, 255, 255, 0.2), transparent),
+        radial-gradient(0.3px 0.3px at 330px 40px, rgba(147, 197, 253, 0.3), transparent),
+        radial-gradient(0.3px 0.3px at 380px 90px, rgba(255, 255, 255, 0.3), transparent);
+    
+    background-repeat: repeat;
+    background-size: 450px 120px;
+    animation: starfield 8s linear infinite;
+    z-index: 2;
+}
+
+@keyframes starfield {
+    0% { transform: translateY(0) translateX(0); }
+    100% { transform: translateY(-120px) translateX(-50px); }
+}
+
+/* Shooting stars */
+.mar-full-contaner .shooting-star {
+    position: absolute;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 1), transparent);
+    border-radius: 50px;
+    z-index: 5;
+    animation: shoot 3s ease-out infinite;
+}
+
+.mar-full-contaner .shooting-star:nth-child(1) {
+    top: 20%;
+    left: 10%;
+    width: 100px;
+    animation-delay: 2s;
+    animation-duration: 2.5s;
+}
+
+.mar-full-contaner .shooting-star:nth-child(2) {
+    top: 60%;
+    right: 20%;
+    width: 80px;
+    animation-delay: 5s;
+    animation-duration: 3s;
+    background: linear-gradient(90deg, rgba(147, 197, 253, 1), transparent);
+}
+
+.mar-full-contaner .shooting-star:nth-child(3) {
+    top: 40%;
+    left: 60%;
+    width: 120px;
+    animation-delay: 8s;
+    animation-duration: 2s;
+}
+
+.mar-full-contaner .shooting-star:nth-child(4) {
+    top: 80%;
+    left: 30%;
+    width: 90px;
+    animation-delay: 12s;
+    animation-duration: 2.8s;
+    background: linear-gradient(90deg, rgba(196, 181, 253, 1), transparent);
+}
+
+@keyframes shoot {
+    0% {
+        transform: translateX(0) translateY(0) rotate(45deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(300px) translateY(300px) rotate(45deg);
+        opacity: 0;
+    }
+}
+
+/* Nebula clouds */
+.mar-full-contaner .nebula {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(40px);
+    z-index: 1;
+    animation: nebulaDrift 20s ease-in-out infinite;
+}
+
+.mar-full-contaner .nebula:nth-child(5) {
+    width: 200px;
+    height: 200px;
+    top: 10%;
+    left: 20%;
+    background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0.05) 50%, transparent 100%);
+    animation-delay: -5s;
+}
+
+.mar-full-contaner .nebula:nth-child(6) {
+    width: 300px;
+    height: 150px;
+    top: 50%;
+    right: 15%;
+    background: radial-gradient(ellipse, rgba(147, 51, 234, 0.15) 0%, rgba(147, 51, 234, 0.03) 60%, transparent 100%);
+    animation-delay: -10s;
+}
+
+.mar-full-contaner .nebula:nth-child(7) {
+    width: 250px;
+    height: 250px;
+    bottom: 20%;
+    left: 40%;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.02) 50%, transparent 100%);
+    animation-delay: -15s;
+}
+
+@keyframes nebulaDrift {
+    0%, 100% {
+        transform: translateX(0) translateY(0) rotate(0deg) scale(1);
+    }
+    25% {
+        transform: translateX(20px) translateY(-10px) rotate(90deg) scale(1.1);
+    }
+    50% {
+        transform: translateX(-10px) translateY(-20px) rotate(180deg) scale(0.9);
+    }
+    75% {
+        transform: translateX(-20px) translateY(10px) rotate(270deg) scale(1.05);
+    }
+}
+
+/* Moon */
+.mar-full-contaner .moon {
+    position: absolute;
+    top: 15%;
+    right: 10%;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(226, 232, 240, 0.7) 100%);
+    box-shadow: 
+        0 0 20px rgba(255, 255, 255, 0.3),
+        inset -10px -10px 0 rgba(148, 163, 184, 0.2);
+    z-index: 6;
+    animation: moonGlow 6s ease-in-out infinite alternate;
+}
+
+@keyframes moonGlow {
+    0% {
+        box-shadow: 
+            0 0 20px rgba(255, 255, 255, 0.3),
+            inset -10px -10px 0 rgba(148, 163, 184, 0.2);
+    }
+    100% {
+        box-shadow: 
+            0 0 40px rgba(255, 255, 255, 0.5),
+            0 0 80px rgba(255, 255, 255, 0.2),
+            inset -10px -10px 0 rgba(148, 163, 184, 0.3);
+    }
+}
+
+/* Constellation lines */
+.mar-full-contaner .constellation {
+    position: absolute;
+    z-index: 4;
+}
+
+.mar-full-contaner .constellation::before {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.1));
+    transform: rotate(30deg);
+    top: 30%;
+    left: 25%;
+}
+
+.mar-full-contaner .constellation::after {
+    content: '';
+    position: absolute;
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.1));
+    transform: rotate(-45deg);
+    top: 70%;
+    right: 30%;
+}
+
+/* Content wrapper */
+.mar-full-contaner > .content {
+    position: relative;
+    z-index: 10;
+    background: rgba(15, 23, 42, 0.3);
+    backdrop-filter: blur(2px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    margin: 20px;
+    padding: 30px;
+}
+
+/* Twinkling animation for specific stars */
+.mar-full-contaner .twinkle-star {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    z-index: 7;
+    animation: twinkle 2s ease-in-out infinite alternate;
+}
+
+.mar-full-contaner .twinkle-star:nth-child(8) {
+    top: 25%;
+    left: 15%;
+    animation-delay: 0.5s;
+}
+
+.mar-full-contaner .twinkle-star:nth-child(9) {
+    top: 55%;
+    right: 25%;
+    animation-delay: 1.2s;
+    background: rgba(147, 197, 253, 0.9);
+}
+
+.mar-full-contaner .twinkle-star:nth-child(10) {
+    top: 75%;
+    left: 45%;
+    animation-delay: 0.8s;
+    background: rgba(196, 181, 253, 0.9);
+}
+
+@keyframes twinkle {
+    0% {
+        opacity: 0.3;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1.2);
+    }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .mar-full-contaner .moon {
+        width: 50px;
+        height: 50px;
+        top: 10%;
+        right: 5%;
+    }
+    
+    .mar-full-contaner .nebula {
+        display: none;
+    }
+    
+    .mar-full-contaner .shooting-star {
+        width: 60px;
+    }
+    
+    .mar-full-contaner::before,
+    .mar-full-contaner::after {
+        background-size: 200px 100px;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .mar-full-contaner *,
+    .mar-full-contaner::before,
+    .mar-full-contaner::after {
+        animation: none;
+    }
+    
+    .mar-full-contaner {
+        background: #0f172a;
+    }
+}
+
+/* end of background */
+.background-pattern-mar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.1;
+  background-image: 
+    radial-gradient(circle at 25% 25%, #de2727 2px, transparent 2px),
+    radial-gradient(circle at 75% 75%, #ef0707 1px, transparent 1px);
+  background-size: 50px 50px;
+  z-index: -1;
+}
+
+.container-mar {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.header-mar {
+  text-align: center;
+  margin-bottom: 3rem;
+  animation: fadeInDown 0.8s ease-out;
+}
+
+.header-mar h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+  text-shadow: 0 4px 20px rgb(255, 255, 255);
+}
+
+.header-mar p {
+  font-size: 1.2rem;
+  color: #cbd5e1;
+  font-weight: 400;
+}
+
+.form-container-mar {
+  position: relative;
+  background: rgba(10, 28, 63, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  padding: 3rem;
+  box-shadow: 
+    0 25px 50px -12px rgba(0, 0, 0, 0.25),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: fadeInUp 0.8s ease-out 0.2s both;
+  z-index: 100;
+}
+
+.form-grid-mar {
+  display: grid;
+  gap: 2rem;
+}
+
+.form-group-mar {
+  position: relative;
+}
+
+.form-label-mar {
+  display: block;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 0.75rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.025em;
+}
+
+.form-input-mar, .form-select-mar, .form-textarea-mar {
+  width: 100%;
+  padding: 1rem 1.25rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 1rem;
+  background: #ffffff;
+  color: #1e293b;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: inherit;
+}
+
+.form-input-mar:focus, .form-select-mar:focus, .form-textarea-mar:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  transform: translateY(-2px);
+}
+
+.form-textarea-mar {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.form-select-mar {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+  background-position: right 0.75rem center;
+  background-repeat: no-repeat;
+  background-size: 1.5em 1.5em;
+  padding-right: 2.5rem;
+}
+
+.file-upload-area-mar {
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  background: #f8fafc;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.file-upload-area-mar:hover {
+  border-color: #3b82f6;
+  background: #eff6ff;
+}
+
+.file-upload-area-mar.dragover-mar {
+  border-color: #3b82f6;
+  background: #dbeafe;
+  transform: scale(1.02);
+}
+
+.file-input-mar {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.upload-icon-mar {
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 1rem;
+  color: #6b7280;
+}
+
+.upload-text-mar {
+  color: #374151;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.upload-subtext-mar {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+.file-preview-mar {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: #f0f9ff;
+  border: 1px solid #bae6fd;
+  border-radius: 8px;
+  display: none;
+}
+
+.file-preview-mar.show-mar {
+  display: block;
+  animation: slideInUp 0.3s ease;
+}
+
+.preview-image-mar {
+  max-width: 200px;
+  max-height: 150px;
+  border-radius: 8px;
+  margin: 0 auto;
+  display: block;
+}
+
+.two-column-mar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.submit-button-mar {
+  background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%);
+  color: white;
+  border: none;
+  padding: 1.25rem 2.5rem;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 2rem;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-button-mar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 25px -5px rgba(59, 130, 246, 0.4);
+}
+
+.submit-button-mar:active {
+  transform: translateY(0);
+}
+
+.submit-button-mar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.submit-button-mar:hover::before {
+  left: 100%;
+}
+
+.floating-shapes-mar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.shape-mar {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  animation: float 20s infinite linear;
+}
+
+.shape-mar:nth-child(1) {
+  width: 80px;
+  height: 80px;
+  top: 20%;
+  left: 10%;
+  animation-delay: -2s;
+}
+
+.shape-mar:nth-child(2) {
+  width: 120px;
+  height: 120px;
+  top: 60%;
+  right: 10%;
+  animation-delay: -8s;
+}
+
+.shape-mar:nth-child(3) {
+  width: 60px;
+  height: 60px;
+  bottom: 20%;
+  left: 20%;
+  animation-delay: -15s;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+    opacity: 0.8;
+  }
+}
+
+@media (max-width: 768px) {
+  .container-mar {
+    padding: 1rem;
+  }
+  
+  .form-container-mar {
+    padding: 2rem;
+    border-radius: 16px;
+  }
+  
+  .header-mar h1 {
+    font-size: 2rem;
+  }
+  
+  .two-column-mar {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+
+
+
+
+/* All previous CSS remains the same until the form styles. Adding/updating the following for fixes and Quill support. */
+
+/* Ensure inputs are fully interactive - explicit pointer-events and user-select */
+.form-input-mar, 
+.form-select-mar, 
+.form-textarea-mar, 
+.quill-editor-mar {
+  pointer-events: auto !important;
+  user-select: text !important;
+  -webkit-user-select: text !important;
+  position: relative;
+  z-index: 1;
+}
+
+/* Fix potential overflow issues in container */
+.mar-full-contaner {
+  position: relative;
+  background: linear-gradient(180deg, #0f172a 0%, #1e293b 30%, #334155 60%, #0f172a 100%);
+  overflow: visible; /* Changed from hidden to prevent clipping interactions */
+  min-height: 100vh;
+}
+
+/* Quill specific styles to match theme */
+.quill-editor-mar {
+  min-height: 120px !important;
+  border-radius: 12px !important;
+  border: 2px solid #e2e8f0 !important;
+  background: #ffffff !important;
+  color: #1e293b !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.quill-editor-mar .ql-toolbar {
+  border-top-left-radius: 12px !important;
+  border-top-right-radius: 12px !important;
+  background: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+.quill-editor-mar .ql-container {
+  border-bottom-left-radius: 12px !important;
+  border-bottom-right-radius: 12px !important;
+  font-size: 1rem !important;
+  font-family: inherit !important;
+}
+
+.quill-editor-mar:focus-within {
+  border-color: #3b82f6 !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+  transform: translateY(-2px) !important;
+}
+
+.quill-editor-mar .ql-editor {
+  min-height: 120px !important;
+}
+
+/* Improve file upload accessibility and interaction */
+.file-upload-area-mar {
+  border: 2px dashed #cbd5e1;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  background: #f8fafc;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  pointer-events: auto; /* Explicit */
+}
+
+.file-upload-area-mar:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Rest of the CSS remains unchanged... */
+
+
+.mar-full-contaner::before,
+.mar-full-contaner::after,
+.background-pattern-mar,
+.nebula,
+.shooting-star,
+.moon,
+.constellation,
+.twinkle-star {
+  pointer-events: none; /* allow clicks to pass through */
+}

@@ -20,7 +20,10 @@ const MentorNavbar = () => {
             setActiveTab('guidance');
         } else if (currentPath ==='/mentor-announcement') {
             setActiveTab('announcements');
+        } else if (currentPath === '/mentor-article') {
+            setActiveTab('articles');
         }
+
     }, [location.pathname]);
 
     const handleTabChange = (tab) => {
@@ -34,44 +37,55 @@ const MentorNavbar = () => {
             navigate('/mentor-guidance');
         } else if (tab === 'announcements') {
             navigate('/mentor-announcement');
+        } else if (tab === 'articles') {
+            navigate('/mentor-article');
         }
     };
 
     return (
         // Header
-        <header className="header-md">
-            <div className="header-content-md">
-                <div className="logo-section-md">
-                    <img src={UniVerseLogo} alt="Logo" className="logo-image-md" />
+        <div className="mentor-navbar-container">
+
+            <header className="header-md">
+                <div className="header-content-md">
+                    <div className="logo-section-md">
+                        <img src={UniVerseLogo} alt="Logo" className="logo-image-md" />
+                    </div>
+                    <nav className="nav-md">
+                        <button
+                            className={`nav-btn-md ${activeTab === 'overview' ? 'active-md' : ''}`}
+                            onClick={() => handleTabChange('overview')}
+                        >
+                            OVERVIEW
+                        </button>
+                        <button
+                            className={`nav-btn-md ${activeTab === 'sessions' ? 'active-md' : ''}`}
+                            onClick={() => handleTabChange('sessions')}
+                        >
+                            SESSIONS
+                        </button>
+                        <button
+                            className={`nav-btn-md ${activeTab === 'guidance' ? 'active-md' : ''}`}
+                            onClick={() => handleTabChange('guidance')}
+                        >
+                            GUIDANCE
+                        </button>
+                        <button
+                            className={`nav-btn-md ${activeTab === 'announcements' ? 'active-md' : ''}`}
+                            onClick={() => handleTabChange('announcements')}
+                        >
+                            ANNOUNCEMENTS
+                        </button>
+                        <button
+                            className={`nav-btn-md ${activeTab === 'articles' ? 'active-md' : ''}`}
+                            onClick={() => handleTabChange('articles')}
+                        >
+                            ARTICLES
+                        </button>
+                    </nav>
                 </div>
-                <nav className="nav-md">
-                    <button
-                        className={`nav-btn-md ${activeTab === 'overview' ? 'active-md' : ''}`}
-                        onClick={() => handleTabChange('overview')}
-                    >
-                        OVERVIEW
-                    </button>
-                    <button
-                        className={`nav-btn-md ${activeTab === 'sessions' ? 'active-md' : ''}`}
-                        onClick={() => handleTabChange('sessions')}
-                    >
-                        SESSIONS
-                    </button>
-                    <button
-                        className={`nav-btn-md ${activeTab === 'guidance' ? 'active-md' : ''}`}
-                        onClick={() => handleTabChange('guidance')}
-                    >
-                        GUIDANCE
-                    </button>
-                    <button
-                        className={`nav-btn-md ${activeTab === 'announcements' ? 'active-md' : ''}`}
-                        onClick={() => handleTabChange('announcements')}
-                    >
-                        ANNOUNCEMENTS
-                    </button>
-                </nav>
-            </div>
-        </header>
+            </header>
+        </div>
     );
 };
 
