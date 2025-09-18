@@ -71,60 +71,252 @@ const StuDashboard = () => {
   ]);
   
   // In a real app, you would fetch from a news API
-  // useEffect(() => {
-  //   const fetchTechNews = async () => {
-  //     try {
-  //       const response = await fetch('https://newsapi.org/v2/top-headlines?category=technology&apiKey=YOUR_API_KEY');
-  //       const data = await response.json();
-  //       setTechNews(data.articles.map((article, index) => ({
-  //         id: index,
-  //         title: article.title,
-  //         source: article.source.name,
-  //         date: new Date(article.publishedAt).toLocaleDateString(),
-  //         url: article.url,
-  //         image: article.urlToImage
-  //       })));
-  //     } catch (error) {
-  //       console.error('Error fetching tech news:', error);
-  //     }
-  //   };
-  //   fetchTechNews();
-  // }, []);
+// Tech News state
+
+
+// Fixed useEffect for fetching tech news/articles
+useEffect(() => {
+  const fetchTechNews = async () => {
+    try {
+      console.log('Fetching articles from API...');
+      const response = await fetch("http://localhost:8070/mentor-article/display");
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      console.log("Raw API response:", data);
+
+      // Handle the response structure - the API returns { message, articles }
+      const articles = data.articles || [];
+      
+      if (!Array.isArray(articles)) {
+        console.warn('Articles is not an array:', articles);
+        setTechNews([]);
+        return;
+      }
+
+      console.log("Processing articles:", articles.length);
+
+      const formatted = articles.map((article) => {
+        // Handle image data properly
+        let imageUrl = "https://via.placeholder.com/300x200?text=No+Image";
+        
+        if (article.article_image && article.article_image.data) {
+          try {
+            // Convert Buffer to base64 if it's a Buffer object
+            const imageBuffer = article.article_image.data;
+            let base64String;
+            
+            if (imageBuffer.type === 'Buffer' && Array.isArray(imageBuffer.data)) {
+              // Handle Buffer object with data array
+              base64String = Buffer.from(imageBuffer.data).toString('base64');
+            } else if (typeof imageBuffer === 'string') {
+              // Handle if it's already a base64 string
+              base64String = imageBuffer;
+            } else {
+              // Handle direct buffer
+              base64String = Buffer.from(imageBuffer).toString('base64');
+            }
+            
+            imageUrl = `data:${article.article_image.contentType || 'image/jpeg'};base64,${base64String}`;
+          } catch (error) {
+            console.error('Error processing image for article:', article._id, error);
+            // Keep default placeholder image
+          }
+        }
+
+        // Format date properly
+        let formattedDate = "Unknown date";
+        if (article.createdAt) {
+          try {
+            const date = new Date(article.createdAt);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+            const diffDays = Math.floor(diffHours / 24);
+            
+            if (diffHours < 1) {
+              formattedDate = "Just now";
+            } else if (diffHours < 24) {
+              formattedDate = `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+            } else if (diffDays < 7) {
+              formattedDate = `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+            } else {
+              formattedDate = date.toLocaleDateString();
+            }
+          } catch (error) {
+            console.error('Error formatting date:', error);
+            formattedDate = new Date(article.createdAt).toLocaleDateString();
+          }
+        }
+
+        return {
+          id: article._id,
+          title: article.article_title || "Untitled Article",
+          source: article.article_author || "Unknown Author",
+          date: formattedDate,
+          category: article.article_category || "Tech News",
+          duration: article.artivle_duration || "5 min read", // Note: there's a typo in your schema
+          url: `/student/articales/${article._id}`, // Fixed typo in "articles"
+          image: imageUrl,
+          description: article.article_description ? 
+            article.article_description.substring(0, 100) + "..." : 
+            "No description available"
+        };
+      });
+
+      console.log("Formatted articles:", formatted);
+      
+      // Sort by creation date (newest first) and take only the latest 5
+      const sortedArticles = formatted
+        .sort((a, b) => {
+          // If we have creation dates, sort by them
+          if (articles.find(art => art._id === a.id)?.createdAt && 
+              articles.find(art => art._id === b.id)?.createdAt) {
+            return new Date(articles.find(art => art._id === b.id).createdAt) - 
+                   new Date(articles.find(art => art._id === a.id).createdAt);
+          }
+          return 0;
+        })
+        .slice(0, 5);
+
+      setTechNews(sortedArticles);
+      
+    } catch (error) {
+      console.error("Error fetching tech news:", error);
+      // Set empty array on error to avoid breaking the UI
+      setTechNews([]);
+    }
+  };
+
+  fetchTechNews();
+}, []);
+
 
   // Fetch resources from API
-  useEffect(() => {
-    const fetchResources = async () => {
-      try {
-        console.log('Fetching resources from API...');
-        const response = await fetch('http://localhost:8070/resource/display');
-        console.log('Response status:', response.status);
-        const data = await response.json();
-        console.log('API Response Data:', data);
-        
-        if (!response.ok) {
-          throw new Error(data.message || `HTTP error! status: ${response.status}`);
-        }
-        
-        if (!data.resources || !Array.isArray(data.resources)) {
-          console.warn('Unexpected API response format:', data);
-          setResources([]);
-        } else {
-          console.log('Setting resources:', data.resources);
-          setResources(data.resources);
-        }
-      } catch (error) {
-        console.error('Error fetching resources:', error);
-        setResourcesError(error.message);
-      } finally {
-        setIsLoadingResources(false);
+
+
+
+useEffect(() => {
+  const fetchTechNews = async () => {
+    try {
+      console.log('Fetching articles from API...');
+      const response = await fetch("http://localhost:8070/mentor-article/display");
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-    };
+      
+      const data = await response.json();
+      console.log("Raw API response:", data);
 
-    fetchResources();
+      // Handle the response structure - the API returns { message, articles }
+      const articles = data.articles || [];
+      
+      if (!Array.isArray(articles)) {
+        console.warn('Articles is not an array:', articles);
+        setTechNews([]);
+        return;
+      }
 
-    const t = setInterval(() => setNow(new Date()), 1000);
-    return () => clearInterval(t);
-  }, []);
+      console.log("Processing articles:", articles.length);
+
+      const formatted = articles.map((article) => {
+        // Handle image data properly
+        let imageUrl = "https://via.placeholder.com/300x200?text=No+Image";
+        
+        if (article.article_image && article.article_image.data) {
+          try {
+            // Convert Buffer to base64 if it's a Buffer object
+            const imageBuffer = article.article_image.data;
+            let base64String;
+            
+            if (imageBuffer.type === 'Buffer' && Array.isArray(imageBuffer.data)) {
+              // Handle Buffer object with data array
+              base64String = Buffer.from(imageBuffer.data).toString('base64');
+            } else if (typeof imageBuffer === 'string') {
+              // Handle if it's already a base64 string
+              base64String = imageBuffer;
+            } else {
+              // Handle direct buffer
+              base64String = Buffer.from(imageBuffer).toString('base64');
+            }
+            
+            imageUrl = `data:${article.article_image.contentType || 'image/jpeg'};base64,${base64String}`;
+          } catch (error) {
+            console.error('Error processing image for article:', article._id, error);
+            // Keep default placeholder image
+          }
+        }
+
+        // Format date properly
+        let formattedDate = "Unknown date";
+        if (article.createdAt) {
+          try {
+            const date = new Date(article.createdAt);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+            const diffDays = Math.floor(diffHours / 24);
+            
+            if (diffHours < 1) {
+              formattedDate = "Just now";
+            } else if (diffHours < 24) {
+              formattedDate = `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+            } else if (diffDays < 7) {
+              formattedDate = `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+            } else {
+              formattedDate = date.toLocaleDateString();
+            }
+          } catch (error) {
+            console.error('Error formatting date:', error);
+            formattedDate = new Date(article.createdAt).toLocaleDateString();
+          }
+        }
+
+        return {
+          id: article._id,
+          title: article.article_title || "Untitled Article",
+          source: article.article_author || "Unknown Author",
+          date: formattedDate,
+          category: article.article_category || "Tech News",
+          duration: article.artivle_duration || "5 min read", // Note: there's a typo in your schema
+          url: `/student/articales/${article._id}`, // Fixed typo in "articles"
+          image: imageUrl,
+          description: article.article_description ? 
+            article.article_description.substring(0, 100) + "..." : 
+            "No description available"
+        };
+      });
+
+      console.log("Formatted articles:", formatted);
+      
+      // Sort by creation date (newest first) and take only the latest 3
+      const sortedArticles = formatted
+        .sort((a, b) => {
+          // If we have creation dates, sort by them
+          if (articles.find(art => art._id === a.id)?.createdAt && 
+              articles.find(art => art._id === b.id)?.createdAt) {
+            return new Date(articles.find(art => art._id === b.id).createdAt) - 
+                   new Date(articles.find(art => art._id === a.id).createdAt);
+          }
+          return 0;
+        })
+        .slice(0, 3);
+
+      setTechNews(sortedArticles);
+      
+    } catch (error) {
+      console.error("Error fetching tech news:", error);
+      // Set empty array on error to avoid breaking the UI
+      setTechNews([]);
+    }
+  };
+
+  fetchTechNews();
+}, []);
 
   const [sessions, setSessions] = useState(() => {
     console.log('Initial sessions state set');
@@ -1038,37 +1230,62 @@ const StuDashboard = () => {
           <header className="sd-card-header">
             <div className="sd-card-title">
               <Zap size={18} />
-              <h2>Articales</h2>
+              <h2>Latest Articles</h2>
             </div>
             <Link to="/student/articales" className="sd-link">
-                 View all
-                 <ChevronRight size={16} />
-             </Link>
+              View all
+              <ChevronRight size={16} />
+            </Link>
           </header>
+
           <div className="sd-news">
-            {techNews.map(news => (
-              <a 
-                key={news.id} 
-                href={news.url} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="sd-news-item"
-              >
-                <div className="sd-news-image">
-                  <img src={news.image} alt={news.title} />
+            {techNews.length > 0 ? (
+              techNews
+                .filter(news => 
+                  search === "" || 
+                  news.title.toLowerCase().includes(search.toLowerCase()) ||
+                  news.category.toLowerCase().includes(search.toLowerCase())
+                )
+                .map((news) => (
+                  <Link
+                    key={news.id}
+                    to={news.url}
+                    className="sd-news-item"
+                  >
+                    <div className="sd-news-image">
+                      <img 
+                        src={news.image} 
+                        alt={news.title}
+                        onError={(e) => {
+                          e.target.src = "https://via.placeholder.com/300x200?text=No+Image";
+                        }}
+                      />
+                      <div className="sd-news-category">{news.category}</div>
+                    </div>
+                    <div className="sd-news-content">
+                      <div className="sd-news-source">{news.source}</div>
+                      <h3 className="sd-news-title">{news.title}</h3>
+                      
+                      <div className="sd-news-meta">
+                        <Clock size={12} />
+                        <span>{news.date}</span>
+                        <span className="sd-meta-separator">•</span>
+                        <span>{news.duration}</span>
+                      </div>
+                    </div>
+                  </Link>
+                ))
+            ) : (
+              <div className="sd-empty-state">
+                <div className="sd-empty-icon">
+                  <BookOpen size={24} />
                 </div>
-                <div className="sd-news-content">
-                  <div className="sd-news-source">{news.source}</div>
-                  <h3 className="sd-news-title">{news.title}</h3>
-                  <div className="sd-news-meta">
-                    <Clock size={12} />
-                    <span>{news.date}</span>
-                  </div>
-                </div>
-              </a>
-            ))}
+                <p>No articles available at the moment</p>
+              </div>
+            )}
           </div>
         </section>
+
       </div>
 
       {/* Footer callout */}

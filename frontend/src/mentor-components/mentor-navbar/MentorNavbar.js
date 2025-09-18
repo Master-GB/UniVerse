@@ -20,7 +20,10 @@ const MentorNavbar = () => {
             setActiveTab('guidance');
         } else if (currentPath ==='/mentor-announcement') {
             setActiveTab('announcements');
+        } else if (currentPath === '/mentor-article') {
+            setActiveTab('articles');
         }
+
     }, [location.pathname]);
 
     const handleTabChange = (tab) => {
@@ -34,6 +37,8 @@ const MentorNavbar = () => {
             navigate('/mentor-guidance');
         } else if (tab === 'announcements') {
             navigate('/mentor-announcement');
+        } else if (tab === 'articles') {
+            navigate('/mentor-article');
         }
     };
 
@@ -70,6 +75,12 @@ const MentorNavbar = () => {
                             onClick={() => handleTabChange('announcements')}
                         >
                             ANNOUNCEMENTS
+                        </button>
+                        <button
+                            className={`nav-btn-md ${activeTab === 'articles' ? 'active-md' : ''}`}
+                            onClick={() => handleTabChange('articles')}
+                        >
+                            ARTICLES
                         </button>
                     </nav>
                 </div>

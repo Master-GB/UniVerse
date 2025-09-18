@@ -1,6 +1,8 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Filter, Search } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import "react-quill-new/dist/quill.snow.css";
 import "./stu_articales.css";
 
 const CATEGORIES = [
@@ -19,87 +21,6 @@ const SORTS = [
   { key: "oldest", label: "Oldest" },
 ];
 
-// TEMP: sample data; replace with your API data later
-const sampleArticles = [
-  {
-    id: "1",
-    title: "Next.js 15 released with Partial Prerendering",
-    excerpt:
-      "The latest Next.js release brings performance gains and a simplified data fetching model.",
-    category: "Tech News",
-    author: "Vercel Team",
-    publishedAt: "2025-08-18T09:00:00.000Z",
-    coverImg:
-      "https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1600&auto=format&fit=crop",
-  },
-  {
-    id: "2",
-    title: "Prompt Engineering: Practical Patterns",
-    excerpt:
-      "A set of actionable patterns to design reliable LLM prompts for production systems.",
-    category: "AI",
-    author: "Jane Park",
-    publishedAt: "2025-08-15T08:00:00.000Z",
-    coverImg:
-      "https://images.unsplash.com/photo-1526378722484-bd91ca387e72?q=80&w=1600&auto=format&fit=crop",
-  },
-  {
-    id: "3",
-    title: "Best Tools for Frontend Devs in 2025",
-    excerpt:
-      "From build tools to component libraries—what’s worth your time this year.",
-    category: "Tools",
-    author: "Alex Chen",
-    publishedAt: "2025-08-12T10:15:00.000Z",
-    coverImg:
-      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1600&auto=format&fit=crop",
-  },
-  {
-    id: "4",
-    title: "Choosing a Tech Stack for Scale",
-    excerpt:
-      "How to evaluate your tech stack based on team, product stage, and growth plans.",
-    category: "Tech Stack",
-    author: "Priya Singh",
-    publishedAt: "2025-08-10T13:30:00.000Z",
-    coverImg:
-      "https://images.unsplash.com/photo-1516259762381-22954d7d3ad2?q=80&w=1600&auto=format&fit=crop",
-  },
-  {
-    id: "5",
-    title: "Modern Web Performance Playbook",
-    excerpt:
-      "Optimizing Core Web Vitals with a systematic approach for 2025 web standards.",
-    category: "Web",
-    author: "Google Web DevRel",
-    publishedAt: "2025-08-20T07:30:00.000Z",
-    coverImg:
-      "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=1600&auto=format&fit=crop",
-  },
-  {
-    id: "6",
-    title: "Zero-to-One: Founder Mindset",
-    excerpt:
-      "Mindset shifts for engineers stepping into entrepreneurship and early traction.",
-    category: "Entrepreneurship",
-    author: "Sam Patel",
-    publishedAt: "2025-08-05T11:45:00.000Z",
-    coverImg:
-      "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1600&auto=format&fit=crop",
-  },
-  {
-    id: "7",
-    title: "Platform Engineering: Golden Paths",
-    excerpt:
-      "Create golden paths and reduce cognitive load for product teams using IDPs.",
-    category: "Engineering",
-    author: "DevEx Guild",
-    publishedAt: "2025-08-19T16:10:00.000Z",
-    coverImg:
-      "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?q=80&w=1600&auto=format&fit=crop",
-  },
-];
-
 function formatDate(iso) {
   try {
     const d = new Date(iso);
@@ -113,6 +34,14 @@ function formatDate(iso) {
   }
 }
 
+// Utility to strip HTML and truncate
+function getExcerpt(html, wordLimit = 30) {
+  const text = html.replace(/<[^>]+>/g, ""); // strip HTML tags
+  const words = text.split(/\s+/);
+  if (words.length <= wordLimit) return text;
+  return words.slice(0, wordLimit).join(" ") + " ...";
+}
+
 export default function StuArticales() {
   const navigate = useNavigate();
   const [articles, setArticles] = useState([]);
@@ -122,45 +51,54 @@ export default function StuArticales() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // Replace this with your API call when ready
   useEffect(() => {
     let mounted = true;
-    (async () => {
+
+    const fetchArticles = async () => {
       try {
         setLoading(true);
         setError("");
-        // Example API pattern:
-        // const res = await axios.get('http://localhost:8070/articles');
-        // setArticles(res.data);
-        await new Promise((r) => setTimeout(r, 400)); // small UX delay
-        if (mounted) setArticles(sampleArticles);
+        const res = await axios.get("http://localhost:8070/mentor-article/display");
+
+        const articlesData = Array.isArray(res.data)
+          ? res.data
+          : Array.isArray(res.data.articles)
+          ? res.data.articles
+          : [];
+
+        if (mounted) setArticles(articlesData);
       } catch (e) {
+        console.error("Error fetching articles:", e);
         if (mounted) setError("Failed to load articles. Please try again.");
       } finally {
         if (mounted) setLoading(false);
       }
-    })();
-    return () => {
-      mounted = false;
     };
+
+    fetchArticles();
+    return () => (mounted = false);
   }, []);
 
   const filtered = useMemo(() => {
+    if (!Array.isArray(articles)) return [];
+
     const q = searchQuery.trim().toLowerCase();
     let list = articles.filter((a) => {
       const matchCategory =
-        activeCategory === "All" || a.category === activeCategory;
+        activeCategory === "All" || a.article_category === activeCategory;
+
       const matchSearch =
         !q ||
-        a.title.toLowerCase().includes(q) ||
-        a.excerpt.toLowerCase().includes(q) ||
-        a.author.toLowerCase().includes(q);
+        (a.article_title && a.article_title.toLowerCase().includes(q)) ||
+        (a.article_description && a.article_description.toLowerCase().includes(q)) ||
+        (a.article_author && a.article_author.toLowerCase().includes(q));
+
       return matchCategory && matchSearch;
     });
 
     list.sort((a, b) => {
-      const ad = new Date(a.publishedAt).getTime();
-      const bd = new Date(b.publishedAt).getTime();
+      const ad = new Date(a.article_date).getTime();
+      const bd = new Date(b.article_date).getTime();
       return sortBy === "newest" ? bd - ad : ad - bd;
     });
 
@@ -242,24 +180,31 @@ export default function StuArticales() {
         <div className="articles-grid">
           {filtered.map((a) => (
             <article
-              key={a.id}
+              key={a._id || a.id}
               className="article-card"
-              onClick={() => navigate(`/student/articales/${a.id}`)}
+              onClick={() => navigate(`/student/articales/${a._id || a.id}`)}
               style={{ cursor: "pointer" }}
             >
-              {a.coverImg && (
+              {a.article_image && (
                 <div className="cover">
-                  <img src={a.coverImg} alt={a.title} loading="lazy" />
+                  <img
+                    src={`http://localhost:8070/mentor-article/image/${a._id}`}
+                    alt={a.article_title}
+                    loading="lazy"
+                  />
                 </div>
               )}
               <div className="content">
-                <div className="badge">{a.category}</div>
-                <h3 className="title">{a.title}</h3>
-                <p className="excerpt">{a.excerpt}</p>
+                <div className="badge">{a.article_category}</div>
+                <h3 className="title">{a.article_title}</h3>
+                <p className="excerpt">
+                  {getExcerpt(a.article_description, 30)}{" "}
+                  <span className="see-more">See more →</span>
+                </p>
                 <div className="meta">
-                  <span className="author">{a.author}</span>
+                  <span className="author">{a.article_author}</span>
                   <span className="dot">•</span>
-                  <span className="date">{formatDate(a.publishedAt)}</span>
+                  <span className="date">{formatDate(a.article_date)}</span>
                 </div>
               </div>
             </article>

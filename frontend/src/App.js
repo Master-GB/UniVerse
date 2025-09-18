@@ -24,6 +24,7 @@ import MentorshipAnnouncementForm from "./mentor-components/mentor-announcement/
 import MentorGuidance from "./mentor-components/mentor-guidance/MentorGuidance";
 import MentorResourcehub from "./mentor-components/mentor-resourcehub/MentorResourcehub";
 import MentorManageResourses from "./mentor-components/mentor-resourcehub/MentorResourceManage";
+import MentorArticle from "./mentor-components/mentor-article/MentorArticle";
 
 
 
@@ -56,6 +57,7 @@ const MentorLayout = () => (
          <Route path="/mentor-announcement" element={<MentorshipAnnouncementForm />} />
          <Route path="/mentor-resourcehub" element={<MentorResourcehub />} />
          <Route path="/mentor-manage-resources" element={<MentorManageResourses />} />
+         <Route path="/mentor-article" element={<MentorArticle />} />
       </Routes>
     </React.Fragment>
   </div>
@@ -80,9 +82,9 @@ function App() {
   return (
     <div className="app-container">
       <Routes>
-        <Route path="/j*" element={<LandingPageLayout />} />
+        <Route path="/jh*" element={<LandingPageLayout />} />
         <Route path="/*" element={<StudentLayout />} />
-        <Route path="/0*" element={<MentorLayout />} />
+        <Route path="/j*" element={<MentorLayout />} />
       </Routes>
     </div>
   );

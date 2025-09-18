@@ -39,7 +39,28 @@ const StuNavigation = () => {
                                 </Link>
                             </div>
                         </div>
-                        <Link to="/student/Career & Skills" className="stu-nav-link">Career & Skills</Link>
+
+
+                        <div className="stu-dropdown">
+                        <Link to="/student/Career & Skills" className="stu-nav-link">Career & Skills
+                            <svg className="stu-dropdown-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M6 9L12 15L18 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                </svg>
+                        </Link>
+                            <div className="stu-dropdown-content">
+                                <Link to="/student/#" className="stu-dropdown-item">
+                                    Resume Builder
+                                </Link>
+                                <Link to="/student/#" className="stu-dropdown-item">
+                                    Mock Interview
+                                </Link>
+                                <Link to="/student/#" className="stu-dropdown-item">
+                                    Interview Quisses
+                                </Link>
+                            </div>
+                        </div>
+
+
                         <Link to="/student/exam-support" className="stu-nav-link">Exam Support</Link>
                         <Link to="/student/guidance" className="stu-nav-link">Guidance</Link>
                         <div className="stu-dropdown">
