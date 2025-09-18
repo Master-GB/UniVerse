@@ -15,41 +15,52 @@ const MentorNavbar = () => {
         if (currentPath === '/mentor-dashboard') {
             setActiveTab('overview');
         } else if (currentPath === '/mentor-session-create') {
-            setActiveTab('sessions');
+            setActiveTab('academic-sessions');
+        } else if (currentPath === '/mentor-career-session') {
+            setActiveTab('career-sessions');
         } else if (currentPath === '/mentor-guidance') {
             setActiveTab('guidance');
-        } else if (currentPath ==='/mentor-announcement') {
+        } else if (currentPath === '/mentor-announcement') {
             setActiveTab('announcements');
         } else if (currentPath === '/mentor-article') {
             setActiveTab('articles');
         }
-
     }, [location.pathname]);
 
     const handleTabChange = (tab) => {
         setActiveTab(tab);
         
-        if (tab === 'overview') {
-            navigate('/mentor-dashboard');
-        } else if (tab === 'sessions') {
-            navigate('/mentor-session-create');
-        } else if (tab === 'guidance') {
-            navigate('/mentor-guidance');
-        } else if (tab === 'announcements') {
-            navigate('/mentor-announcement');
-        } else if (tab === 'articles') {
-            navigate('/mentor-article');
+        // Use switch statement for cleaner navigation logic
+        switch(tab) {
+            case 'overview':
+                navigate('/mentor-dashboard');
+                break;
+            case 'academic-sessions':
+                navigate('/mentor-session-create');
+                break;
+            case 'career-sessions':
+                navigate('/mentor-career-session');
+                break;
+            case 'guidance':
+                navigate('/mentor-guidance');
+                break;
+            case 'announcements':
+                navigate('/mentor-announcement');
+                break;
+            case 'articles':
+                navigate('/mentor-article');
+                break;
+            default:
+                navigate('/mentor-dashboard');
         }
     };
 
     return (
-        // Header
         <div className="mentor-navbar-container">
-
             <header className="header-md">
                 <div className="header-content-md">
                     <div className="logo-section-md">
-                        <img src={UniVerseLogo} alt="Logo" className="logo-image-md" />
+                        <img src={UniVerseLogo} alt="UniVerse Logo" className="logo-image-md" />
                     </div>
                     <nav className="nav-md">
                         <button
@@ -59,10 +70,16 @@ const MentorNavbar = () => {
                             OVERVIEW
                         </button>
                         <button
-                            className={`nav-btn-md ${activeTab === 'sessions' ? 'active-md' : ''}`}
-                            onClick={() => handleTabChange('sessions')}
+                            className={`nav-btn-md ${activeTab === 'academic-sessions' ? 'active-md' : ''}`}
+                            onClick={() => handleTabChange('academic-sessions')}
                         >
-                            SESSIONS
+                            ACADEMIC SESSIONS
+                        </button>
+                        <button
+                            className={`nav-btn-md ${activeTab === 'career-sessions' ? 'active-md' : ''}`}
+                            onClick={() => handleTabChange('career-sessions')}
+                        >
+                            CAREER SESSIONS
                         </button>
                         <button
                             className={`nav-btn-md ${activeTab === 'guidance' ? 'active-md' : ''}`}
