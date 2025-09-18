@@ -23,11 +23,21 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve uploaded files statically for download/access
+// 🚀 Disable caching so no 304 in dev
+if (process.env.NODE_ENV === "development") {
+  app.use((req, res, next) => {
+    res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+    res.setHeader("Pragma", "no-cache");
+    res.setHeader("Expires", "0");
+    res.setHeader("Surrogate-Control", "no-store");
+    next();
+  });
+}
+
+// Serve uploaded files statically
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-//Routes
-// Root Route
+// Routes
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
@@ -35,10 +45,13 @@ app.get("/", (req, res) => {
 app.use("/guidance", guidanceRouter);
 app.use("/resource", resourcesRouter);
 
-// Mentorship  Routes
-
+// Mentorship Routes
 app.use("/mentorshipResponse", mentorshipResponseRoute);
 app.use("/mentorship-announcement", mentorshipAnnouncementRoute);
+app.use("/mentor-resourcehub", mentorresourcesRoute);
+app.use("/mentor-article", mentorArticleRoute);
+app.use("/mentor-career-session", mentorCareerSessionRoute);
+
 
 // Interview Route
 app.use("/api/interview", interviewroutes);

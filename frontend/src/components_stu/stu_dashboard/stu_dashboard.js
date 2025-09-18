@@ -829,6 +829,68 @@ useEffect(() => {
     }
   };
 
+
+
+  // resouce hub ///
+
+  useEffect(() => {
+  const fetchResources = async () => {
+    setIsLoadingResources(true);
+    setResourcesError(null);
+    
+    try {
+      console.log('Fetching resources from API...');
+      const response = await fetch("http://localhost:8070/resource/display"); // Replace with your actual resources endpoint
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      console.log("Raw resources API response:", data);
+
+      // Handle different response structures
+      let resourcesArray = [];
+      if (Array.isArray(data)) {
+        resourcesArray = data;
+      } else if (data.resources && Array.isArray(data.resources)) {
+        resourcesArray = data.resources;
+      } else if (data.data && Array.isArray(data.data)) {
+        resourcesArray = data.data;
+      }
+
+      console.log("Processing resources:", resourcesArray.length);
+
+      // Format resources for display
+      const formattedResources = resourcesArray.map((resource) => {
+        return {
+          _id: resource._id || resource.id,
+          id: resource._id || resource.id,
+          title: resource.title || resource.resourceTitle || "Untitled Resource",
+          uploadedBy: resource.uploadedBy || resource.author || resource.creator || "Unknown",
+          updatedAt: resource.updatedAt || resource.createdAt || new Date().toISOString(),
+          typeOfRes: resource.typeOfRes || resource.type || resource.resourceType || 'other',
+          type: resource.typeOfRes || resource.type || resource.resourceType || 'other',
+          fileUrl: resource.fileUrl || resource.downloadUrl || resource.url || '#',
+          description: resource.description || "No description available"
+        };
+      });
+
+      console.log("Formatted resources:", formattedResources);
+      setResources(formattedResources);
+      
+    } catch (error) {
+      console.error("Error fetching resources:", error);
+      setResourcesError(error.message || "Failed to load resources");
+      setResources([]); // Set empty array on error
+    } finally {
+      setIsLoadingResources(false);
+    }
+  };
+
+  fetchResources();
+}, []);
+
   return (
     <div className="stu-dashboard">
       <MatrixEffect />
