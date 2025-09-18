@@ -58,7 +58,9 @@ export default function StuArticales() {
       try {
         setLoading(true);
         setError("");
-        const res = await axios.get("http://localhost:8070/mentor-article/display");
+        const res = await axios.get(
+          "http://localhost:8070/mentor-article/display"
+        );
 
         const articlesData = Array.isArray(res.data)
           ? res.data
@@ -90,7 +92,8 @@ export default function StuArticales() {
       const matchSearch =
         !q ||
         (a.article_title && a.article_title.toLowerCase().includes(q)) ||
-        (a.article_description && a.article_description.toLowerCase().includes(q)) ||
+        (a.article_description &&
+          a.article_description.toLowerCase().includes(q)) ||
         (a.article_author && a.article_author.toLowerCase().includes(q));
 
       return matchCategory && matchSearch;

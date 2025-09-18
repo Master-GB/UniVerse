@@ -27,8 +27,7 @@ import MentorGuidance from "./mentor-components/mentor-guidance/MentorGuidance";
 import MentorResourcehub from "./mentor-components/mentor-resourcehub/MentorResourcehub";
 import MentorManageResourses from "./mentor-components/mentor-resourcehub/MentorResourceManage";
 import MentorArticle from "./mentor-components/mentor-article/MentorArticle";
-
-
+import MentorCareerSession from "./mentor-components/mentor-career-session/MentorCareerSession"
 
 const StudentLayout = () => (
   <div className="app-layout">
@@ -60,6 +59,7 @@ const MentorLayout = () => (
          <Route path="/mentor-resourcehub" element={<MentorResourcehub />} />
          <Route path="/mentor-manage-resources" element={<MentorManageResourses />} />
          <Route path="/mentor-article" element={<MentorArticle />} />
+         <Route path="/mentor-career-session" element={<MentorCareerSession/>} />
       </Routes>
     </React.Fragment>
   </div>
@@ -85,8 +85,9 @@ const MIPageLayout = () => (
   <div className="App">
     <React.Fragment>
       <Routes>
-        <Route path="/milanding" element={<MIPage />} />
-        <Route path="/mockinterview" element={<MIDash />} />
+        <Route path="/" element={<MIPage />} />
+        <Route path="milanding" element={<MIPage />} />
+        <Route path="mockinterview" element={<MIDash />} />
       </Routes>
     </React.Fragment>
   </div>
@@ -96,10 +97,9 @@ function App() {
   return (
     <div className="app-container">
       <Routes>
-        <Route path="/MIPage*" element={<MIPageLayout />} />
-        <Route path="/jh*" element={<LandingPageLayout />} />
+        <Route path="/l*" element={<LandingPageLayout />} />
         <Route path="/*" element={<StudentLayout />} />
-        <Route path="/j*" element={<MentorLayout />} />
+        <Route path="/h*" element={<MentorLayout />} />
       </Routes>
     </div>
   );
