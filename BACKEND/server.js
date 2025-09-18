@@ -11,8 +11,10 @@ const mentorshipResponseRoute = require("./routes/Mentor-Route/mentornship_respo
 const guidanceRouter = require("./routes/student_routes/guidanceR");
 const resourcesRouter = require("./routes/Resource_Router/resourceRouter");
 const mentorshipAnnouncementRoute = require("./routes/Mentor-Route/mentornship_announsmentR");
+const interviewroutes = require("./routes/InterviewRoutes/interviewRoute_jcj");
 const mentorresourcesRoute = require("./routes/Mentor-Route/mentornship_resourcehubR");
 const mentorArticleRoute = require("./routes/Mentor-Route/mentornship_ArticleR");
+
 const mentorCareerSessionRoute = require("./routes/Mentor-Route/mentornship_career_session");
 const PORT = process.env.PORT || 8070;
 
@@ -50,6 +52,13 @@ app.use("/mentor-resourcehub", mentorresourcesRoute);
 app.use("/mentor-article", mentorArticleRoute);
 app.use("/mentor-career-session", mentorCareerSessionRoute);
 
+
+// Interview Route
+app.use("/api/interview", interviewroutes);
+app.use("/mentor-resourcehub",mentorresourcesRoute);
+app.use("/mentor-article",mentorArticleRoute);
+
+app.use("/mentor-career-session",mentorCareerSessionRoute);
 const URL = process.env.MONGODB_URL;
 mongoose.connect(URL);
 
