@@ -140,8 +140,7 @@ const updateResource = async(req,res) =>{
         if(!updateresource){
             return res.status(404).json({message:"Resource is not Updated"});
         }
-
-        return res.status(400).json({message:"Resource is Successfully Updated",updateresource});
+        return res.status(200).json({message:"Resource is Successfully Updated", updateresource});
         
 
     }catch(error){
@@ -151,8 +150,15 @@ const updateResource = async(req,res) =>{
 
 };
 
+// When opening the edit modal, use the resource from your backend data
+const openEditModal = (resource) => {
+  setSelectedResource({ ...resource });
+  setShowEditModal(true);
+};
+
 exports.addResources = addResources;
 exports.displayResource = displayResource;
 exports.displayResourceByID = displayResourceByID;
 exports.deleteResource = deleteResource;
 exports.updateResource = updateResource;
+exports.openEditModal = openEditModal;

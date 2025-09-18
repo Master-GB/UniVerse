@@ -5,112 +5,11 @@ const API_BASE = "http://localhost:8070";
 const ENDPOINT = `${API_BASE}/resource/display`;
 
 const MAIN_TABS = ["Overview", "All", "Computing", "Business", "Engineering"];
-const TYPES = ["LectureVideo", "LectureNote", "PastPapper", "Papper", "Other"];
+const TYPES = ["LectureVideo", "LectureNote", "PastPaper", "Paper", "Other"];
 
 const PAGE_SIZE = 12;
 
-const dummyResources = [
-  // Computing
-  {
-    _id: "r1",
-    title: "Intro to Algorithms - Lecture 1",
-    description: "Foundations of algorithms, complexity, and problem-solving.",
-    category: "Computing",
-    sub_category: "Algorithms",
-    typeOfRes: "LectureVideo",
-    contentType: "mp4",
-    fileUrl: "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
-    thumbnailUrl: "",
-    updatedAt: "2025-08-10T10:00:00.000Z",
-  },
-  {
-    _id: "r2",
-    title: "Data Structures Notes",
-    description: "Comprehensive notes on arrays, stacks, queues, trees, and graphs.",
-    category: "Computing",
-    sub_category: "Data Structures",
-    typeOfRes: "LectureNote",
-    contentType: "pdf",
-    fileUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-    thumbnailUrl: "",
-    updatedAt: "2025-08-12T09:00:00.000Z",
-  },
-  {
-    _id: "r3",
-    title: "Operating Systems Past Paper 2023",
-    description: "Final exam paper with solutions.",
-    category: "Computing",
-    sub_category: "Operating Systems",
-    typeOfRes: "PastPapper",
-    contentType: "pdf",
-    fileUrl: "https://www.africau.edu/images/default/sample.pdf",
-    thumbnailUrl: "",
-    updatedAt: "2025-08-08T08:30:00.000Z",
-  },
-  // Business
-  {
-    _id: "r4",
-    title: "Marketing 101 Lecture",
-    description: "Basics of marketing and market segmentation.",
-    category: "Business",
-    sub_category: "Marketing",
-    typeOfRes: "LectureVideo",
-    contentType: "mp4",
-    fileUrl: "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
-    thumbnailUrl: "",
-    updatedAt: "2025-08-11T11:15:00.000Z",
-  },
-  {
-    _id: "r5",
-    title: "Financial Accounting Notes",
-    description: "Essential accounting principles and examples.",
-    category: "Business",
-    sub_category: "Accounting",
-    typeOfRes: "LectureNote",
-    contentType: "pdf",
-    fileUrl: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-    thumbnailUrl: "",
-    updatedAt: "2025-08-05T13:20:00.000Z",
-  },
-  // Engineering
-  {
-    _id: "r6",
-    title: "Thermodynamics Paper",
-    description: "Sample paper on thermodynamics laws and applications.",
-    category: "Engineering",
-    sub_category: "Mechanical",
-    typeOfRes: "Papper",
-    contentType: "pdf",
-    fileUrl: "https://www.africau.edu/images/default/sample.pdf",
-    thumbnailUrl: "",
-    updatedAt: "2025-08-02T10:10:00.000Z",
-  },
-  {
-    _id: "r7",
-    title: "Circuits Lecture",
-    description: "Ohm’s law, Kirchhoff’s rules, and circuit analysis.",
-    category: "Engineering",
-    sub_category: "Electrical",
-    typeOfRes: "LectureVideo",
-    contentType: "mp4",
-    fileUrl: "https://samplelib.com/lib/preview/mp4/sample-5s.mp4",
-    thumbnailUrl: "",
-    updatedAt: "2025-08-14T17:40:00.000Z",
-  },
-  // Other
-  {
-    _id: "r8",
-    title: "Academic Writing Guide",
-    description: "Tips and templates for academic reports.",
-    category: "Computing",
-    sub_category: "General",
-    typeOfRes: "Other",
-    contentType: "link",
-    fileUrl: "https://www.example.com",
-    thumbnailUrl: "",
-    updatedAt: "2025-08-06T15:10:00.000Z",
-  },
-];
+
 
 function useFavorites() {
   const KEY = "universe_resource_favorites";
@@ -263,7 +162,7 @@ export default function StuResources() {
   const [previewItem, setPreviewItem] = useState(null);
   const { favSet, toggleFav, isFav } = useFavorites();
 
-  // Fetch or use dummy data
+ 
   useEffect(() => {
     let mounted = true;
     setLoading(true);
@@ -279,7 +178,7 @@ export default function StuResources() {
         const arr = Array.isArray(data?.resources) ? data.resources : [];
         // Normalize minimal fields; fallback to dummy if empty
         if (arr.length === 0) {
-          setResources(dummyResources);
+           console.log("No resources from API, using dummy data.");
         } else {
           setResources(
             arr.map((x, i) => ({
@@ -299,7 +198,7 @@ export default function StuResources() {
       })
       .catch(() => {
         if (!mounted) return;
-        setResources(dummyResources);
+        console.log("Failed to fetch resources, using dummy data.");
       })
       .finally(() => {
         if (mounted) setLoading(false);
@@ -428,23 +327,25 @@ export default function StuResources() {
           ))}
         </div>
         <div className="pagination">
-          <button
-            className="btn ghost"
-            disabled={page === 1}
-            onClick={() => setPage((p) => Math.max(1, p - 1))}
-          >
-            Prev
-          </button>
+          <div className="pagination-buttons">
+            <button
+              className="btn ghost"
+              disabled={page === 1}
+              onClick={() => setPage((p) => Math.max(1, p - 1))}
+            >
+              Prev
+            </button>
+            <button
+              className="btn ghost"
+              disabled={page === totalPages}
+              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+            >
+              Next
+            </button>
+          </div>
           <span className="page-indicator">
             Page {page} of {totalPages}
           </span>
-          <button
-            className="btn ghost"
-            disabled={page === totalPages}
-            onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-          >
-            Next
-          </button>
         </div>
       </>
     );
@@ -482,8 +383,21 @@ export default function StuResources() {
         </label>
       </div>
 
+      
+
       <div className="filters">
         <div className="filter-row">
+
+          <div className="filter grow">
+            <label>Search (title)</label>
+            <input
+              type="text"
+              placeholder="Search by title..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+            />
+          </div>
+          
           <div className="filter">
             <label>Type</label>
             <select
@@ -513,15 +427,6 @@ export default function StuResources() {
             </select>
           </div>
 
-          <div className="filter grow">
-            <label>Search (title)</label>
-            <input
-              type="text"
-              placeholder="Search by title..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />
-          </div>
 
           <div className="filter">
             <label>Sort</label>

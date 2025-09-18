@@ -13,9 +13,6 @@ const {
 } = require('../../controllers/Mentor-Controller/Mentornship_AnnounsmentC');
 
 
-
-
-
 router.get('/display', getMentornshipAnnounsment);
 router.get('/getid/:id', getMentornshipAnnounsmentById);
 router.post('/add', upload.array('resources', 10), addMentorshipAnnouncement);

@@ -131,6 +131,12 @@
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
+
+.filter.grow {
+  flex: 2;
+  min-width: 300px;
+  max-width: 100%;
+}
 .filter select,
 .filter input {
   padding: 10px 12px;
@@ -233,6 +239,46 @@
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
+.pagination {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.pagination-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.pagination button {
+  padding: 6px 16px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination button:not(:disabled):hover {
+  background: var(--primary-light);
+  border-color: var(--primary);
+}
+
+.page-indicator {
+  color: var(--text-muted);
+  font-size: 13px;
+  margin-top: 4px;
+}
+
 .res-fav {
   background: transparent;
   border: none;

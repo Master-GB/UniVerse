@@ -508,19 +508,20 @@ const StuSession = () => {
   return (
     <div className="session-wrapper">
       <div className="session-container">
+        <h1 className="acdamic-res-title">Academic Mentorship Sessions</h1>
         <div className="session-tabs">
-          <button 
+          <div 
             className={`tab ${activeTab === 'available' ? 'active' : ''}`}
             onClick={() => setActiveTab('available')}
           >
             Available Sessions
-          </button>
-          <button 
+          </div>
+          <div 
             className={`tab ${activeTab === 'booked' ? 'active' : ''}`}
             onClick={() => setActiveTab('booked')}
           >
             My Bookings
-          </button>
+          </div>
         </div>
 
         <div className="controls">
