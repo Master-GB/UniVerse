@@ -3,7 +3,6 @@ import './MentorCareerSession.css';
 import MentorNavbar from '../mentor-navbar/MentorNavbar';
 
 const CareerSessionForm = () => {
-  // Configure your backend URL here
   const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8070';
   
   const [formData, setFormData] = useState({
@@ -26,7 +25,6 @@ const CareerSessionForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
-  // useEffect to handle API submission when form is validated and ready
   useEffect(() => {
     if (isSubmitting && Object.keys(errors).length === 0) {
       submitToAPI();
@@ -35,24 +33,19 @@ const CareerSessionForm = () => {
 
   const submitToAPI = async () => {
     try {
-      // Filter out empty resource links
       const cleanedData = {
         ...formData,
         resource_links: formData.resource_links.filter(link => link.trim() !== '')
       };
 
-      // Create FormData for file uploads
       const formDataToSend = new FormData();
       
-      // Append all form fields except files
       Object.keys(cleanedData).forEach(key => {
         if (key === 'session_resources') {
-          // Handle files separately
           cleanedData[key].forEach((file, index) => {
             formDataToSend.append(`session_resources`, file.buffer || file);
           });
         } else if (key === 'resource_links') {
-          // Handle array of links
           cleanedData[key].forEach((link, index) => {
             formDataToSend.append(`resource_links[${index}]`, link);
           });
@@ -64,7 +57,6 @@ const CareerSessionForm = () => {
       const response = await fetch(`${API_BASE_URL}/mentor-career-session/add`, {
         method: 'POST',
         body: formDataToSend,
-        // Don't set Content-Type header when using FormData - browser will set it automatically with boundary
       });
 
       if (!response.ok) {
@@ -77,7 +69,6 @@ const CareerSessionForm = () => {
       setSubmitSuccess(true);
       setIsSubmitting(false);
       
-      // Reset form after successful submission
       setTimeout(() => {
         resetForm();
         setSubmitSuccess(false);
@@ -116,7 +107,6 @@ const CareerSessionForm = () => {
       [name]: value
     }));
     
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -158,7 +148,7 @@ const CareerSessionForm = () => {
       originalName: file.name,
       mimetype: file.type,
       size: file.size,
-      buffer: file // The actual file object for FormData
+      buffer: file
     }));
     
     setFormData(prev => ({
@@ -178,7 +168,6 @@ const CareerSessionForm = () => {
   const validateForm = () => {
     const newErrors = {};
     
-    // Required field validations
     if (!formData.mentor_name.trim()) newErrors.mentor_name = 'Mentor name is required';
     if (!formData.mentor_email.trim()) newErrors.mentor_email = 'Mentor email is required';
     if (!formData.session_start_date) newErrors.session_start_date = 'Session start date is required';
@@ -188,13 +177,11 @@ const CareerSessionForm = () => {
     if (!formData.session_description.trim()) newErrors.session_description = 'Session description is required';
     if (!formData.session_link.trim()) newErrors.session_link = 'Session link is required';
     
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (formData.mentor_email && !emailRegex.test(formData.mentor_email)) {
       newErrors.mentor_email = 'Please enter a valid email address';
     }
     
-    // URL validation for session link
     try {
       if (formData.session_link && !formData.session_link.startsWith('http')) {
         newErrors.session_link = 'Session link must be a valid URL (starting with http or https)';
@@ -212,7 +199,6 @@ const CareerSessionForm = () => {
     
     if (validateForm()) {
       setIsSubmitting(true);
-      // The actual submission will be handled by useEffect
     }
   };
 
@@ -220,26 +206,25 @@ const CareerSessionForm = () => {
     <div>
       <MentorNavbar/>
       {submitSuccess && (
-        <div className="success-message">
+        <div className="success-message-mcs">
           Career Session created successfully!
         </div>
       )}
-      <div className="form-container">
-        <div className="form-wrapper">
-          <div className="form-header">
+      <div className="form-container-mcs">
+        <div className="form-wrapper-mcs">
+          <div className="form-header-mcs">
             <h1>Create Career Session</h1>
             <p>Set up your mentoring session with all the necessary details</p>
           </div>
-          <form onSubmit={handleSubmit} className="career-session-form">
-            {/* Mentor Information Section */}
-            <div className="form-section">
-              <h2 className="section-title">
-                <span className="section-icon">👨‍🏫</span>
+          <form onSubmit={handleSubmit} className="career-session-form-mcs">
+            <div className="form-section-mcs">
+              <h2 className="section-title-mcs">
+                <span className="section-icon-mcs">👨‍🏫</span>
                 Mentor Information
               </h2>
     
-              <div className="form-row">
-                <div className="form-group">
+              <div className="form-row-mcs">
+                <div className="form-group-mcs">
                   <label htmlFor="mentor_name">Mentor Name *</label>
                   <input
                     type="text"
@@ -247,14 +232,14 @@ const CareerSessionForm = () => {
                     name="mentor_name"
                     value={formData.mentor_name}
                     onChange={handleInputChange}
-                    className={errors.mentor_name ? 'error' : ''}
+                    className={errors.mentor_name ? 'error-mcs' : ''}
                     placeholder="Enter mentor's full name"
                     disabled={isSubmitting}
                   />
-                  {errors.mentor_name && <span className="error-message">{errors.mentor_name}</span>}
+                  {errors.mentor_name && <span className="error-message-mcs">{errors.mentor_name}</span>}
                 </div>
     
-                <div className="form-group">
+                <div className="form-group-mcs">
                   <label htmlFor="mentor_email">Mentor Email *</label>
                   <input
                     type="email"
@@ -262,15 +247,15 @@ const CareerSessionForm = () => {
                     name="mentor_email"
                     value={formData.mentor_email}
                     onChange={handleInputChange}
-                    className={errors.mentor_email ? 'error' : ''}
+                    className={errors.mentor_email ? 'error-mcs' : ''}
                     placeholder="mentor@example.com"
                     disabled={isSubmitting}
                   />
-                  {errors.mentor_email && <span className="error-message">{errors.mentor_email}</span>}
+                  {errors.mentor_email && <span className="error-message-mcs">{errors.mentor_email}</span>}
                 </div>
               </div>
     
-              <div className="form-group">
+              <div className="form-group-mcs">
                 <label htmlFor="mentor_description">Mentor Description</label>
                 <textarea
                   id="mentor_description"
@@ -283,15 +268,14 @@ const CareerSessionForm = () => {
                 />
               </div>
             </div>
-            {/* Session Details Section */}
-            <div className="form-section">
-              <h2 className="section-title">
-                <span className="section-icon">📅</span>
+            <div className="form-section-mcs">
+              <h2 className="section-title-mcs">
+                <span className="section-icon-mcs">📅</span>
                 Session Details
               </h2>
     
-              <div className="form-row">
-                <div className="form-group">
+              <div className="form-row-mcs">
+                <div className="form-group-mcs">
                   <label htmlFor="session_start_date">Start Date *</label>
                   <input
                     type="date"
@@ -299,13 +283,13 @@ const CareerSessionForm = () => {
                     name="session_start_date"
                     value={formData.session_start_date}
                     onChange={handleInputChange}
-                    className={errors.session_start_date ? 'error' : ''}
+                    className={errors.session_start_date ? 'error-mcs' : ''}
                     disabled={isSubmitting}
                   />
-                  {errors.session_start_date && <span className="error-message">{errors.session_start_date}</span>}
+                  {errors.session_start_date && <span className="error-message-mcs">{errors.session_start_date}</span>}
                 </div>
     
-                <div className="form-group">
+                <div className="form-group-mcs">
                   <label htmlFor="session_start_time">Start Time *</label>
                   <input
                     type="time"
@@ -313,22 +297,22 @@ const CareerSessionForm = () => {
                     name="session_start_time"
                     value={formData.session_start_time}
                     onChange={handleInputChange}
-                    className={errors.session_start_time ? 'error' : ''}
+                    className={errors.session_start_time ? 'error-mcs' : ''}
                     disabled={isSubmitting}
                   />
-                  {errors.session_start_time && <span className="error-message">{errors.session_start_time}</span>}
+                  {errors.session_start_time && <span className="error-message-mcs">{errors.session_start_time}</span>}
                 </div>
               </div>
     
-              <div className="form-row">
-                <div className="form-group">
+              <div className="form-row-mcs">
+                <div className="form-group-mcs">
                   <label htmlFor="session_duration">Duration *</label>
                   <select
                     id="session_duration"
                     name="session_duration"
                     value={formData.session_duration}
                     onChange={handleInputChange}
-                    className={errors.session_duration ? 'error' : ''}
+                    className={`select-mcs ${errors.session_duration ? 'error-mcs' : ''}`}
                     disabled={isSubmitting}
                   >
                     <option value="">Select duration</option>
@@ -338,10 +322,10 @@ const CareerSessionForm = () => {
                     <option value="1.5 hours">1.5 hours</option>
                     <option value="2 hours">2 hours</option>
                   </select>
-                  {errors.session_duration && <span className="error-message">{errors.session_duration}</span>}
+                  {errors.session_duration && <span className="error-message-mcs">{errors.session_duration}</span>}
                 </div>
     
-                <div className="form-group">
+                <div className="form-group-mcs">
                   <label htmlFor="seat_count">Available Seats</label>
                   <input
                     type="number"
@@ -356,13 +340,14 @@ const CareerSessionForm = () => {
                 </div>
               </div>
     
-              <div className="form-group">
+              <div className="form-group-mcs">
                 <label htmlFor="session_status">Session Status</label>
                 <select
                   id="session_status"
                   name="session_status"
                   value={formData.session_status}
                   onChange={handleInputChange}
+                  className="select-mcs"
                   disabled={isSubmitting}
                 >
                   <option value="book">Available to Book</option>
@@ -370,14 +355,13 @@ const CareerSessionForm = () => {
                 </select>
               </div>
             </div>
-            {/* Session Content Section */}
-            <div className="form-section">
-              <h2 className="section-title">
-                <span className="section-icon">📝</span>
+            <div className="form-section-mcs">
+              <h2 className="section-title-mcs">
+                <span className="section-icon-mcs">📝</span>
                 Session Content
               </h2>
     
-              <div className="form-group">
+              <div className="form-group-mcs">
                 <label htmlFor="session_title">Session Title *</label>
                 <input
                   type="text"
@@ -385,29 +369,29 @@ const CareerSessionForm = () => {
                   name="session_title"
                   value={formData.session_title}
                   onChange={handleInputChange}
-                  className={errors.session_title ? 'error' : ''}
+                  className={errors.session_title ? 'error-mcs' : ''}
                   placeholder="Enter a compelling session title"
                   disabled={isSubmitting}
                 />
-                {errors.session_title && <span className="error-message">{errors.session_title}</span>}
+                {errors.session_title && <span className="error-message-mcs">{errors.session_title}</span>}
               </div>
     
-              <div className="form-group">
+              <div className="form-group-mcs">
                 <label htmlFor="session_description">Session Description *</label>
                 <textarea
                   id="session_description"
                   name="session_description"
                   value={formData.session_description}
                   onChange={handleInputChange}
-                  className={errors.session_description ? 'error' : ''}
+                  className={errors.session_description ? 'error-mcs' : ''}
                   rows="4"
                   placeholder="Detailed description of what will be covered in this session"
                   disabled={isSubmitting}
                 />
-                {errors.session_description && <span className="error-message">{errors.session_description}</span>}
+                {errors.session_description && <span className="error-message-mcs">{errors.session_description}</span>}
               </div>
     
-              <div className="form-group">
+              <div className="form-group-mcs">
                 <label htmlFor="session_link">Session Link *</label>
                 <input
                   type="url"
@@ -415,24 +399,23 @@ const CareerSessionForm = () => {
                   name="session_link"
                   value={formData.session_link}
                   onChange={handleInputChange}
-                  className={errors.session_link ? 'error' : ''}
+                  className={errors.session_link ? 'error-mcs' : ''}
                   placeholder="https://meet.google.com/xxx-xxx-xxx"
                   disabled={isSubmitting}
                 />
-                {errors.session_link && <span className="error-message">{errors.session_link}</span>}
+                {errors.session_link && <span className="error-message-mcs">{errors.session_link}</span>}
               </div>
             </div>
-            {/* Resources Section */}
-            <div className="form-section">
-              <h2 className="section-title">
-                <span className="section-icon">📚</span>
+            <div className="form-section-mcs">
+              <h2 className="section-title-mcs">
+                <span className="section-icon-mcs">📚</span>
                 Resources
               </h2>
     
-              <div className="form-group">
+              <div className="form-group-mcs">
                 <label>Resource Links</label>
                 {formData.resource_links.map((link, index) => (
-                  <div key={index} className="resource-link-row">
+                  <div key={index} className="resource-link-row-mcs">
                     <input
                       type="url"
                       value={link}
@@ -444,7 +427,7 @@ const CareerSessionForm = () => {
                       <button
                         type="button"
                         onClick={() => removeResourceLink(index)}
-                        className="remove-btn"
+                        className="remove-btn-mcs"
                         disabled={isSubmitting}
                       >
                         ✕
@@ -455,14 +438,14 @@ const CareerSessionForm = () => {
                 <button 
                   type="button" 
                   onClick={addResourceLink} 
-                  className="add-btn"
+                  className="add-btn-mcs"
                   disabled={isSubmitting}
                 >
                   + Add Resource Link
                 </button>
               </div>
     
-              <div className="form-group">
+              <div className="form-group-mcs">
                 <label htmlFor="session_resources">Upload Files</label>
                 <input
                   type="file"
@@ -470,18 +453,19 @@ const CareerSessionForm = () => {
                   multiple
                   onChange={handleFileChange}
                   accept=".pdf,.doc,.docx,.ppt,.pptx,.txt"
+                  className="file-input-mcs"
                   disabled={isSubmitting}
                 />
                 {formData.session_resources.length > 0 && (
-                  <div className="uploaded-files">
+                  <div className="uploaded-files-mcs">
                     {formData.session_resources.map((file, index) => (
-                      <div key={index} className="file-item">
+                      <div key={index} className="file-item-mcs">
                         <span>{file.originalName}</span>
-                        <span className="file-size">({Math.round(file.size / 1024)}KB)</span>
+                        <span className="file-size-mcs">({Math.round(file.size / 1024)}KB)</span>
                         <button
                           type="button"
                           onClick={() => removeFile(index)}
-                          className="remove-file-btn"
+                          className="remove-file-btn-mcs"
                           disabled={isSubmitting}
                         >
                           ✕
@@ -492,12 +476,12 @@ const CareerSessionForm = () => {
                 )}
               </div>
             </div>
-            {/* Submit Button */}
-            <div className="form-actions">
+            <div className="form-actions-mcs">
               <button 
-                type="submit" 
-                className="submit-btn"
+                type="button" 
+                className="submit-btn-mcs"
                 disabled={isSubmitting}
+                onClick={handleSubmit}
               >
                 {isSubmitting ? 'Creating...' : 'Create Career Session'}
               </button>

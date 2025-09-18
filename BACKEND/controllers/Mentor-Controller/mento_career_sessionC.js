@@ -238,6 +238,97 @@ const getArticleImage = async (req, res) => {
 };
 
 
+const bookCareerSession = async (req, res) => {
+    try {
+        const { sessionId, studentId } = req.body;
+
+        if (!sessionId) {
+            return res.status(400).json({ message: "Session ID is required" });
+        }
+
+        // Find the session
+        const session = await mentorshipResponseController.findById(sessionId);
+        if (!session) {
+            return res.status(404).json({ message: "Session not found" });
+        }
+
+        // Check if session is available
+        if (session.session_status !== 'book') {
+            return res.status(400).json({ message: "Session is not available for booking" });
+        }
+
+        // Update session status to 'booked'
+        const updatedSession = await mentorshipResponseController.findByIdAndUpdate(
+            sessionId,
+            { $set: { session_status: 'booked' } },
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedSession) {
+            return res.status(500).json({ message: "Failed to update session status" });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Session booked successfully",
+            data: updatedSession
+        });
+
+    } catch (error) {
+        console.error('Error booking session:', error);
+        res.status(500).json({
+            message: "Error booking session",
+            error: error.message
+        });
+    }
+};
+
+const cancelCareerSession = async (req, res) => {
+    try {
+        const { sessionId, studentId } = req.body;
+
+        if (!sessionId) {
+            return res.status(400).json({ message: "Session ID is required" });
+        }
+
+        // Find the session
+        const session = await mentorshipResponseController.findById(sessionId);
+        if (!session) {
+            return res.status(404).json({ message: "Session not found" });
+        }
+
+        // Check if session is booked
+        if (session.session_status !== 'booked') {
+            return res.status(400).json({ message: "Session is not booked" });
+        }
+
+        // Update session status back to 'book'
+        const updatedSession = await mentorshipResponseController.findByIdAndUpdate(
+            sessionId,
+            { $set: { session_status: 'book' } },
+            { new: true, runValidators: true }
+        );
+
+        if (!updatedSession) {
+            return res.status(500).json({ message: "Failed to update session status" });
+        }
+
+        res.status(200).json({
+            success: true,
+            message: "Booking canceled successfully",
+            data: updatedSession
+        });
+
+    } catch (error) {
+        console.error('Error canceling booking:', error);
+        res.status(500).json({
+            message: "Error canceling booking",
+            error: error.message
+        });
+    }
+};
+
+// Don't forget to export these new functions
 module.exports = {
     addCareerSession, 
     UpdateCareerSession, 
@@ -245,5 +336,8 @@ module.exports = {
     getCareerSession,
     getCareerSessionById,
     getArticleImage,
+    bookCareerSession,    // Add this
+    cancelCareerSession,  // Add this
     upload
 };
+

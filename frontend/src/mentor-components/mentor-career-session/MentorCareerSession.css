@@ -1,19 +1,11 @@
-/* CareerSessionForm.css */
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-.form-container {
+.form-container-mcs {
   min-height: 100vh;
   background: linear-gradient(135deg, #0d1929 0%, #1e3c72 25%, #2a5298 50%, #1a237e 75%, #0d1929 100%);
   padding: 20px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.form-wrapper {
+.form-wrapper-mcs {
   max-width: 1000px;
   margin: 0 auto;
   background: rgba(255, 255, 255, 0.03);
@@ -24,7 +16,7 @@
   overflow: hidden;
 }
 
-.form-header {
+.form-header-mcs {
   background: linear-gradient(135deg, #1a237e 0%, #283593 50%, #3949ab 100%);
   padding: 40px;
   text-align: center;
@@ -32,7 +24,7 @@
   position: relative;
 }
 
-.form-header::before {
+.form-header-mcs::before {
   content: '';
   position: absolute;
   top: 0;
@@ -43,7 +35,7 @@
   opacity: 0.3;
 }
 
-.form-header h1 {
+.form-header-mcs h1 {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 10px;
@@ -51,18 +43,18 @@
   z-index: 1;
 }
 
-.form-header p {
+.form-header-mcs p {
   font-size: 1.1rem;
   opacity: 0.9;
   position: relative;
   z-index: 1;
 }
 
-.career-session-form {
+.career-session-form-mcs {
   padding: 40px;
 }
 
-.form-section {
+.form-section-mcs {
   margin-bottom: 40px;
   background: rgba(255, 255, 255, 0.02);
   border-radius: 15px;
@@ -71,13 +63,13 @@
   transition: all 0.3s ease;
 }
 
-.form-section:hover {
+.form-section-mcs:hover {
   background: rgba(255, 255, 255, 0.04);
   border-color: rgba(74, 144, 226, 0.3);
   transform: translateY(-2px);
 }
 
-.section-title {
+.section-title-mcs {
   display: flex;
   align-items: center;
   font-size: 1.5rem;
@@ -86,7 +78,7 @@
   font-weight: 600;
 }
 
-.section-icon {
+.section-icon-mcs {
   font-size: 1.8rem;
   margin-right: 12px;
   background: linear-gradient(135deg, #4a90e2, #357abd);
@@ -99,7 +91,7 @@
   height: 40px;
 }
 
-.form-row {
+.form-row-mcs {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 25px;
@@ -107,18 +99,18 @@
 }
 
 @media (max-width: 768px) {
-  .form-row {
+  .form-row-mcs {
     grid-template-columns: 1fr;
   }
 }
 
-.form-group {
+.form-group-mcs {
   display: flex;
   flex-direction: column;
   margin-bottom: 20px;
 }
 
-.form-group label {
+.form-group-mcs label {
   color: #e3f2fd;
   font-size: 0.95rem;
   font-weight: 500;
@@ -127,9 +119,9 @@
   letter-spacing: 0.5px;
 }
 
-.form-group input,
-.form-group select,
-.form-group textarea {
+.form-group-mcs input,
+.form-group-mcs select,
+.form-group-mcs textarea {
   background: rgba(255, 255, 255, 0.05);
   border: 2px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
@@ -140,47 +132,47 @@
   backdrop-filter: blur(10px);
 }
 
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
+.form-group-mcs input:focus,
+.form-group-mcs select:focus,
+.form-group-mcs textarea:focus {
   outline: none;
   border-color: #4a90e2;
   background: rgba(255, 255, 255, 0.08);
   box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
 }
 
-.form-group input::placeholder,
-.form-group textarea::placeholder {
+.form-group-mcs input::placeholder,
+.form-group-mcs textarea::placeholder {
   color: rgba(255, 255, 255, 0.5);
 }
 
-.form-group input.error,
-.form-group select.error,
-.form-group textarea.error {
+.form-group-mcs input.error-mcs,
+.form-group-mcs select.error-mcs,
+.form-group-mcs textarea.error-mcs {
   border-color: #ff6b6b;
   background: rgba(255, 107, 107, 0.05);
 }
 
-.error-message {
+.error-message-mcs {
   color: #ff6b6b;
   font-size: 0.85rem;
   margin-top: 5px;
   font-weight: 500;
 }
 
-.resource-link-row {
+.resource-link-row-mcs {
   display: flex;
   align-items: center;
   gap: 10px;
   margin-bottom: 10px;
 }
 
-.resource-link-row input {
+.resource-link-row-mcs input {
   flex: 1;
 }
 
-.remove-btn,
-.remove-file-btn {
+.remove-btn-mcs,
+.remove-file-btn-mcs {
   background: rgba(255, 107, 107, 0.2);
   border: 1px solid rgba(255, 107, 107, 0.3);
   color: #ff6b6b;
@@ -196,13 +188,13 @@
   justify-content: center;
 }
 
-.remove-btn:hover,
-.remove-file-btn:hover {
+.remove-btn-mcs:hover,
+.remove-file-btn-mcs:hover {
   background: rgba(255, 107, 107, 0.3);
   transform: scale(1.05);
 }
 
-.add-btn {
+.add-btn-mcs {
   background: linear-gradient(135deg, #4a90e2, #357abd);
   border: none;
   color: white;
@@ -217,13 +209,13 @@
   letter-spacing: 0.5px;
 }
 
-.add-btn:hover {
+.add-btn-mcs:hover {
   background: linear-gradient(135deg, #357abd, #2e6ba8);
   transform: translateY(-2px);
   box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
 }
 
-.uploaded-files {
+.uploaded-files-mcs {
   margin-top: 15px;
   background: rgba(255, 255, 255, 0.02);
   border-radius: 10px;
@@ -231,7 +223,7 @@
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.file-item {
+.file-item-mcs {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -242,23 +234,23 @@
   color: #e3f2fd;
 }
 
-.file-item:last-child {
+.file-item-mcs:last-child {
   margin-bottom: 0;
 }
 
-.file-size {
+.file-size-mcs {
   color: rgba(255, 255, 255, 0.6);
   font-size: 0.85rem;
   margin-left: 10px;
 }
 
-.form-actions {
+.form-actions-mcs {
   text-align: center;
   padding-top: 20px;
   border-top: 2px solid rgba(255, 255, 255, 0.1);
 }
 
-.submit-btn {
+.submit-btn-mcs {
   background: linear-gradient(135deg, #4a90e2 0%, #357abd 50%, #2e6ba8 100%);
   border: none;
   color: white;
@@ -274,7 +266,7 @@
   overflow: hidden;
 }
 
-.submit-btn::before {
+.submit-btn-mcs::before {
   content: '';
   position: absolute;
   top: 0;
@@ -285,100 +277,96 @@
   transition: left 0.5s;
 }
 
-.submit-btn:hover {
+.submit-btn-mcs:hover {
   transform: translateY(-3px);
   box-shadow: 0 10px 30px rgba(74, 144, 226, 0.4);
   background: linear-gradient(135deg, #357abd 0%, #2e6ba8 50%, #1e5f99 100%);
 }
 
-.submit-btn:hover::before {
+.submit-btn-mcs:hover::before {
   left: 100%;
 }
 
-.submit-btn:active {
+.submit-btn-mcs:active {
   transform: translateY(-1px);
 }
 
-/* Custom file input styling */
-input[type="file"] {
+.file-input-mcs {
   position: relative;
-  background: rgba(255, 255, 255, 0.05) !important;
-  border: 2px dashed rgba(255, 255, 255, 0.2) !important;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px dashed rgba(255, 255, 255, 0.2);
   border-radius: 10px;
-  padding: 20px !important;
+  padding: 20px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
-input[type="file"]:hover {
-  border-color: #4a90e2 !important;
-  background: rgba(255, 255, 255, 0.08) !important;
+.file-input-mcs:hover {
+  border-color: #4a90e2;
+  background: rgba(255, 255, 255, 0.08);
 }
 
-/* Custom select arrow */
-select {
+.select-mcs {
   appearance: none;
   background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%23ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6,9 12,15 18,9"></polyline></svg>');
   background-repeat: no-repeat;
   background-position: right 12px center;
   background-size: 16px;
-  padding-right: 45px !important;
+  padding-right: 45px;
 }
 
-/* Responsive design */
 @media (max-width: 768px) {
-  .form-container {
+  .form-container-mcs {
     padding: 10px;
   }
   
-  .form-header {
+  .form-header-mcs {
     padding: 30px 20px;
   }
   
-  .form-header h1 {
+  .form-header-mcs h1 {
     font-size: 2rem;
   }
   
-  .career-session-form {
+  .career-session-form-mcs {
     padding: 20px;
   }
   
-  .form-section {
+  .form-section-mcs {
     padding: 20px;
   }
   
-  .section-title {
+  .section-title-mcs {
     font-size: 1.3rem;
   }
   
-  .submit-btn {
+  .submit-btn-mcs {
     padding: 15px 40px;
     font-size: 1rem;
   }
 }
 
 @media (max-width: 480px) {
-  .form-header h1 {
+  .form-header-mcs h1 {
     font-size: 1.8rem;
   }
   
-  .form-header p {
+  .form-header-mcs p {
     font-size: 1rem;
   }
   
-  .section-title {
+  .section-title-mcs {
     font-size: 1.2rem;
     flex-direction: column;
     text-align: center;
     gap: 10px;
   }
   
-  .section-icon {
+  .section-icon-mcs {
     margin-right: 0;
   }
 }
 
-/* Animation for form sections */
 @keyframes slideIn {
   from {
     opacity: 0;
@@ -390,12 +378,22 @@ select {
   }
 }
 
-.form-section {
+.form-section-mcs {
   animation: slideIn 0.6s ease-out;
 }
 
-.form-section:nth-child(1) { animation-delay: 0.1s; }
-.form-section:nth-child(2) { animation-delay: 0.2s; }
-.form-section:nth-child(3) { animation-delay: 0.3s; }
-.form-section:nth-child(4) { animation-delay: 0.4s; }
-.form-section:nth-child(5) { animation-delay: 0.5s; }
+.form-section-mcs:nth-child(1) { animation-delay: 0.1s; }
+.form-section-mcs:nth-child(2) { animation-delay: 0.2s; }
+.form-section-mcs:nth-child(3) { animation-delay: 0.3s; }
+.form-section-mcs:nth-child(4) { animation-delay: 0.4s; }
+.form-section-mcs:nth-child(5) { animation-delay: 0.5s; }
+
+.success-message-mcs {
+  background: rgba(46, 204, 113, 0.1);
+  color: #2ecc71;
+  padding: 15px;
+  text-align: center;
+  border-radius: 8px;
+  margin: 20px 0;
+  font-weight: 500;
+}

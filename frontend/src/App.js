@@ -86,8 +86,8 @@ function App() {
     <div className="app-container">
       <Routes>
         <Route path="/l*" element={<LandingPageLayout />} />
-        <Route path="/k*" element={<StudentLayout />} />
-        <Route path="/*" element={<MentorLayout />} />
+        <Route path="/*" element={<StudentLayout />} />
+        <Route path="/h*" element={<MentorLayout />} />
       </Routes>
     </div>
   );
