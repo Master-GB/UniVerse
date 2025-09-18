@@ -4,7 +4,7 @@ import MILP_Content_jcj from "./MI_LP_content_jcj/MILP_Content_jcj";
 
 function MI_LandingPage_jcj() {
   return (
-    <div>
+    <div className="black-bg-jcj">
       {/* This is the main welcoming page of the mock interview module, this page is built by combining other components */}
       <MILP_Content_jcj />
     </div>

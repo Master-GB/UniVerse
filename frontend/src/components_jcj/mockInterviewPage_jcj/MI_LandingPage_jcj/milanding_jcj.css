@@ -1,0 +1,34 @@
+/* milanding_jcj.css -- add these rules */
+
+.black-bg-jcj {
+  position: relative;    /* create stacking context for children */
+  z-index: 0;            /* baseline stacking context */
+  background-color: #121212;
+  color: #ffffff;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* ensure the video sits above the .black-bg-jcj background */
+.black-bg-jcj .milp-background-video-jcj {
+  position: absolute;    /* already set in component CSS, but reinforce */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;            /* above the parent's background (which is painted below children in this stacking context) */
+  pointer-events: none;  /* optional: so clicks pass through to UI */
+}
+
+/* gradient overlay sits above the video */
+.black-bg-jcj .milp-bg-gradient-dark-jcj {
+  z-index: 1;
+}
+
+/* page content sits above gradient + video */
+.black-bg-jcj .milp-hero-content-jcj,
+.black-bg-jcj .milp-companies-section-jcj {
+  position: relative;
+  z-index: 2;
+}

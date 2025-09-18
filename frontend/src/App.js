@@ -27,7 +27,7 @@ import MentorGuidance from "./mentor-components/mentor-guidance/MentorGuidance";
 import MentorResourcehub from "./mentor-components/mentor-resourcehub/MentorResourcehub";
 import MentorManageResourses from "./mentor-components/mentor-resourcehub/MentorResourceManage";
 import MentorArticle from "./mentor-components/mentor-article/MentorArticle";
-import MentorCareerSession from "./mentor-components/mentor-career-session/MentorCareerSession"
+import MentorCareerSession from "./mentor-components/mentor-career-session/MentorCareerSession";
 
 const StudentLayout = () => (
   <div className="app-layout">
@@ -52,14 +52,26 @@ const MentorLayout = () => (
   <div className="App">
     <React.Fragment>
       <Routes>
-         <Route path="/mentor-dashboard" element={<MentorDashboard />} />
-         <Route path="/mentor-session-create" element={<MentorSessionCreate />} />
-         <Route path="/mentor-guidance" element={<MentorGuidance />} />
-         <Route path="/mentor-announcement" element={<MentorshipAnnouncementForm />} />
-         <Route path="/mentor-resourcehub" element={<MentorResourcehub />} />
-         <Route path="/mentor-manage-resources" element={<MentorManageResourses />} />
-         <Route path="/mentor-article" element={<MentorArticle />} />
-         <Route path="/mentor-career-session" element={<MentorCareerSession/>} />
+        <Route path="/mentor-dashboard" element={<MentorDashboard />} />
+        <Route
+          path="/mentor-session-create"
+          element={<MentorSessionCreate />}
+        />
+        <Route path="/mentor-guidance" element={<MentorGuidance />} />
+        <Route
+          path="/mentor-announcement"
+          element={<MentorshipAnnouncementForm />}
+        />
+        <Route path="/mentor-resourcehub" element={<MentorResourcehub />} />
+        <Route
+          path="/mentor-manage-resources"
+          element={<MentorManageResourses />}
+        />
+        <Route path="/mentor-article" element={<MentorArticle />} />
+        <Route
+          path="/mentor-career-session"
+          element={<MentorCareerSession />}
+        />
       </Routes>
     </React.Fragment>
   </div>
@@ -100,6 +112,7 @@ function App() {
         <Route path="/l*" element={<LandingPageLayout />} />
         <Route path="/*" element={<StudentLayout />} />
         <Route path="/h*" element={<MentorLayout />} />
+        <Route path="/MIPage*" element={<MIPageLayout />} />
       </Routes>
     </div>
   );
