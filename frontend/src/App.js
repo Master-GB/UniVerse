@@ -17,6 +17,8 @@ import AboutUs_jcj from "./components_jcj/Aboutus_jcj/AboutUs_jcj";
 import SupportPage_jcj from "./components_jcj/SupportPage_jcj/SupportPage_jcj";
 import Courses_jcj from "./components_jcj/Courses_jcj/Courses_jcj";
 import LoginPageJCJ from "./components_jcj/LoginPage_jcj/LoginPageJCJ";
+import MIPage from "./components_jcj/mockInterviewPage_jcj/MI_LandingPage_jcj/MI_LandingPage_jcj";
+import MIDash from "./components_jcj/mockInterviewPage_jcj/MI_LandingPage_jcj/MI_Dashboard_jcj/MockInterview";
 
 import MentorDashboard from "./mentor-components/mentor-dashboard/MentorDashboard";
 import MentorSessionCreate from "./mentor-components/mentor-session-create/MentorSessionCreate";
@@ -26,8 +28,6 @@ import MentorResourcehub from "./mentor-components/mentor-resourcehub/MentorReso
 import MentorManageResourses from "./mentor-components/mentor-resourcehub/MentorResourceManage";
 import MentorArticle from "./mentor-components/mentor-article/MentorArticle";
 import MentorCareerSession from "./mentor-components/mentor-career-session/MentorCareerSession"
-
-
 
 const StudentLayout = () => (
   <div className="app-layout">
@@ -60,7 +60,6 @@ const MentorLayout = () => (
          <Route path="/mentor-manage-resources" element={<MentorManageResourses />} />
          <Route path="/mentor-article" element={<MentorArticle />} />
          <Route path="/mentor-career-session" element={<MentorCareerSession/>} />
-
       </Routes>
     </React.Fragment>
   </div>
@@ -81,13 +80,27 @@ const LandingPageLayout = () => (
   </div>
 );
 
+// Mock interview page layout
+const MIPageLayout = () => (
+  <div className="App">
+    <React.Fragment>
+      <Routes>
+        <Route path="/" element={<MIPage />} />
+        <Route path="milanding" element={<MIPage />} />
+        <Route path="mockinterview" element={<MIDash />} />
+      </Routes>
+    </React.Fragment>
+  </div>
+);
+
 function App() {
   return (
     <div className="app-container">
       <Routes>
-        <Route path="/l*" element={<LandingPageLayout />} />
-        <Route path="/k*" element={<StudentLayout />} />
-        <Route path="/*" element={<MentorLayout />} />
+        <Route path="/MIPage*" element={<MIPageLayout />} />
+        <Route path="/jh*" element={<LandingPageLayout />} />
+        <Route path="/*" element={<StudentLayout />} />
+        <Route path="/j*" element={<MentorLayout />} />
       </Routes>
     </div>
   );
