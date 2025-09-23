@@ -1,0 +1,654 @@
+:root {
+  --bg: #0c0f14;
+  --card: #11161d;
+  --muted: #8b97a8;
+  --text: #e8eef7;
+  --accent: #5b9cff;
+  --accent-2: #7f5bff;
+  --success: #38d39f;
+  --warning: #ffb020;
+  --danger: #ff5b6a;
+  --border: rgba(255,255,255,0.08);
+  --glass: rgba(255,255,255,0.04);
+  --pill: rgba(255,255,255,0.06);
+  --shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+
+.courses-page {
+  padding: 15px 0 30px;
+  background: radial-gradient(1000px 600px at 10% -10%, rgba(127,91,255,0.2), transparent),
+             radial-gradient(1000px 600px at 100% 0%, rgba(91,156,255,0.15), transparent),
+             var(--bg);
+  min-height: 100vh;
+  margin: -100px 0 -50px;
+  width: 100%;
+  max-width: 100vw;
+  position: relative;
+  left: 0;
+  right: 0;
+  box-sizing: border-box;
+  animation: fadeIn 0.4s ease;
+  z-index: 1;
+  overflow-x: hidden;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+.courses-page::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(90deg, 
+      var(--border) 1px, 
+      transparent 1px
+    ) 0 0 / 40px 40px,
+    linear-gradient(0deg, 
+      var(--border) 1px, 
+      transparent 1px
+    ) 0 0 / 40px 40px;
+  background-attachment: fixed;
+  opacity: 0.5;
+  z-index: -1;
+  animation: gridMove 30s linear infinite;
+  pointer-events: none;
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+  -webkit-transform: translate3d(0, 0, 0);
+  -webkit-backface-visibility: hidden;
+  -webkit-perspective: 1000;
+}
+
+@keyframes gridMove {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(15px, 10px);
+  }
+  50% {
+    transform: translate(30px, 0);
+  }
+  75% {
+    transform: translate(45px, 15px);
+  }
+  100% {
+    transform: translate(60px, 0);
+  }
+}
+
+
+
+/* Container */
+.container-StuCourses {
+  width: 90% !important;
+  max-width: 100% !important;
+  margin: 30px auto 0 !important;
+  padding: 10px 15px 20px !important;
+  background: none;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+  box-sizing: border-box !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 1;
+  min-height: 100vh;
+  overflow: visible !important;
+}
+
+/* Grid Background - Added to body */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(90deg, 
+      rgba(255, 255, 255, 0.15) 1px, 
+      transparent 1px
+    ) 0 0 / 40px 40px,
+    linear-gradient(0deg, 
+      rgba(255, 255, 255, 0.15) 1px, 
+      transparent 1px
+    ) 0 0 / 40px 40px;
+  z-index: -1;
+  animation: gridMove 20s linear infinite;
+  pointer-events: none;
+  will-change: transform;
+  opacity: 0.5;
+}
+
+
+@keyframes gridMove {
+  0% { transform: translate3d(0, 0, 0); }
+  25% { transform: translate3d(5px, 2.5px, 0); }
+  50% { transform: translate3d(10px, 0, 0); }
+  75% { transform: translate3d(5px, -2.5px, 0); }
+  100% { transform: translate3d(0, 0, 0); }
+}
+
+/* Alerts */
+.loading-StuCourses,
+.error-StuCourses,
+.no-courses-StuCourses {
+  color: #fff;
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 60px 0;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.loading-StuCourses {
+  background: rgba(0, 128, 128, 0.15);
+  color: #00CED1;
+  border: 2px solid #00CED1;
+}
+
+.error-StuCourses {
+  background: rgba(220, 20, 60, 0.15);
+  color: #FF4040;
+  border: 2px solid #FF4040;
+}
+
+.no-courses-StuCourses {
+  background: rgba(255, 255, 255, 0.08);
+  color: #B0B0B0;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+/* Hero Section */
+.hero-StuCourses {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 0;
+  margin-bottom: 50px;
+  background: linear-gradient(90deg, #1A1A1D, #0F0F14);
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.hero-text-StuCourses {
+  max-width: 50%;
+}
+
+.hero-tag-StuCourses {
+  color: #00FF7F; /* Peacock green */
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 20px;
+  text-shadow: 0 0 10px rgba(0, 255, 127, 0.3);
+}
+
+.hero-title-StuCourses {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 25px;
+  animation: slideIn 1s ease-out;
+}
+
+.hero-subtitle-StuCourses {
+  font-size: 1.2rem;
+  color: #D3D3D3;
+  margin-bottom: 35px;
+}
+
+.explore-btn-StuCourses {
+  background: linear-gradient(45deg, #00FF7F, #00CED1);
+  color: #fff;
+  border: none;
+  padding: 15px 40px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 700;
+  transition: all 0.4s ease;
+  box-shadow: 0 6px 15px rgba(0, 255, 127, 0.4);
+}
+
+.explore-btn-StuCourses:hover {
+  background: linear-gradient(45deg, #00CED1, #00FF7F);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 255, 127, 0.6);
+}
+
+.hero-img-StuCourses {
+  max-width: 40%;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  animation: breathe 6s ease-in-out infinite;
+}
+
+/* CEO Message */
+.ceo-message-StuCourses {
+  padding: 50px 70px;
+  background: linear-gradient(135deg, #1A1A1D, #2E2E38);
+  text-align: center;
+  margin-bottom: 50px;
+  border-radius: 15px;
+  border: 2px solid #00FF7F;
+  box-shadow: 0 4px 15px rgba(0, 255, 127, 0.2);
+}
+
+.message-tag-StuCourses {
+  color: #00FF7F;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.message-title-StuCourses {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 25px;
+}
+
+.message-text-StuCourses {
+  font-size: 1.1rem;
+  color: #D3D3D3;
+  max-width: 900px;
+  margin: 0 auto 25px;
+}
+
+.ceo-signature-StuCourses {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.ceo-photo-StuCourses {
+  border-radius: 50%;
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border: 4px solid #00FF7F;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.signature-text-StuCourses {
+  font-style: italic;
+  font-size: 1.2rem;
+  color: #fff;
+  font-weight: 600;
+}
+
+.ceo-role-StuCourses {
+  font-size: 1rem;
+  color: #B0B0B0;
+}
+
+/* Goal Section */
+.goal-section-StuCourses {
+  display: flex;
+  gap: 40px;
+  padding: 80px 20px;
+  margin-bottom: 50px;
+  background: linear-gradient(135deg, #1A1A1D, #0F0F14);
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.experience-box-StuCourses {
+  max-width: 30%;
+  position: relative;
+}
+
+.experience-tag-StuCourses {
+  background: #00FF7F;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 600;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1;
+  animation: pulse 2s infinite;
+}
+
+.experience-img-StuCourses {
+  width: 100%;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.goal-content-StuCourses {
+  max-width: 70%;
+}
+
+.goal-tag-StuCourses {
+  color: #00FF7F;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.goal-title-StuCourses {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 25px;
+}
+
+.goal-text-StuCourses {
+  font-size: 1.1rem;
+  color: #D3D3D3;
+  margin-bottom: 35px;
+}
+
+.goal-items-StuCourses {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+}
+
+.goal-item-StuCourses {
+  background: linear-gradient(135deg, #2E2E38, #1A1A1D);
+  padding: 25px;
+  border-radius: 15px;
+  border: 2px solid #00FF7F;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.goal-item-StuCourses:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 255, 127, 0.4);
+}
+
+.goal-icon-StuCourses {
+  font-size: 28px;
+  color: #00FF7F;
+  margin-bottom: 15px;
+}
+
+.goal-item-StuCourses h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 12px;
+}
+
+.goal-item-StuCourses p {
+  font-size: 1rem;
+  color: #B0B0B0;
+}
+
+/* Banner Section */
+.banner-section-StuCourses {
+  display: flex;
+  gap: 25px;
+  padding: 50px 0;
+  background: linear-gradient(135deg, #2e3638, #1A1A1D);
+  justify-content: center;
+  border-radius: 15px;
+  border: 2px solid #00FF7F;
+  box-shadow: 0 6px 18px rgba(0, 255, 127, 0.2);
+}
+
+.banner-item-StuCourses {
+  flex: 1;
+  max-width: 320px;
+  text-align: center;
+  padding: 25px;
+  background: rgba(6, 94, 104, 0.08);
+  border-radius: 12px;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.banner-item-StuCourses:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 255, 127, 0.4);
+}
+
+.banner-icon-StuCourses {
+  font-size: 35px;
+  color: #00FF7F;
+  margin-bottom: 20px;
+}
+
+.banner-item-StuCourses h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 12px;
+}
+
+.banner-item-StuCourses p {
+  font-size: 1rem;
+  color: #B0B0B0;
+}
+
+/* Unique Courses Preview */
+.unique-courses-StuCourses {
+  padding: 25px 10px;
+  margin-top: 50px;
+  text-align: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1A1A1D, #0F0F14);
+  border-radius: 8px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.unique-tag-StuCourses {
+  color: #00FF7F;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.unique-title-StuCourses {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 20px;
+}
+
+.courses-grid-StuCourses {
+  display: grid;
+  grid-template-columns: repeat(3, 240px);
+  justify-content: center;
+  gap: 50px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Course Card */
+.course-card-StuCourses {
+  background: linear-gradient(135deg, #2E2E38, #1A1A1D);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.25s ease;
+  border: 1px solid #00CC66;
+  cursor: pointer;
+  height: 100%;
+  width: 240px;
+  margin: 0;
+}
+
+.course-card-StuCourses:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 200, 100, 0.3);
+}
+
+.course-img-StuCourses {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-bottom: 1px solid rgba(0, 220, 120, 0.25);
+}
+
+.course-body-StuCourses {
+  padding: 10px 12px 12px;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.course-level-StuCourses {
+  background: rgba(0, 200, 100, 0.15);
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  display: inline-block;
+  margin: 0 auto 6px;
+  line-height: 1.2;
+  white-space: nowrap;
+  max-width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+.course-title-StuCourses {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+  margin: 6px 0;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-height: 2.6em;
+  text-align: center;
+}
+
+.course-conducting-StuCourses {
+  font-size: 0.8rem;
+  color: #bbb;
+  margin: 4px 0 0;
+  line-height: 1.3;
+  opacity: 0.9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+
+/* Explore All */
+.explore-all-StuCourses {
+  text-align: center;
+  padding: 50px 0;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .courses-grid-StuCourses {
+    grid-template-columns: repeat(2, 240px);
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 600px) {
+  .courses-grid-StuCourses {
+    grid-template-columns: 1fr;
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container-StuCourses {
+    padding: 0 15px;
+    margin: -40px auto 0;
+    max-width: 100%;
+  }
+
+  .hero-StuCourses {
+    flex-direction: column;
+    gap: 30px;
+    text-align: center;
+  }
+
+  .hero-text-StuCourses {
+    max-width: 100%;
+  }
+
+  .hero-img-StuCourses {
+  width: 100%;
+  height: auto;
+  background: transparent; /* optional */
+}
+
+
+  .goal-section-StuCourses {
+    flex-direction: column;
+  }
+
+  .experience-box-StuCourses,
+  .goal-content-StuCourses {
+    max-width: 100%;
+  }
+
+  .banner-section-StuCourses {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .banner-item-StuCourses {
+    max-width: 100%;
+  }
+
+  .hero-title-StuCourses {
+    font-size: 2.5rem;
+  }
+
+  .goal-items-StuCourses {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-100px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes breathe {
+  0%   { transform: scale(1); }
+  25%  { transform: scale(1.05); }
+  50%  { transform: scale(1.1); }
+  75%  { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}

@@ -11,6 +11,7 @@ import StuSession from "./components_stu/stu_session/stu_session";
 import StuArticales from "./components_stu/stu_articale/stu_articales";
 import StuFullArticle from "./components_stu/stu_articale/stu_fullArticle";
 import StuCareerSession from "./components_stu/stu_career_session/stu_career_session";
+import StuCourses from "./components_stu/stu_course/stu_courses/stu_courses";
 
 import LandingPage from "./components_jcj/LandingPage_jcj/LandingPage_jcj";
 import AboutUs_jcj from "./components_jcj/Aboutus_jcj/AboutUs_jcj";
@@ -42,6 +43,7 @@ const StudentLayout = () => (
         <Route path="/student/career-session" element={<StuCareerSession />} />
         <Route path="/student/articales" element={<StuArticales />} />
         <Route path="/student/articales/:id" element={<StuFullArticle />} />
+        <Route path="/student/courses" element={<StuCourses />} />
       </Routes>
     </main>
     <StuFooter />
@@ -100,6 +102,7 @@ function App() {
         <Route path="/l*" element={<LandingPageLayout />} />
         <Route path="/*" element={<StudentLayout />} />
         <Route path="/h*" element={<MentorLayout />} />
+        <Route path="/h*" element={<MIPageLayout />} />
       </Routes>
     </div>
   );
