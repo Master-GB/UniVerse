@@ -12,6 +12,10 @@ import StuArticales from "./components_stu/stu_articale/stu_articales";
 import StuFullArticle from "./components_stu/stu_articale/stu_fullArticle";
 import StuCareerSession from "./components_stu/stu_career_session/stu_career_session";
 import StuCourses from "./components_stu/stu_course/stu_courses/stu_courses";
+import Stu_AllCourses from "./components_stu/stu_course/stu_AllCourses/stu_AllCourses";
+import Stu_CourseDetails from "./components_stu/stu_course/stu_CourseDetails/stu_CourseDetails";
+import Stu_CourseContent from "./components_stu/stu_course/stu_CourseContent/stu_CourseContent";
+import Stu_CourseQuiz from "./components_stu/stu_course/stu_CourseQuiz/stu_CourseQuiz";
 
 import LandingPage from "./components_jcj/LandingPage_jcj/LandingPage_jcj";
 import AboutUs_jcj from "./components_jcj/Aboutus_jcj/AboutUs_jcj";
@@ -44,6 +48,10 @@ const StudentLayout = () => (
         <Route path="/student/articales" element={<StuArticales />} />
         <Route path="/student/articales/:id" element={<StuFullArticle />} />
         <Route path="/student/courses" element={<StuCourses />} />
+        <Route path="/all-courses" element={<Stu_AllCourses />} />
+        <Route path="/courses/:id" element={<Stu_CourseDetails  />} />
+        <Route path="/courses/:id/content" element={<Stu_CourseContent />} />
+        <Route path="/courses/:id/quiz" element={<Stu_CourseQuiz />} />
       </Routes>
     </main>
     <StuFooter />
@@ -62,6 +70,7 @@ const MentorLayout = () => (
          <Route path="/mentor-manage-resources" element={<MentorManageResourses />} />
          <Route path="/mentor-article" element={<MentorArticle />} />
          <Route path="/mentor-career-session" element={<MentorCareerSession/>} />
+
       </Routes>
     </React.Fragment>
   </div>
