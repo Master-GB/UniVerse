@@ -19,14 +19,30 @@ const mentorCareerSessionRoute = require("./routes/Mentor-Route/mentornship_care
 const PORT = process.env.PORT || 8070;
 
 app.use(cors());
-app.use(express.json());
-app.use(bodyParser.json());
+
+// Parse JSON and capture raw body for debugging malformed JSON issues
+app.use(
+  express.json({
+    verify: (req, res, buf, encoding) => {
+      try {
+        req.rawBody = buf.toString(encoding || "utf8");
+      } catch (e) {
+        req.rawBody = undefined;
+      }
+    },
+  })
+);
+
+// Note: bodyParser.json() would duplicate parsing here, so we rely on express.json above
 app.use(express.urlencoded({ extended: true }));
 
 // 🚀 Disable caching so no 304 in dev
 if (process.env.NODE_ENV === "development") {
   app.use((req, res, next) => {
-    res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
+    res.setHeader(
+      "Cache-Control",
+      "no-store, no-cache, must-revalidate, proxy-revalidate"
+    );
     res.setHeader("Pragma", "no-cache");
     res.setHeader("Expires", "0");
     res.setHeader("Surrogate-Control", "no-store");
@@ -52,13 +68,12 @@ app.use("/mentor-resourcehub", mentorresourcesRoute);
 app.use("/mentor-article", mentorArticleRoute);
 app.use("/mentor-career-session", mentorCareerSessionRoute);
 
-
 // Interview Route
 app.use("/api/interview", interviewroutes);
-app.use("/mentor-resourcehub",mentorresourcesRoute);
-app.use("/mentor-article",mentorArticleRoute);
+app.use("/mentor-resourcehub", mentorresourcesRoute);
+app.use("/mentor-article", mentorArticleRoute);
 
-app.use("/mentor-career-session",mentorCareerSessionRoute);
+app.use("/mentor-career-session", mentorCareerSessionRoute);
 const URL = process.env.MONGODB_URL;
 mongoose.connect(URL);
 
@@ -69,4 +84,22 @@ connection.once("open", () => {
 
 app.listen(PORT, () => {
   console.log(`Server is up and running on port no ${PORT}`);
+});
+
+// Better JSON parse error messages for debugging malformed requests
+app.use((err, req, res, next) => {
+  if (
+    err &&
+    err instanceof SyntaxError &&
+    err.status === 400 &&
+    "body" in err
+  ) {
+    console.error("JSON Syntax Error:", err.message);
+    console.error(
+      "Raw body received (first 2000 chars):",
+      req.rawBody?.slice(0, 2000)
+    );
+    return res.status(400).send(`Invalid JSON: ${err.message}`);
+  }
+  next(err);
 });

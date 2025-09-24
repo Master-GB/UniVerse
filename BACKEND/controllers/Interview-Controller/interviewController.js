@@ -3,8 +3,17 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const askAI = async (req, res) => {
-  // console.log("askAI function called"); // <-- Add this
-  // console.log("API Key exists:", !!process.env.GEMINI_API_KEY); // <-- Add this to check the key
+  console.log("askAI function called");
+  console.log("API Key exists:", !!process.env.GEMINI_API_KEY);
+  // Helpful debug logs for malformed JSON issues on some machines
+  if (req.rawBody !== undefined) {
+    console.log("Raw body (first 2000 chars):", req.rawBody.slice(0, 2000));
+  } else {
+    console.log(
+      "No rawBody captured (client may not have sent JSON or verify didn't run)"
+    );
+  }
+  console.log("Parsed req.body:", JSON.stringify(req.body));
   try {
     const { userAnswer, chatHistory } = req.body;
 
