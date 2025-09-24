@@ -32,7 +32,7 @@ import MentorGuidance from "./mentor-components/mentor-guidance/MentorGuidance";
 import MentorResourcehub from "./mentor-components/mentor-resourcehub/MentorResourcehub";
 import MentorManageResourses from "./mentor-components/mentor-resourcehub/MentorResourceManage";
 import MentorArticle from "./mentor-components/mentor-article/MentorArticle";
-import MentorCareerSession from "./mentor-components/mentor-career-session/MentorCareerSession"
+import MentorCareerSession from "./mentor-components/mentor-career-session/MentorCareerSession";
 
 const StudentLayout = () => (
   <div className="app-layout">
@@ -70,7 +70,6 @@ const MentorLayout = () => (
          <Route path="/mentor-manage-resources" element={<MentorManageResourses />} />
          <Route path="/mentor-article" element={<MentorArticle />} />
          <Route path="/mentor-career-session" element={<MentorCareerSession/>} />
-
       </Routes>
     </React.Fragment>
   </div>
@@ -108,7 +107,7 @@ function App() {
   return (
     <div className="app-container">
       <Routes>
-        <Route path="/l*" element={<LandingPageLayout />} />
+        <Route path="/landing/*" element={<LandingPageLayout />} />
         <Route path="/*" element={<StudentLayout />} />
         <Route path="/h*" element={<MentorLayout />} />
         <Route path="/h*" element={<MIPageLayout />} />
