@@ -1,26 +1,14 @@
 :root {
   --bg: #0c0f14;
-  --card: #11161d;
-  --muted: #8b97a8;
-  --text: #e8eef7;
-  --accent: #5b9cff;
-  --accent-2: #7f5bff;
-  --success: #38d39f;
-  --warning: #ffb020;
-  --danger: #ff5b6a;
-  --border: rgba(255,255,255,0.08);
-  --glass: rgba(255,255,255,0.04);
-  --pill: rgba(255,255,255,0.06);
-  --shadow: 0 10px 30px rgba(0,0,0,0.35);
 }
 
 .courses-page {
-  padding: 15px 0 30px;
+  padding: 15px 0 0;
   background: radial-gradient(1000px 600px at 10% -10%, rgba(127,91,255,0.2), transparent),
              radial-gradient(1000px 600px at 100% 0%, rgba(91,156,255,0.15), transparent),
              var(--bg);
-  min-height: 100vh;
-  margin: -100px 0 -50px;
+  min-height: calc(100vh - 70px);
+  margin: -100px 0 -35px;
   width: 100%;
   max-width: 100vw;
   position: relative;
@@ -54,9 +42,11 @@
       var(--border) 1px, 
       transparent 1px
     ) 0 0 / 40px 40px;
-  background-attachment: fixed;
   opacity: 0.5;
   z-index: -1;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0,0,0);
   animation: gridMove 30s linear infinite;
   pointer-events: none;
   backface-visibility: hidden;
@@ -64,7 +54,6 @@
   will-change: transform;
   -webkit-transform: translate3d(0, 0, 0);
   -webkit-backface-visibility: hidden;
-  -webkit-perspective: 1000;
 }
 
 @keyframes gridMove {
@@ -102,39 +91,6 @@
   z-index: 1;
   min-height: 100vh;
   overflow: visible !important;
-}
-
-/* Grid Background - Added to body */
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    linear-gradient(90deg, 
-      rgba(255, 255, 255, 0.15) 1px, 
-      transparent 1px
-    ) 0 0 / 40px 40px,
-    linear-gradient(0deg, 
-      rgba(255, 255, 255, 0.15) 1px, 
-      transparent 1px
-    ) 0 0 / 40px 40px;
-  z-index: -1;
-  animation: gridMove 20s linear infinite;
-  pointer-events: none;
-  will-change: transform;
-  opacity: 0.5;
-}
-
-
-@keyframes gridMove {
-  0% { transform: translate3d(0, 0, 0); }
-  25% { transform: translate3d(5px, 2.5px, 0); }
-  50% { transform: translate3d(10px, 0, 0); }
-  75% { transform: translate3d(5px, -2.5px, 0); }
-  100% { transform: translate3d(0, 0, 0); }
 }
 
 /* Alerts */

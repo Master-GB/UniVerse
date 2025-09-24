@@ -66,6 +66,7 @@ app.use("/mentor-resourcehub",mentorresourcesRoute);
 app.use("/mentor-article",mentorArticleRoute);
 
 app.use("/mentor-career-session",mentorCareerSessionRoute);
+
 const URL = process.env.MONGODB_URL;
 mongoose.connect(URL);
 

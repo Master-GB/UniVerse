@@ -37,7 +37,8 @@ function StuCourses() {
 
   return (
     <div className="courses-page">
-      <div className="container-StuCourses">
+      <div className="courses-content-wrapper">
+        <div className="container-StuCourses">
         {/* Hero Section */}
         <div className="hero-StuCourses">
           <div className="hero-text-StuCourses">
@@ -187,6 +188,7 @@ function StuCourses() {
             Explore All Courses →
           </button>
         </div>
+      </div>
       </div>
     </div>
   );
