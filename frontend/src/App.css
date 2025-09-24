@@ -26,7 +26,7 @@ html, body, #root {
   flex: 1 0 auto;
   width: 100%;
   padding-top: 158px; /* Space for fixed header */
-  padding-bottom: 2rem;
+  padding-bottom: 0rem;
   min-height: calc(100vh - 80px); /* Full viewport height minus header */
   box-sizing: border-box;
 }

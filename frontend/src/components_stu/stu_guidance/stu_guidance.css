@@ -16,7 +16,8 @@
 .guidance-container {
   max-width: 1500px;
   margin: 0 auto;
-  padding: 2rem;
+  padding-top: 2rem;
+  padding-bottom: 5rem;
   color: var(--text);
   min-height: 100vh;
   position: relative;
