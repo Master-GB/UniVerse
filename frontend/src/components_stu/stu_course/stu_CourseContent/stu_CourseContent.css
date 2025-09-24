@@ -1,8 +1,15 @@
+:root {
+  --bg: #0c0f14;
+  --border: rgba(255, 255, 255, 0.08);
+}
+
 .course-details-page-coursecontent {
   max-width: 100%;
   margin: 0;
   padding: 0;
-  background: linear-gradient(135deg, #0A0A14 0%, #1F1F2E 100%);
+  background: radial-gradient(1000px 600px at 10% -10%, rgba(127,91,255,0.2), transparent),
+             radial-gradient(1000px 600px at 100% 0%, rgba(91,156,255,0.15), transparent),
+             var(--bg);
   min-height: 100vh;
   color: #D3D3D3;
   font-family: 'Poppins', sans-serif;
@@ -24,7 +31,9 @@
 .course-content-section-coursecontent {
   flex: 1;
   padding: 20px 30px;
-  background: rgba(15, 15, 20, 0.95);
+  background: radial-gradient(1000px 600px at 10% -10%, rgba(127,91,255,0.2), transparent),
+             radial-gradient(1000px 600px at 100% 0%, rgba(91,156,255,0.15), transparent),
+             var(--bg);
   border-radius: 12px;
    margin: 20px 20px 25px 280px;
   overflow-y: auto;
