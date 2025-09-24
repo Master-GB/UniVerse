@@ -18,6 +18,7 @@ import Stu_CourseContent from "./components_stu/stu_course/stu_CourseContent/stu
 import Stu_CourseQuiz from "./components_stu/stu_course/stu_CourseQuiz/stu_CourseQuiz";
 import StudentInterviewQuiz from "./components_stu/stu_interview/stu_StudentInterviewQuiz/stu_StudentInterviewQuiz";
 import ResumeTemplate1 from "./components_stu/stu_resume/stu_resumeTem/stu_resumeTem1";
+import CareerResourceHub from "./components_stu/stu_trainingContent/stu_trainingContent";
 
 import LandingPage from "./components_jcj/LandingPage_jcj/LandingPage_jcj";
 import AboutUs_jcj from "./components_jcj/Aboutus_jcj/AboutUs_jcj";
@@ -55,6 +56,7 @@ const StudentLayout = () => (
         <Route path="/courses/:id/content" element={<Stu_CourseContent />} />
         <Route path="/courses/:id/quiz" element={<Stu_CourseQuiz />} />
         <Route path="/student/interview_quiz" element={<StudentInterviewQuiz />} />
+        <Route path="/student/career-resources" element={<CareerResourceHub />} />
         <Route path="/student/resume" element={<ResumeTemplate1 />} />
       </Routes>
     </main>
