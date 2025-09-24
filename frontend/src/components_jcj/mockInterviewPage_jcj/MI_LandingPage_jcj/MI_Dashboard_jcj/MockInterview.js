@@ -28,14 +28,18 @@ const MockInterview = () => {
     setTimeout(() => {
       const firstQuestion = mockQuestions[0];
       setCurrentQuestion(firstQuestion);
+
+      // this will initialize chat history with the first question from the mockQuestions array
       setChatHistory([
-        { type: "ai", message: firstQuestion, timestamp: new Date() },
+        { type: "ai", message: firstQuestion, timestamp: new Date() }, // AI's first question, as an object
       ]);
+
       setIsTyping(false);
     }, 2000);
   };
 
   const submitAnswer = async () => {
+    // Do nothing if answer is empty
     if (!userAnswer.trim()) return;
     setIsLoading(true);
 
