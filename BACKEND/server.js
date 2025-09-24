@@ -11,9 +11,11 @@ const mentorshipResponseRoute = require("./routes/Mentor-Route/mentornship_respo
 const guidanceRouter = require("./routes/student_routes/guidanceR");
 const resourcesRouter = require("./routes/Resource_Router/resourceRouter");
 const mentorshipAnnouncementRoute = require("./routes/Mentor-Route/mentornship_announsmentR");
-const interviewroutes = require("./routes/InterviewRoutes/interviewRoute_jcj");
 const mentorresourcesRoute = require("./routes/Mentor-Route/mentornship_resourcehubR");
 const mentorArticleRoute = require("./routes/Mentor-Route/mentornship_ArticleR");
+const courseRouter = require("./routes/Course_routes/courseRoutes");
+const enrollmentRouter = require("./routes/Course_routes/enrollmentR");
+const interviewQuizRouter = require("./routes/InterviewRoutes/interviewRoute_jcj");
 
 const mentorCareerSessionRoute = require("./routes/Mentor-Route/mentornship_career_session");
 const PORT = process.env.PORT || 8070;
@@ -36,7 +38,7 @@ app.use(
 // Note: bodyParser.json() would duplicate parsing here, so we rely on express.json above
 app.use(express.urlencoded({ extended: true }));
 
-// 🚀 Disable caching so no 304 in dev
+// Disable caching so no 304 in dev
 if (process.env.NODE_ENV === "development") {
   app.use((req, res, next) => {
     res.setHeader(
@@ -70,10 +72,18 @@ app.use("/mentor-career-session", mentorCareerSessionRoute);
 
 // Interview Route
 app.use("/api/interview", interviewroutes);
+// Course routes
+app.use("/api/courses", courseRouter);
+app.use("/api/enrollments", enrollmentRouter);
+
+//interview quiz routes
+app.use("/api/interviewQuiz", interviewQuizRouter);
+
 app.use("/mentor-resourcehub", mentorresourcesRoute);
 app.use("/mentor-article", mentorArticleRoute);
 
 app.use("/mentor-career-session", mentorCareerSessionRoute);
+
 const URL = process.env.MONGODB_URL;
 mongoose.connect(URL);
 

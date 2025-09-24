@@ -1,10 +1,21 @@
-const express = require("express");
+const express = require('express');
 const {
-  askAI,
-} = require("../../controllers/Interview-Controller/interviewController.js");
+  addInterviewQuiz,
+  getAllInterviewQuizzes,
+  updateInterviewQuiz,
+  deleteInterviewQuiz,
+  getQuestionsByFacultyAndRole,
+  getFaculties
+} = require('../../controllers/Interview-Controller/interviewController');
 
 const router = express.Router();
 
-router.post("/ask", askAI);
+// Routes
+router.post('/', addInterviewQuiz);
+router.get('/', getAllInterviewQuizzes);
+router.get('/faculties', getFaculties); // ✅ faculties dropdown
+router.get('/:faculty/:role', getQuestionsByFacultyAndRole);
+router.put('/:faculty/:role', updateInterviewQuiz);
+router.delete('/:faculty/:role/:qIndex', deleteInterviewQuiz);
 
 module.exports = router;
