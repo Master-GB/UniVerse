@@ -11,6 +11,7 @@ import StuSession from "./components_stu/stu_session/stu_session";
 import StuArticales from "./components_stu/stu_articale/stu_articales";
 import StuFullArticle from "./components_stu/stu_articale/stu_fullArticle";
 import StuCareerSession from "./components_stu/stu_career_session/stu_career_session";
+import StuResume from "./components_stu/stu_resume/StuResume";
 import StuCourses from "./components_stu/stu_course/stu_courses/stu_courses";
 import Stu_AllCourses from "./components_stu/stu_course/stu_AllCourses/stu_AllCourses";
 import Stu_CourseDetails from "./components_stu/stu_course/stu_CourseDetails/stu_CourseDetails";
@@ -18,6 +19,7 @@ import Stu_CourseContent from "./components_stu/stu_course/stu_CourseContent/stu
 import Stu_CourseQuiz from "./components_stu/stu_course/stu_CourseQuiz/stu_CourseQuiz";
 import StudentInterviewQuiz from "./components_stu/stu_interview/stu_StudentInterviewQuiz/stu_StudentInterviewQuiz";
 import CareerResourceHub from "./components_stu/stu_trainingContent/stu_trainingContent";
+
 
 import LandingPage from "./components_jcj/LandingPage_jcj/LandingPage_jcj";
 import AboutUs_jcj from "./components_jcj/Aboutus_jcj/AboutUs_jcj";
@@ -49,6 +51,7 @@ const StudentLayout = () => (
         <Route path="/student/career-session" element={<StuCareerSession />} />
         <Route path="/student/articales" element={<StuArticales />} />
         <Route path="/student/articales/:id" element={<StuFullArticle />} />
+        <Route path="/student/resume/" element={<StuResume />} />
         <Route path="/student/courses" element={<StuCourses />} />
         <Route path="/all-courses" element={<Stu_AllCourses />} />
         <Route path="/courses/:id" element={<Stu_CourseDetails  />} />
