@@ -15,7 +15,8 @@ const mentorresourcesRoute = require("./routes/Mentor-Route/mentornship_resource
 const mentorArticleRoute = require("./routes/Mentor-Route/mentornship_ArticleR");
 const courseRouter = require("./routes/Course_routes/courseRoutes");
 const enrollmentRouter = require("./routes/Course_routes/enrollmentR");
-const interviewQuizRouter = require("./routes/InterviewRoutes/interviewRoute_jcj");
+const interviewQuizRouter = require("./routes/Interview_routes/interviewQuizRoutes");
+const interviewroutes = require("./routes/InterviewRoutes/interviewRoute_jcj");
 
 const mentorCareerSessionRoute = require("./routes/Mentor-Route/mentornship_career_session");
 const PORT = process.env.PORT || 8070;
@@ -78,6 +79,7 @@ app.use("/api/enrollments", enrollmentRouter);
 
 //interview quiz routes
 app.use("/api/interviewQuiz", interviewQuizRouter);
+app.use("/api/interview", interviewroutes);
 
 app.use("/mentor-resourcehub", mentorresourcesRoute);
 app.use("/mentor-article", mentorArticleRoute);

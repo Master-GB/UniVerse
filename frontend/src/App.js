@@ -16,6 +16,9 @@ import Stu_AllCourses from "./components_stu/stu_course/stu_AllCourses/stu_AllCo
 import Stu_CourseDetails from "./components_stu/stu_course/stu_CourseDetails/stu_CourseDetails";
 import Stu_CourseContent from "./components_stu/stu_course/stu_CourseContent/stu_CourseContent";
 import Stu_CourseQuiz from "./components_stu/stu_course/stu_CourseQuiz/stu_CourseQuiz";
+import StudentInterviewQuiz from "./components_stu/stu_interview/stu_StudentInterviewQuiz/stu_StudentInterviewQuiz";
+import ResumeTemplate1 from "./components_stu/stu_resume/stu_resumeTem/stu_resumeTem1";
+import CareerResourceHub from "./components_stu/stu_trainingContent/stu_trainingContent";
 
 import LandingPage from "./components_jcj/LandingPage_jcj/LandingPage_jcj";
 import AboutUs_jcj from "./components_jcj/Aboutus_jcj/AboutUs_jcj";
@@ -52,6 +55,9 @@ const StudentLayout = () => (
         <Route path="/courses/:id" element={<Stu_CourseDetails  />} />
         <Route path="/courses/:id/content" element={<Stu_CourseContent />} />
         <Route path="/courses/:id/quiz" element={<Stu_CourseQuiz />} />
+        <Route path="/student/interview_quiz" element={<StudentInterviewQuiz />} />
+        <Route path="/student/career-resources" element={<CareerResourceHub />} />
+        <Route path="/student/resume" element={<ResumeTemplate1 />} />
       </Routes>
     </main>
     <StuFooter />
@@ -78,6 +84,7 @@ const MentorLayout = () => (
 // jcj
 const LandingPageLayout = () => (
   <div className="App">
+  <div>
     <React.Fragment>
       <Routes>
         <Route path="/" element={<LandingPage />} />
@@ -88,11 +95,14 @@ const LandingPageLayout = () => (
       </Routes>
     </React.Fragment>
   </div>
+  </div>
 );
 
 // Mock interview page layout
 const MIPageLayout = () => (
   <div className="App">
+    <StuNavigation />
+    <div>
     <React.Fragment>
       <Routes>
         <Route path="/" element={<MIPage />} />
@@ -100,6 +110,8 @@ const MIPageLayout = () => (
         <Route path="mockinterview" element={<MIDash />} />
       </Routes>
     </React.Fragment>
+    </div>
+    <StuFooter />
   </div>
 );
 
@@ -110,7 +122,7 @@ function App() {
         <Route path="/landing/*" element={<LandingPageLayout />} />
         <Route path="/*" element={<StudentLayout />} />
         <Route path="/h*" element={<MentorLayout />} />
-        <Route path="/h*" element={<MIPageLayout />} />
+        <Route path="/MIPage*" element={<MIPageLayout />} />
       </Routes>
     </div>
   );
