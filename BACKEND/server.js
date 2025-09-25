@@ -11,9 +11,12 @@ const mentorshipResponseRoute = require("./routes/Mentor-Route/mentornship_respo
 const guidanceRouter = require("./routes/student_routes/guidanceR");
 const resourcesRouter = require("./routes/Resource_Router/resourceRouter");
 const mentorshipAnnouncementRoute = require("./routes/Mentor-Route/mentornship_announsmentR");
-const interviewroutes = require("./routes/InterviewRoutes/interviewRoute_jcj");
 const mentorresourcesRoute = require("./routes/Mentor-Route/mentornship_resourcehubR");
 const mentorArticleRoute = require("./routes/Mentor-Route/mentornship_ArticleR");
+const courseRouter = require("./routes/Course_routes/courseRoutes"); 
+const enrollmentRouter = require("./routes/Course_routes/enrollmentR");
+const interviewQuizRouter = require("./routes/Interview_routes/interviewQuizRoutes")
+const interviewroutes = require("./routes/InterviewRoutes/interviewRoute_jcj");
 
 const resumeRoutes = require('./routes/student_routes/ResumeBuilderR');
 
@@ -25,7 +28,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(express.urlencoded({ extended: true }));
 
-// 🚀 Disable caching so no 304 in dev
+// Disable caching so no 304 in dev
 if (process.env.NODE_ENV === "development") {
   app.use((req, res, next) => {
     res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate");
@@ -55,13 +58,20 @@ app.use("/mentor-resourcehub", mentorresourcesRoute);
 app.use("/mentor-article", mentorArticleRoute);
 app.use("/mentor-career-session", mentorCareerSessionRoute);
 
+// Course routes
+app.use("/api/courses", courseRouter);
+app.use("/api/enrollments", enrollmentRouter);
 
-// Interview Route
+//interview quiz routes
+app.use("/api/interviewQuiz", interviewQuizRouter);
 app.use("/api/interview", interviewroutes);
+
+
 app.use("/mentor-resourcehub",mentorresourcesRoute);
 app.use("/mentor-article",mentorArticleRoute);
 
 app.use("/mentor-career-session",mentorCareerSessionRoute);
+
 const URL = process.env.MONGODB_URL;
 mongoose.connect(URL);
 

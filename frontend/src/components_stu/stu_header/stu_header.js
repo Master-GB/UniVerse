@@ -94,7 +94,7 @@ const StuNavigation = () => {
                 <Link to="/MIPage" className="stu-dropdown-item">
                   Mock Interview
                 </Link>
-                <Link to="/student/#" className="stu-dropdown-item">
+                <Link to="/student/interview_quiz" className="stu-dropdown-item">
                   Interview Quisses
                 </Link>
               </div>

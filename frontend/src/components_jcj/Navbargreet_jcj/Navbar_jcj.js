@@ -23,76 +23,82 @@ function Navbar() {
         <div className="navbar-logo">
           <img src={newlogo} alt="Company Logo" height="40" />
         </div>
+
         {/* Menu items on the right */}
         <ul className="navbar-menu">
           <div className="navbar-main-links-jcj">
             <li className="navbar-item">
-              <a
-                href="/"
+              <Link
+                to="/landing"
                 className={`navbar-link ${
-                  activeLink === "/" ? "active-jcj" : ""
+                  activeLink === "/landing" ? "active-jcj" : ""
                 }`}
-                onClick={() => handleLinkClick("/")}
+                onClick={() => handleLinkClick("/landing")}
               >
                 Home
-              </a>
+              </Link>
             </li>
+
             <li className="navbar-item">
               <Link
-                to="/about"
+                to="/landing/about"
                 className={`navbar-link ${
-                  activeLink === "/about" ? "active-jcj" : ""
+                  activeLink === "/landing/about" ? "active-jcj" : ""
                 }`}
-                onClick={() => handleLinkClick("/about")}
+                onClick={() => handleLinkClick("/landing/about")}
               >
                 About Us
               </Link>
             </li>
+
             <li className="navbar-item">
               <Link
-                to="/courses_jcj"
+                to="/landing/courses_jcj"
                 className={`navbar-link ${
-                  activeLink === "/courses_jcj" ? "active-jcj" : ""
+                  activeLink === "/landing/courses_jcj" ? "active-jcj" : ""
                 }`}
-                onClick={() => handleLinkClick("/courses_jcj")}
+                onClick={() => handleLinkClick("/landing/courses_jcj")}
               >
                 Courses
               </Link>
             </li>
+
             <li className="navbar-item">
               <Link
-                to="/support"
+                to="/landing/support"
                 className={`navbar-link ${
-                  activeLink === "/support" ? "active-jcj" : ""
+                  activeLink === "/landing/support" ? "active-jcj" : ""
                 }`}
-                onClick={() => handleLinkClick("/support")}
+                onClick={() => handleLinkClick("/landing/support")}
               >
                 Support
               </Link>
             </li>
           </div>
+
           <div className="navbar-auth-links-jcj">
             <li className="navbar-item">
               <Link
-                to="/login"
+                to="/landing/login"
                 className={`navbar-auth-link-jcj ${
-                  activeLink === "/login" ? "active-auth-jcj" : ""
+                  activeLink === "/landing/login" ? "active-auth-jcj" : ""
                 }`}
-                onClick={() => handleLinkClick("/login")}
+                onClick={() => handleLinkClick("/landing/login")}
               >
                 Login
               </Link>
             </li>
+
             <li className="navbar-item">
-              <a
-                href="/signup"
+              <Link
+                to="/landing/signup"
                 className={`navbar-auth-link-jcj navbar-signup-jcj ${
-                  activeLink === "/signup" ? "active-signup-jcj" : ""
+                  activeLink === "/landing/signup" ? "active-signup-jcj" : ""
                 }`}
-                onClick={() => handleLinkClick("/signup")}
+                onClick={() => handleLinkClick("/landing/signup")}
               >
                 Sign Up
-              </a>
+              </Link>
             </li>
           </div>
         </ul>

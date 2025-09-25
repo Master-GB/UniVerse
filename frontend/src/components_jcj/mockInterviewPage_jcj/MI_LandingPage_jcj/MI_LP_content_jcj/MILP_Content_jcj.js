@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./milpcontent_jcj.css";
 
 function MILP_Content_jcj() {
@@ -48,18 +48,6 @@ function MILP_Content_jcj() {
             </span>
             <span className="milp-arrow-jcj">→</span>
           </div>
-        </div>
-      </div>
-
-      {/* Company Logos Section */}
-      <div className="milp-companies-section-jcj">
-        <div className="milp-companies-container-jcj">
-          <div className="milp-company-logo-jcj">Google</div>
-          <div className="milp-company-logo-jcj">Microsoft</div>
-          <div className="milp-company-logo-jcj">Amazon</div>
-          <div className="milp-company-logo-jcj">Meta</div>
-          <div className="milp-company-logo-jcj">Apple</div>
-          <div className="milp-company-logo-jcj">Netflix</div>
         </div>
       </div>
     </div>
