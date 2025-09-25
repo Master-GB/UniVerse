@@ -88,7 +88,7 @@ const StuNavigation = () => {
                 </svg>
               </Link>
               <div className="stu-dropdown-content">
-                <Link to="/student/#" className="stu-dropdown-item">
+                <Link to="/student/resume" className="stu-dropdown-item">
                   Resume Builder
                 </Link>
                 <Link to="/MIPage" className="stu-dropdown-item">

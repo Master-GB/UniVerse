@@ -15,6 +15,8 @@ const interviewroutes = require("./routes/InterviewRoutes/interviewRoute_jcj");
 const mentorresourcesRoute = require("./routes/Mentor-Route/mentornship_resourcehubR");
 const mentorArticleRoute = require("./routes/Mentor-Route/mentornship_ArticleR");
 
+const resumeRoutes = require('./routes/student_routes/ResumeBuilderR');
+
 const mentorCareerSessionRoute = require("./routes/Mentor-Route/mentornship_career_session");
 const PORT = process.env.PORT || 8070;
 
@@ -44,6 +46,7 @@ app.get("/", (req, res) => {
 
 app.use("/guidance", guidanceRouter);
 app.use("/resource", resourcesRouter);
+app.use('/resumes', resumeRoutes);
 
 // Mentorship Routes
 app.use("/mentorshipResponse", mentorshipResponseRoute);
