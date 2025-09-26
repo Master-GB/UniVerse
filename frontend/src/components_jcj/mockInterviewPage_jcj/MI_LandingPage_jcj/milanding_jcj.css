@@ -3,7 +3,7 @@
 .black-bg-jcj {
   position: relative;    /* create stacking context for children */
   z-index: 0;            /* baseline stacking context */
-  background-color: #121212;
+  background-color: #010138;
   color: #ffffff;
   min-height: 100vh;
   overflow: hidden;
