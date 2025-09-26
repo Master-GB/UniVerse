@@ -1,4 +1,11 @@
 import { useCallback, useEffect, useMemo, useRef, useState, memo } from "react";
+import {
+  FaGoogle,
+  FaMicrosoft,
+  FaAmazon,
+  FaFacebook,
+  FaLinkedin,
+} from "react-icons/fa";
 import "./mi_logoloop.css";
 
 const ANIMATION_CONFIG = {
@@ -139,7 +146,7 @@ export const LogoLoop = memo(
     speed = 120,
     direction = "left",
     width = "100%",
-    logoHeight = 28,
+    logoHeight = 36,
     gap = 32,
     pauseOnHover = true,
     fadeOut = false,
@@ -153,28 +160,34 @@ export const LogoLoop = memo(
     // Using simple SVG data URIs to avoid external network dependency and ensure immediate visibility.
     const DEFAULT_LOGOS = [
       {
-        src:
-          "data:image/svg+xml;utf8," +
-          encodeURIComponent(
-            '<svg xmlns="http://www.w3.org/2000/svg" width="120" height="28"><rect width="120" height="28" fill="#1f77b4" rx="4"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="12">Logo A</text></svg>'
-          ),
-        alt: "Logo A",
+        node: <FaGoogle aria-hidden />,
+        ariaLabel: "Google",
+        title: "Google",
+        href: "https://about.google",
       },
       {
-        src:
-          "data:image/svg+xml;utf8," +
-          encodeURIComponent(
-            '<svg xmlns="http://www.w3.org/2000/svg" width="120" height="28"><rect width="120" height="28" fill="#ff7f0e" rx="4"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="12">Logo B</text></svg>'
-          ),
-        alt: "Logo B",
+        node: <FaMicrosoft aria-hidden />,
+        ariaLabel: "Microsoft",
+        title: "Microsoft",
+        href: "https://www.microsoft.com",
       },
       {
-        src:
-          "data:image/svg+xml;utf8," +
-          encodeURIComponent(
-            '<svg xmlns="http://www.w3.org/2000/svg" width="120" height="28"><rect width="120" height="28" fill="#2ca02c" rx="4"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="12">Logo C</text></svg>'
-          ),
-        alt: "Logo C",
+        node: <FaAmazon aria-hidden />,
+        ariaLabel: "Amazon",
+        title: "Amazon",
+        href: "https://www.amazon.com",
+      },
+      {
+        node: <FaFacebook aria-hidden />,
+        ariaLabel: "Meta",
+        title: "Meta",
+        href: "https://about.facebook.com",
+      },
+      {
+        node: <FaLinkedin aria-hidden />,
+        ariaLabel: "LinkedIn",
+        title: "LinkedIn",
+        href: "https://www.linkedin.com",
       },
     ];
 

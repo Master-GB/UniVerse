@@ -3,8 +3,8 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const askAI = async (req, res) => {
-  // console.log("askAI function called"); // <-- Add this
-  // console.log("API Key exists:", !!process.env.GEMINI_API_KEY); // <-- Add this to check the key
+  console.log("askAI function called"); // <-- Add this
+  console.log("API Key exists:", !!process.env.GEMINI_API_KEY); // <-- Add this to check the key
   try {
     const { userAnswer, chatHistory } = req.body;
 
