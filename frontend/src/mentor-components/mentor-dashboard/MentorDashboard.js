@@ -96,17 +96,21 @@ const MentorDashboard = () => {
               <div className="card-icon-md">
                 <BookOpen size={32} />
               </div>
-              <h4 className="card-title-md">Resource Hub</h4>
+              <h4 className="card-title-md">Academic Resource Hub</h4>
               <p className="card-description-md">Access learning materials and resources</p>
               <div className="card-glow-md"></div>
             </div>
             
-            <div className="action-card-md tertiary-card-md">
+            <div className="action-card-md tertiary-card-md"
+            onClick={() => navigate("/mentor-career-resourcehub")}
+            style={{cursor:"pointer"}}
+            
+            >
               <div className="card-icon-md">
                 <MessageSquare size={32} />
               </div>
-              <h4 className="card-title-md">Messages</h4>
-              <p className="card-description-md">Chat with students and send updates</p>
+              <h4 className="card-title-md">Career Resource</h4>
+              <p className="card-description-md">Career Resource hub </p>
               <div className="card-glow-md"></div>
             </div>
             
