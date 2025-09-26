@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./loginPage_jcj.css";
 
 function LoginPageJCJ() {
@@ -6,6 +7,13 @@ function LoginPageJCJ() {
     email: "",
     password: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const navigate = useNavigate();
+  const API_BASE_URL = (
+    process.env.REACT_APP_API_BASE_URL || "http://localhost:8070"
+  ).replace(/\/$/, "");
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -15,10 +23,49 @@ function LoginPageJCJ() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Login submitted:", formData);
-    // Add your login logic here
+    setErrorMessage("");
+
+    setIsSubmitting(true);
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          login: formData.email.trim(),
+          password: formData.password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data?.message || "Invalid email or password");
+      }
+
+      // Persist token + user for later authenticated requests. Adjust storage strategy with the team if needed.
+      if (data?.token) {
+        localStorage.setItem("universe_token", data.token);
+      }
+      if (data?.user) {
+        localStorage.setItem("universe_user", JSON.stringify(data.user));
+      }
+
+      // Redirect by role. Update the paths below if the team changes layouts.
+      const role = data?.user?.role;
+      if (role === "mentor") {
+        navigate("/mentor-dashboard"); // Mentor landing path hook
+      } else {
+        navigate("/student/dashboard"); // Default student landing path
+      }
+    } catch (error) {
+      setErrorMessage(error.message || "Unable to sign you in right now");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -73,7 +120,17 @@ function LoginPageJCJ() {
               />
             </div>
 
-            <button type="submit" className="continue-btn-jcj">
+            {errorMessage && (
+              <p className="login-error-text-jcj" role="alert">
+                {errorMessage}
+              </p>
+            )}
+
+            <button
+              type="submit"
+              className="continue-btn-jcj"
+              disabled={isSubmitting}
+            >
               CONTINUE
               <span className="btn-arrow-jcj">→</span>
             </button>

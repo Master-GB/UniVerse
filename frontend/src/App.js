@@ -27,6 +27,7 @@ import Courses_jcj from "./components_jcj/Courses_jcj/Courses_jcj";
 import LoginPageJCJ from "./components_jcj/LoginPage_jcj/LoginPageJCJ";
 import MIPage from "./components_jcj/mockInterviewPage_jcj/MI_LandingPage_jcj/MI_LandingPage_jcj";
 import MIDash from "./components_jcj/mockInterviewPage_jcj/MI_LandingPage_jcj/MI_Dashboard_jcj/MockInterview";
+import SignUp from "./components_jcj/SignUp_jcj/SignUp";
 
 import MentorDashboard from "./mentor-components/mentor-dashboard/MentorDashboard";
 import MentorSessionCreate from "./mentor-components/mentor-session-create/MentorSessionCreate";
@@ -52,11 +53,17 @@ const StudentLayout = () => (
         <Route path="/student/articales/:id" element={<StuFullArticle />} />
         <Route path="/student/courses" element={<StuCourses />} />
         <Route path="/all-courses" element={<Stu_AllCourses />} />
-        <Route path="/courses/:id" element={<Stu_CourseDetails  />} />
+        <Route path="/courses/:id" element={<Stu_CourseDetails />} />
         <Route path="/courses/:id/content" element={<Stu_CourseContent />} />
         <Route path="/courses/:id/quiz" element={<Stu_CourseQuiz />} />
-        <Route path="/student/interview_quiz" element={<StudentInterviewQuiz />} />
-        <Route path="/student/career-resources" element={<CareerResourceHub />} />
+        <Route
+          path="/student/interview_quiz"
+          element={<StudentInterviewQuiz />}
+        />
+        <Route
+          path="/student/career-resources"
+          element={<CareerResourceHub />}
+        />
         <Route path="/student/resume" element={<ResumeTemplate1 />} />
       </Routes>
     </main>
@@ -68,14 +75,26 @@ const MentorLayout = () => (
   <div className="App">
     <React.Fragment>
       <Routes>
-         <Route path="/mentor-dashboard" element={<MentorDashboard />} />
-         <Route path="/mentor-session-create" element={<MentorSessionCreate />} />
-         <Route path="/mentor-guidance" element={<MentorGuidance />} />
-         <Route path="/mentor-announcement" element={<MentorshipAnnouncementForm />} />
-         <Route path="/mentor-resourcehub" element={<MentorResourcehub />} />
-         <Route path="/mentor-manage-resources" element={<MentorManageResourses />} />
-         <Route path="/mentor-article" element={<MentorArticle />} />
-         <Route path="/mentor-career-session" element={<MentorCareerSession/>} />
+        <Route path="/mentor-dashboard" element={<MentorDashboard />} />
+        <Route
+          path="/mentor-session-create"
+          element={<MentorSessionCreate />}
+        />
+        <Route path="/mentor-guidance" element={<MentorGuidance />} />
+        <Route
+          path="/mentor-announcement"
+          element={<MentorshipAnnouncementForm />}
+        />
+        <Route path="/mentor-resourcehub" element={<MentorResourcehub />} />
+        <Route
+          path="/mentor-manage-resources"
+          element={<MentorManageResourses />}
+        />
+        <Route path="/mentor-article" element={<MentorArticle />} />
+        <Route
+          path="/mentor-career-session"
+          element={<MentorCareerSession />}
+        />
       </Routes>
     </React.Fragment>
   </div>
@@ -84,17 +103,18 @@ const MentorLayout = () => (
 // jcj
 const LandingPageLayout = () => (
   <div className="App">
-  <div>
-    <React.Fragment>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route path="about" element={<AboutUs_jcj />} />
-        <Route path="support" element={<SupportPage_jcj />} />
-        <Route path="courses_jcj" element={<Courses_jcj />} />
-        <Route path="login" element={<LoginPageJCJ />} />
-      </Routes>
-    </React.Fragment>
-  </div>
+    <div>
+      <React.Fragment>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="about" element={<AboutUs_jcj />} />
+          <Route path="support" element={<SupportPage_jcj />} />
+          <Route path="courses_jcj" element={<Courses_jcj />} />
+          <Route path="login" element={<LoginPageJCJ />} />
+          <Route path="signup" element={<SignUp />} />
+        </Routes>
+      </React.Fragment>
+    </div>
   </div>
 );
 
@@ -103,13 +123,13 @@ const MIPageLayout = () => (
   <div className="App">
     <StuNavigation />
     <div>
-    <React.Fragment>
-      <Routes>
-        <Route path="/" element={<MIPage />} />
-        <Route path="milanding" element={<MIPage />} />
-        <Route path="mockinterview" element={<MIDash />} />
-      </Routes>
-    </React.Fragment>
+      <React.Fragment>
+        <Routes>
+          <Route path="/" element={<MIPage />} />
+          <Route path="milanding" element={<MIPage />} />
+          <Route path="mockinterview" element={<MIDash />} />
+        </Routes>
+      </React.Fragment>
     </div>
     <StuFooter />
   </div>
