@@ -79,67 +79,6 @@ const useImageLoader = (seqRef, onLoad, dependencies) => {
   }, dependencies);
 };
 
-const useAnimationLoop = (
-  trackRef,
-  targetVelocity,
-  seqWidth,
-  isHovered,
-  pauseOnHover
-) => {
-  const rafRef = useRef(null);
-  const lastTimestampRef = useRef(null);
-  const offsetRef = useRef(0);
-  const velocityRef = useRef(0);
-
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-
-    if (seqWidth > 0) {
-      offsetRef.current =
-        ((offsetRef.current % seqWidth) + seqWidth) % seqWidth;
-      track.style.transform = `translate3d(${-offsetRef.current}px, 0, 0)`;
-    }
-
-    const animate = (timestamp) => {
-      if (lastTimestampRef.current === null) {
-        lastTimestampRef.current = timestamp;
-      }
-
-      const deltaTime =
-        Math.max(0, timestamp - lastTimestampRef.current) / 1000;
-      lastTimestampRef.current = timestamp;
-
-      const target = pauseOnHover && isHovered ? 0 : targetVelocity;
-
-      const easingFactor =
-        1 - Math.exp(-deltaTime / ANIMATION_CONFIG.SMOOTH_TAU);
-      velocityRef.current += (target - velocityRef.current) * easingFactor;
-
-      if (seqWidth > 0) {
-        let nextOffset = offsetRef.current + velocityRef.current * deltaTime;
-        nextOffset = ((nextOffset % seqWidth) + seqWidth) % seqWidth;
-        offsetRef.current = nextOffset;
-
-        const translateX = -offsetRef.current;
-        track.style.transform = `translate3d(${translateX}px, 0, 0)`;
-      }
-
-      rafRef.current = requestAnimationFrame(animate);
-    };
-
-    rafRef.current = requestAnimationFrame(animate);
-
-    return () => {
-      if (rafRef.current !== null) {
-        cancelAnimationFrame(rafRef.current);
-        rafRef.current = null;
-      }
-      lastTimestampRef.current = null;
-    };
-  }, [targetVelocity, seqWidth, isHovered, pauseOnHover, trackRef]);
-};
-
 export const LogoLoop = memo(
   ({
     logos = [], // will be replaced with DEFAULT_LOGOS if empty
@@ -194,7 +133,6 @@ export const LogoLoop = memo(
     // If no logos provided, fall back to DEFAULT_LOGOS so the component is visible.
     const effectiveLogos = logos && logos.length > 0 ? logos : DEFAULT_LOGOS;
     const containerRef = useRef(null);
-    const trackRef = useRef(null);
     const seqRef = useRef(null);
 
     const [seqWidth, setSeqWidth] = useState(0);
@@ -230,13 +168,22 @@ export const LogoLoop = memo(
 
     useImageLoader(seqRef, updateDimensions, [logos, gap, logoHeight]);
 
-    useAnimationLoop(
-      trackRef,
-      targetVelocity,
-      seqWidth,
-      isHovered,
-      pauseOnHover
-    );
+    const animationSettings = useMemo(() => {
+      const velocity = targetVelocity;
+      const absoluteVelocity = Math.abs(velocity);
+
+      if (seqWidth <= 0 || absoluteVelocity === 0) {
+        return {
+          distance: 0,
+          duration: 0,
+        };
+      }
+
+      return {
+        distance: velocity >= 0 ? -seqWidth : seqWidth,
+        duration: seqWidth / absoluteVelocity,
+      };
+    }, [targetVelocity, seqWidth]);
 
     const cssVariables = useMemo(
       () => ({
@@ -345,6 +292,26 @@ export const LogoLoop = memo(
       [width, cssVariables, style]
     );
 
+    const trackStyle = useMemo(() => {
+      const playState = pauseOnHover && isHovered ? "paused" : "running";
+      const { distance, duration } = animationSettings;
+
+      if (duration === 0) {
+        return {
+          animation: "none",
+          transform: "translate3d(0, 0, 0)",
+        };
+      }
+
+      return {
+        animationDuration: `${duration}s`,
+        animationPlayState: playState,
+        "--logoloop-animation-distance": `${distance}px`,
+      };
+    }, [animationSettings, pauseOnHover, isHovered]);
+
+    const isAnimated = animationSettings.duration > 0;
+
     return (
       <div
         ref={containerRef}
@@ -355,7 +322,11 @@ export const LogoLoop = memo(
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
-        <div className="logoloop__track" ref={trackRef}>
+        <div
+          className="logoloop__track"
+          style={trackStyle}
+          data-animated={isAnimated}
+        >
           {logoLists}
         </div>
       </div>

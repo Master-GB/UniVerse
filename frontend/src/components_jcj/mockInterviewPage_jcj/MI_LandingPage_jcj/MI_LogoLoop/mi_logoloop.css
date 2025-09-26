@@ -23,6 +23,25 @@
   width: max-content;
   will-change: transform;
   user-select: none;
+  animation-name: logoloop-marquee;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: 0s;
+  animation-play-state: paused;
+}
+
+.logoloop__track[data-animated="false"] {
+  animation: none;
+  transform: translate3d(0, 0, 0);
+}
+
+@keyframes logoloop-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(var(--logoloop-animation-distance, -50%), 0, 0);
+  }
 }
 
 .logoloop__list {
@@ -140,6 +159,7 @@
 @media (prefers-reduced-motion: reduce) {
   .logoloop__track {
     transform: translate3d(0, 0, 0) !important;
+    animation: none !important;
   }
 
   .logoloop__item img,

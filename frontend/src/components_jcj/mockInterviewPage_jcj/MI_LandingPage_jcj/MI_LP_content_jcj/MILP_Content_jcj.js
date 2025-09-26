@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./milpcontent_jcj.css";
+import LogoLoop from "../MI_LogoLoop/LogoLoop";
 
 function MILP_Content_jcj() {
   return (
@@ -49,6 +50,9 @@ function MILP_Content_jcj() {
             <span className="milp-arrow-jcj">→</span>
           </div>
         </div>
+      </div>
+      <div className="logoloop_jcj">
+        <LogoLoop />
       </div>
     </div>
   );
