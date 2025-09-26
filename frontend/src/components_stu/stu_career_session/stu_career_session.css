@@ -43,7 +43,7 @@
   opacity: 1;
   z-index: 0;
   pointer-events: none;
-  animation: gridMove 30s linear infinite;
+  animation: gridMove 100s linear infinite;
   will-change: background-position;
   mask-image: linear-gradient(
     to bottom,

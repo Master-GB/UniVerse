@@ -19,6 +19,11 @@ import Stu_CourseContent from "./components_stu/stu_course/stu_CourseContent/stu
 import Stu_CourseQuiz from "./components_stu/stu_course/stu_CourseQuiz/stu_CourseQuiz";
 import StudentInterviewQuiz from "./components_stu/stu_interview/stu_StudentInterviewQuiz/stu_StudentInterviewQuiz";
 import CareerResourceHub from "./components_stu/stu_trainingContent/stu_trainingContent";
+import ExamPrepOverview from "./components_stu/stu_examPrep/stu_examPrepOverview/stu_examPrepOverview";
+import ExamStrategies from "./components_stu/stu_examPrep/stu_examStrategies/stu_examStrategies";
+import StuExamPastPaper from "./components_stu/stu_examPrep/stu_examPastPaper/stu_examPastPaper";
+import PracticeTestsOverview from "./components_stu/stu_examPrep/stu_examQuiz/PracticeTestsOverview";
+import StuExamQuiz from "./components_stu/stu_examPrep/stu_examQuiz/stu_examQuiz";
 
 
 import LandingPage from "./components_jcj/LandingPage_jcj/LandingPage_jcj";
@@ -59,6 +64,11 @@ const StudentLayout = () => (
         <Route path="/courses/:id/quiz" element={<Stu_CourseQuiz />} />
         <Route path="/student/interview_quiz" element={<StudentInterviewQuiz />} />
         <Route path="/student/career-resources" element={<CareerResourceHub />} />
+        <Route path="/student/exam-support" element={<ExamPrepOverview />} />
+        <Route path="/student/exam/strategies" element={<ExamStrategies />} />
+        <Route path="/student/exam/past-papers" element={<StuExamPastPaper/>} />
+        <Route path="/student/exam/practice-tests" element={<PracticeTestsOverview/>} />
+        <Route path="/student/exam/practice-tests/quiz/:quizId" element={<StuExamQuiz/>} />
       </Routes>
     </main>
     <StuFooter />
