@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FcGoogle } from "react-icons/fc";
+import logoimage from "../SignUp_jcj/images/logohorizontal.png";
+import DecryptedText from "./DecryptedText/DecryptedText";
 import "./loginPage_jcj.css";
 
 function LoginPageJCJ() {
@@ -74,19 +77,21 @@ function LoginPageJCJ() {
       <div className="login-left-side-jcj">
         <div className="login-overlay-jcj">
           <div className="login-logo-jcj">
-            <div className="logo-circles-jcj">
-              <div className="logo-circle-1-jcj"></div>
-              <div className="logo-circle-2-jcj"></div>
+            <img
+              src={logoimage}
+              alt="Logo"
+              style={{ width: "100px", height: "auto" }}
+            />
+            <div>
+              <h1 className="welcome-title-jcj">Log in to UniVerse</h1>
+              {/* error ekak awa div ekkin cover kram fix wuna */}
+              <div>
+                <DecryptedText text="your gateway to academic and career success" />
+              </div>
             </div>
-            <span className="logo-text-jcj">LOGO</span>
           </div>
-          <h1 className="welcome-title-jcj">Welcome Page</h1>
-          <p className="welcome-subtitle-jcj">
-            Sign in to
-            <br />
-            continue access
-          </p>
-          <div className="website-url-jcj">www.yoursite.com</div>
+
+          <div className="website-url-jcj">www.UniVerse.com</div>
         </div>
       </div>
 
@@ -143,9 +148,9 @@ function LoginPageJCJ() {
           </div>
 
           <div className="social-buttons-jcj">
-            <button className="social-btn-jcj twitter-btn-jcj">
-              <span className="social-icon-jcj">🐦</span>
-              Sign In With Twitter
+            <button className="social-btn-jcj google-btn-jcj">
+              <FcGoogle className="social-icon-jcj" />
+              Sign In With Google
             </button>
 
             <button className="social-btn-jcj facebook-btn-jcj">

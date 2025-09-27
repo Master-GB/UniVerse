@@ -23,7 +23,6 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(102, 126, 234, 0.8) 0%, rgba(118, 75, 162, 0.8) 100%);
   padding: 3rem;
   display: flex;
   flex-direction: column;
@@ -34,6 +33,7 @@
 .login-logo-jcj {
   display: flex;
   align-items: center;
+  flex-direction: column;
   gap: 0.75rem;
 }
 
@@ -232,9 +232,10 @@
   transform: translateY(-1px);
 }
 
-.twitter-btn-jcj {
-  background: #1da1f2;
-  color: white;
+.google-btn-jcj {
+  background: #ffffff;
+  color: black;
+  border: solid 1px #000000;
 }
 
 .facebook-btn-jcj {

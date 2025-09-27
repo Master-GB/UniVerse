@@ -3,14 +3,13 @@
 .milp-hero-container-jcj {
   position: relative;
   width: 100%;
-  min-height: 103vh;
+  min-height: 110vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: flex-start;
   color: white;
-  padding-bottom: 20px;
 }
 
 .milp-background-video-jcj {
