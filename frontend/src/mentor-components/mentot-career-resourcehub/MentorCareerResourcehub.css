@@ -1,0 +1,207 @@
+.careerR-page {
+  background-color: #0b1a35;
+  min-height: 100vh;
+  color: white;
+  font-family: "Inter", sans-serif;
+}
+
+.careerR-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.careerR-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.careerR-header h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ffffff, #e0e0ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.careerR-header p {
+  color: #94a3b8;
+  margin: 1rem 0 2rem;
+}
+.careerR-add-btn {
+  background: #1e3a8a;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  color: white;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+}
+.careerR-add-btn:hover {
+  background: #2563eb;
+}
+
+/* Alerts */
+.careerR-alert {
+  padding: 1rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 1rem;
+}
+.careerR-error {
+  background: #dc2626;
+}
+.careerR-success {
+  background: #16a34a;
+}
+
+/* Form */
+.careerR-form-card {
+  background: #12264d;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+.careerR-form-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+.careerR-form-card input,
+.careerR-form-card select,
+.careerR-form-card textarea {
+  background: #0b1a35;
+  border: 1px solid #334a73;
+  color: white;
+  border-radius: 8px;
+  padding: 0.75rem;
+}
+.careerR-form-card button {
+  margin-top: 1rem;
+  background: #16a34a;
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.careerR-form-card button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+.careerR-checkbox {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+/* Search Filter */
+.careerR-search-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.careerR-search-box,
+.careerR-filter-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.careerR-search-box input,
+.careerR-filter-box select {
+  background: #12264d;
+  border: 1px solid #334a73;
+  color: white;
+  padding: 0.75rem 0.75rem 0.75rem 2rem;
+  border-radius: 8px;
+}
+.careerR-search-box svg,
+.careerR-filter-box svg {
+  position: absolute;
+  left: 0.5rem;
+  color: #9ca3af;
+}
+
+/* Grid */
+.careerR-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+}
+.careerR-card {
+  background: #12264d;
+  border: 1px solid #334a73;
+  border-radius: 12px;
+  padding: 1.5rem;
+  position: relative;
+  transition: 0.3s;
+}
+.careerR-card:hover {
+  transform: translateY(-4px);
+  border-color: #4f6391;
+}
+.careerR-premium-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: #fbbf24;
+  color: #0b1a35;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+.careerR-card-header {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.careerR-icon {
+  background: #1e3a8a;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-size: 1.5rem;
+}
+.careerR-type {
+  background: #1e3a8a;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  text-transform: capitalize;
+}
+.careerR-meta {
+  margin: 1rem 0;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  color: #94a3b8;
+}
+.careerR-view-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #1e3a8a;
+  color: white;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+}
+.careerR-view-btn:hover {
+  background: #2563eb;
+}
+.careerR-loading,
+.careerR-empty {
+  text-align: center;
+  color: #94a3b8;
+  padding: 2rem;
+}
