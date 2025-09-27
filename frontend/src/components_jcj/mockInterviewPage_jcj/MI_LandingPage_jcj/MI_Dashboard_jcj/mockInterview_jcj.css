@@ -3,10 +3,10 @@
   
   margin: 0 auto;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   position: relative;
   overflow: hidden;
+  width: 100%;
 }
 
 .interview-container-jcj::before {
@@ -16,7 +16,6 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='m0 40l40-40h-40v40zm40 0v-40h-40l40 40z'/%3E%3C/g%3E%3C/svg%3E") repeat;
   pointer-events: none;
 }
 
@@ -87,17 +86,24 @@
   justify-content: center;
   min-height: calc(100vh - 100px);
   padding: 40px;
+  position: relative;
+  z-index: 1;
+  /* background-image: url(https://images.pexels.com/photos/4862865/pexels-photo-4862865.jpeg); */
+  background-size: cover;
+  background-position: center;
+  backdrop-filter: blur(5px); /* Optional glass effect */
 }
 
 .welcome-content-jcj {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(20px);
   border-radius: 24px;
   padding: 60px;
   text-align: center;
-  max-width: 600px;
+  max-width: 956px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  position: relative;
 }
 
 .gemini-logo-jcj {
@@ -176,6 +182,9 @@
   display: flex;
   flex-direction: column;
   height: calc(100vh - 100px);
+  position: relative;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.8); /* Semi-transparent overlay */
 }
 
 .chat-container-jcj {
@@ -289,6 +298,7 @@
   align-items: flex-end;
   max-width: 1000px;
   margin: 0 auto;
+  flex-wrap: wrap;
 }
 
 .answer-input-jcj {
