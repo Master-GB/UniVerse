@@ -9,6 +9,7 @@ const askAI = async (req, res) => {
     const { userAnswer, chatHistory } = req.body;
 
     // Pick a model (Gemini 1.5 for conversations is common)
+    // Ado e meke welawkt 1.5 flash unavailable kynw ethkot pddk wenas krl blpn 2.5 wlt wge, mge credits iwrd khed
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const prompt = `

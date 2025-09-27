@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
+import { FaCircleArrowRight } from "react-icons/fa6";
 import logoimage from "../SignUp_jcj/images/logohorizontal.png";
 import DecryptedText from "./DecryptedText/DecryptedText";
 import "./loginPage_jcj.css";
@@ -137,7 +138,9 @@ function LoginPageJCJ() {
               disabled={isSubmitting}
             >
               CONTINUE
-              <span className="btn-arrow-jcj">→</span>
+              <span className="btn-arrow-jcj">
+                <FaCircleArrowRight />
+              </span>
             </button>
           </form>
 

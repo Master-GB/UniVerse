@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "./images/logohorizontal.png";
+import { PiStudentFill } from "react-icons/pi";
+import { FaChalkboardTeacher } from "react-icons/fa";
+import { FaEye } from "react-icons/fa";
+import { IoEyeOffOutline } from "react-icons/io5";
 import "./signUp.css";
 
 function SignUp() {
@@ -194,7 +198,9 @@ function SignUp() {
                     className="role-radio-jcj"
                   />
                   <div className="role-card-jcj">
-                    <div className="role-icon-jcj">🎓</div>
+                    <div className="role-icon-jcj">
+                      <PiStudentFill />
+                    </div>
                     <span className="role-text-jcj">Student</span>
                     <span className="role-desc-jcj">Learn and grow</span>
                   </div>
@@ -209,7 +215,9 @@ function SignUp() {
                     className="role-radio-jcj"
                   />
                   <div className="role-card-jcj">
-                    <div className="role-icon-jcj">👨‍🏫</div>
+                    <div className="role-icon-jcj">
+                      <FaChalkboardTeacher />
+                    </div>
                     <span className="role-text-jcj">Mentor</span>
                     <span className="role-desc-jcj">Share knowledge</span>
                   </div>
@@ -235,7 +243,7 @@ function SignUp() {
                     className="password-toggle-jcj"
                     onClick={() => setShowPassword(!showPassword)}
                   >
-                    {showPassword ? "👁️" : "👁️‍🗨️"}
+                    {showPassword ? <FaEye /> : <IoEyeOffOutline />}
                   </button>
                 </div>
               </div>
@@ -256,7 +264,7 @@ function SignUp() {
                     className="password-toggle-jcj"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                   >
-                    {showConfirmPassword ? "👁️" : "👁️‍🗨️"}
+                    {showConfirmPassword ? <FaEye /> : <IoEyeOffOutline />}
                   </button>
                 </div>
               </div>
