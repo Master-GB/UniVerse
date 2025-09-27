@@ -293,7 +293,7 @@ function SignUp() {
 
             <button
               type="submit"
-              className="submit-button-jcj"
+              className="submit-button-jcj-SU"
               disabled={isSubmitting}
             >
               {isSubmitting ? "Creating Account..." : "Create Account"}

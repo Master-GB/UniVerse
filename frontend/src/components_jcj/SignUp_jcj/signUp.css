@@ -321,7 +321,7 @@
 }
 
 /* Submit Button */
-.submit-button-jcj {
+.submit-button-jcj-SU {
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -343,17 +343,17 @@
   transition: all 0.2s ease-in;
 }
 
-.submit-button-jcj:hover {
+.submit-button-jcj-SU:hover {
   background: #3d6aff;
   box-shadow: 0 0 30px 5px rgba(0, 142, 236, 0.75);
   transition: all 0.2s ease-out;
 }
 
-.submit-button-jcj:active {
+.submit-button-jcj-SU:active {
   box-shadow: 0 0 0 0 transparent;
 }
 
-.submit-button-jcj::before {
+.submit-button-jcj-SU::before {
   content: "";
   position: absolute;
   top: 7%;
@@ -366,18 +366,18 @@
   transform: skewX(-20deg);
 }
 
-.submit-button-jcj:hover::before {
+.submit-button-jcj-SU:hover::before {
   animation: submit-shimmer-jcj 0.5s linear;
 }
 
-.submit-button-jcj[disabled] {
+.submit-button-jcj-SU[disabled] {
   opacity: 0.6;
   cursor: not-allowed;
   background: rgba(61, 106, 255, 0.25);
   box-shadow: none;
 }
 
-.submit-button-jcj[disabled]::before {
+.submit-button-jcj-SU[disabled]::before {
   animation: none;
 }
 

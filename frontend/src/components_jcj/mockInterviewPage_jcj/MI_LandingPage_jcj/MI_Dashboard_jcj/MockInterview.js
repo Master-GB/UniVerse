@@ -96,14 +96,14 @@ const MockInterview = () => {
           left: 0,
           width: "100vw",
           height: "100vh",
-          zIndex: -1,
+          zIndex: 0,
         }}
       >
         <DarkVeil
           hueShift={20}
           noiseIntensity={0.02}
           scanlineIntensity={0.1}
-          speed={0.3}
+          speed={1.3}
           scanlineFrequency={0.5}
           warpAmount={0.2}
           resolutionScale={1}

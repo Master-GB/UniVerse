@@ -122,7 +122,7 @@
   font-weight: 800;
   color: #1f2937;
   margin-bottom: 20px;
-  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  background: white;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -130,7 +130,7 @@
 
 .welcome-description-jcj {
   font-size: 16px;
-  color: #6b7280;
+  color: #ffffff;
   line-height: 1.6;
   margin-bottom: 30px;
 }
@@ -287,9 +287,9 @@
 /* Input Section */
 .input-section-jcj {
   padding: 30px;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(17, 24, 39, 0.95); /* Dark background */
   backdrop-filter: blur(20px);
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .input-container-jcj {
@@ -303,7 +303,7 @@
 
 .answer-input-jcj {
   flex: 1;
-  border: 2px solid #e5e7eb;
+  border: 2px solid rgba(75, 85, 99, 0.4);
   border-radius: 12px;
   padding: 16px;
   font-size: 15px;
@@ -311,15 +311,16 @@
   min-height: 50px;
   font-family: inherit;
   transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(31, 41, 55, 0.7);
   backdrop-filter: blur(10px);
+  color: #e5e7eb; /* Light text color */
 }
 
 .answer-input-jcj:focus {
   outline: none;
   border-color: #4f46e5;
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
-  background: white;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+  background: rgba(31, 41, 55, 0.9);
 }
 
 .answer-input-jcj:disabled {
