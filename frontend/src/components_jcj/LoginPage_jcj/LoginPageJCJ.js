@@ -84,7 +84,7 @@ function LoginPageJCJ() {
               style={{ width: "100px", height: "auto" }}
             />
             <div>
-              <h1 className="welcome-title-jcj">Log in to UniVerse</h1>
+              <h1 className="welcome-title-jcj-login">Log in to UniVerse</h1>
               {/* error ekak awa div ekkin cover kram fix wuna */}
               <div>
                 <DecryptedText text="your gateway to academic and career success" />

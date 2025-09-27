@@ -34,7 +34,7 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1.75rem;
 }
 
 .logo-circles-jcj {
@@ -68,11 +68,12 @@
   letter-spacing: 0.1em;
 }
 
-.welcome-title-jcj {
+.welcome-title-jcj-login {
   font-size: 2.5rem;
   font-weight: 700;
   margin: 0;
   line-height: 1.2;
+  margin-bottom: 27px;
 }
 
 .welcome-subtitle-jcj {
@@ -263,7 +264,7 @@
     padding: 2rem;
   }
   
-  .welcome-title-jcj {
+  .welcome-title-jcj-login {
     font-size: 1.75rem;
   }
   

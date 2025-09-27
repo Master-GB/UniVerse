@@ -11,7 +11,7 @@
   flex: 1;
   position: relative;
   background: linear-gradient(45deg, #1e3c72, #2a5298);
-  background-image: url('https://images.pexels.com/photos/3201583/pexels-photo-3201583.jpeg');
+  background-image: url('https://images.pexels.com/photos/5921780/pexels-photo-5921780.jpeg');
   background-size: cover;
   background-position: center;
   display: flex;
@@ -34,7 +34,7 @@
   color: white;
 }
 
-.welcome-title-jcj {
+.welcome-title-jcj-SU {
   font-size: 2.5rem;
   font-weight: 700;
   margin-bottom: 20px;
@@ -117,7 +117,7 @@
   font-size: 2rem;
   font-weight: 700;
   margin: 0 0 10px 0;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: linear-gradient(128deg, #ffffff, #7e00ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -322,32 +322,80 @@
 
 /* Submit Button */
 .submit-button-jcj {
-  background: linear-gradient(135deg, #667eea, #764ba2);
-  border: none;
-  border-radius: 12px;
-  padding: 18px;
-  color: white;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 16px 24px;
   margin-top: 10px;
+  border-radius: 12px;
+  border: 1px solid #3d6aff;
+  background: transparent;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.18rem;
+  text-transform: uppercase;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 0 0 0 transparent;
+  transition: all 0.2s ease-in;
 }
 
 .submit-button-jcj:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+  background: #3d6aff;
+  box-shadow: 0 0 30px 5px rgba(0, 142, 236, 0.75);
+  transition: all 0.2s ease-out;
 }
 
 .submit-button-jcj:active {
-  transform: translateY(0);
+  box-shadow: 0 0 0 0 transparent;
+}
+
+.submit-button-jcj::before {
+  content: "";
+  position: absolute;
+  top: 7%;
+  left: 0;
+  width: 0;
+  height: 86%;
+  opacity: 0;
+  background: #ffffff;
+  box-shadow: 0 0 50px 30px #ffffff;
+  transform: skewX(-20deg);
+}
+
+.submit-button-jcj:hover::before {
+  animation: submit-shimmer-jcj 0.5s linear;
 }
 
 .submit-button-jcj[disabled] {
   opacity: 0.6;
   cursor: not-allowed;
-  transform: none;
+  background: rgba(61, 106, 255, 0.25);
   box-shadow: none;
+}
+
+.submit-button-jcj[disabled]::before {
+  animation: none;
+}
+
+@keyframes submit-shimmer-jcj {
+  0% {
+    opacity: 0;
+    left: 0;
+    width: 0;
+  }
+  50% {
+    opacity: 1;
+    width: 100%;
+  }
+  100% {
+    opacity: 0;
+    left: 100%;
+    width: 0;
+  }
 }
 
 .form-error-text-jcj,
@@ -398,7 +446,7 @@
     padding: 30px 20px;
   }
   
-  .welcome-title-jcj {
+  .welcome-title-jcj-SU {
     font-size: 2rem;
   }
   
@@ -421,7 +469,7 @@
     padding: 15px;
   }
   
-  .welcome-title-jcj {
+  .welcome-title-jcj-SU {
     font-size: 1.8rem;
   }
   

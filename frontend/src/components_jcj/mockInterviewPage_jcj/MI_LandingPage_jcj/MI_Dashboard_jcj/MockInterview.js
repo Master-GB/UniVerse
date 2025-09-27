@@ -104,7 +104,9 @@ const MockInterview = () => {
         <div className="welcome-screen-jcj">
           <div className="welcome-content-jcj">
             <div className="gemini-logo-jcj">✨</div>
-            <h2 className="welcome-title-jcj">Welcome to AI Mock Interview</h2>
+            <h2 className="welcome-title-jcj-MI">
+              Welcome to AI Mock Interview
+            </h2>
             <p className="welcome-description-jcj">
               Get ready for your next interview with our AI-powered mock
               interview platform. Our advanced Gemini AI will ask you relevant
