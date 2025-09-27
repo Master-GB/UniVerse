@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./mockInterview_jcj.css";
+import { FaLightbulb } from "react-icons/fa";
+import { FaChartLine } from "react-icons/fa";
+import { TbTargetArrow } from "react-icons/tb";
 import DarkVeil from "../DarkVeil/DarkVeil";
 
 const MockInterview = () => {
@@ -138,20 +141,59 @@ const MockInterview = () => {
             </p>
             <div className="features-list-jcj">
               <div className="feature-item-jcj">
-                <span className="feature-icon-jcj">🎯</span>
+                <span
+                  className="feature-icon-jcj"
+                  style={{ color: "#f60707ff" }}
+                >
+                  <TbTargetArrow />
+                </span>
                 <span>Personalized Questions</span>
               </div>
               <div className="feature-item-jcj">
-                <span className="feature-icon-jcj">📊</span>
+                <span
+                  className="feature-icon-jcj"
+                  style={{ color: "#52e522ff" }}
+                >
+                  <FaChartLine />
+                </span>
                 <span>Real-time Evaluation</span>
               </div>
               <div className="feature-item-jcj">
-                <span className="feature-icon-jcj">💡</span>
+                <span
+                  className="feature-icon-jcj"
+                  style={{ color: "#ffff00ff" }}
+                >
+                  <FaLightbulb />
+                </span>
                 <span>Instant Feedback</span>
               </div>
             </div>
-            <button className="start-button-jcj" onClick={startInterview}>
-              Start Mock Interview
+            <button
+              className="animated-button-jcj-MI"
+              onClick={startInterview}
+              type="button"
+              aria-label="Start mock interview"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                className="arr-2-jcj-MI"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"></path>
+              </svg>
+              <span className="text-jcj-MI">Start Mock Interview</span>
+              <span className="circle-jcj-MI" aria-hidden="true"></span>
+              <svg
+                viewBox="0 0 24 24"
+                className="arr-1-jcj-MI"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"></path>
+              </svg>
             </button>
           </div>
         </div>
