@@ -17,6 +17,11 @@
   position: relative;
 }
 
+.right-logo-login-jcj {
+  width: 150px;
+  margin-bottom: 20px;
+}
+
 .login-overlay-jcj {
   position: absolute;
   top: 0;
@@ -90,11 +95,13 @@
 }
 
 .login-right-side-jcj {
-  flex: 1;
-  padding: 3rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  flex: 1 1;
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+
 }
 
 .login-form-container-jcj {
@@ -107,36 +114,60 @@
   font-weight: 600;
   color: #333;
   margin: 0 0 2rem 0;
-  text-align: left;
+  text-align: center;
 }
 
 .login-form-jcj {
   margin-bottom: 1.5rem;
 }
 
-.input-group-jcj {
-  margin-bottom: 1.5rem;
+.input-group-login-jcj {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  margin: 1.5rem 0;
+  position: relative;
+  width: 100%;
 }
 
-.login-input-jcj {
+.input-field-login-jcj {
   width: 100%;
-  padding: 1rem;
-  border: none;
-  border-bottom: 2px solid #e0e0e0;
-  background: transparent;
+  padding: 0.95rem 1rem;
+  border: 2px solid rgb(200, 200, 200);
+  background-color: transparent;
+  border-radius: 20px;
   font-size: 1rem;
   font-family: inherit;
-  transition: border-color 0.3s ease;
   outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.login-input-jcj:focus {
-  border-bottom-color: #667eea;
+.input-label-login-jcj {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 0.95rem 1rem;
+  margin-left: 0.6rem;
+  color: rgb(100, 100, 100);
+  font-size: 1rem;
+  pointer-events: none;
+  transition: all 0.3s ease;
 }
 
-.login-input-jcj::placeholder {
-  color: #999;
-  font-weight: 400;
+.input-group-login-jcj
+  :is(.input-field-login-jcj:focus, .input-field-login-jcj:valid)
+  ~ .input-label-login-jcj {
+  transform: translateY(-55%) scale(0.9);
+  margin: 0;
+  margin-left: 1.4rem;
+  padding: 0.35rem 0.6rem;
+  background-color: #e8e8e8;
+  border-radius: 12px;
+  color: #333333;
+}
+
+.input-group-login-jcj
+  :is(.input-field-login-jcj:focus, .input-field-login-jcj:valid) {
+  border-color: rgb(150, 150, 200);
+  box-shadow: 0 6px 18px rgba(102, 126, 234, 0.15);
 }
 
 .continue-btn-jcj {

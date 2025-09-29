@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
 import { FaCircleArrowRight } from "react-icons/fa6";
 import logoimage from "../SignUp_jcj/images/logohorizontal.png";
+import rightlogo from "../SignUp_jcj/images/newlogo.png";
 import DecryptedText from "./DecryptedText/DecryptedText";
 import "./loginPage_jcj.css";
 
@@ -98,32 +99,56 @@ function LoginPageJCJ() {
 
       {/* Right side with login form */}
       <div className="login-right-side-jcj">
+        <div>
+          <img
+            src={rightlogo}
+            alt="Right Logo"
+            className="right-logo-login-jcj"
+          />
+        </div>
+
         <div className="login-form-container-jcj">
           <h2 className="login-title-jcj">Sign In</h2>
 
           <form onSubmit={handleSubmit} className="login-form-jcj">
-            <div className="input-group-jcj">
+            <div className="input-group-login-jcj">
               <input
                 type="email"
                 name="email"
-                placeholder="Email Address"
+                id="login-email-input-jcj"
                 value={formData.email}
                 onChange={handleInputChange}
-                className="login-input-jcj"
+                className="input-field-login-jcj"
+                autoComplete="email"
+                placeholder=" "
                 required
               />
+              <label
+                htmlFor="login-email-input-jcj"
+                className="input-label-login-jcj"
+              >
+                Email Address
+              </label>
             </div>
 
-            <div className="input-group-jcj">
+            <div className="input-group-login-jcj">
               <input
                 type="password"
                 name="password"
-                placeholder="Password"
+                id="login-password-input-jcj"
                 value={formData.password}
                 onChange={handleInputChange}
-                className="login-input-jcj"
+                className="input-field-login-jcj"
+                autoComplete="current-password"
+                placeholder=" "
                 required
               />
+              <label
+                htmlFor="login-password-input-jcj"
+                className="input-label-login-jcj"
+              >
+                Password
+              </label>
             </div>
 
             {errorMessage && (
