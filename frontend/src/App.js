@@ -11,14 +11,20 @@ import StuSession from "./components_stu/stu_session/stu_session";
 import StuArticales from "./components_stu/stu_articale/stu_articales";
 import StuFullArticle from "./components_stu/stu_articale/stu_fullArticle";
 import StuCareerSession from "./components_stu/stu_career_session/stu_career_session";
+import StuResume from "./components_stu/stu_resume/StuResume";
 import StuCourses from "./components_stu/stu_course/stu_courses/stu_courses";
 import Stu_AllCourses from "./components_stu/stu_course/stu_AllCourses/stu_AllCourses";
 import Stu_CourseDetails from "./components_stu/stu_course/stu_CourseDetails/stu_CourseDetails";
 import Stu_CourseContent from "./components_stu/stu_course/stu_CourseContent/stu_CourseContent";
 import Stu_CourseQuiz from "./components_stu/stu_course/stu_CourseQuiz/stu_CourseQuiz";
 import StudentInterviewQuiz from "./components_stu/stu_interview/stu_StudentInterviewQuiz/stu_StudentInterviewQuiz";
-import ResumeTemplate1 from "./components_stu/stu_resume/stu_resumeTem/stu_resumeTem1";
 import CareerResourceHub from "./components_stu/stu_trainingContent/stu_trainingContent";
+import ExamPrepOverview from "./components_stu/stu_examPrep/stu_examPrepOverview/stu_examPrepOverview";
+import ExamStrategies from "./components_stu/stu_examPrep/stu_examStrategies/stu_examStrategies";
+import StuExamPastPaper from "./components_stu/stu_examPrep/stu_examPastPaper/stu_examPastPaper";
+import PracticeTestsOverview from "./components_stu/stu_examPrep/stu_examQuiz/PracticeTestsOverview";
+import StuExamQuiz from "./components_stu/stu_examPrep/stu_examQuiz/stu_examQuiz";
+
 
 import LandingPage from "./components_jcj/LandingPage_jcj/LandingPage_jcj";
 import AboutUs_jcj from "./components_jcj/Aboutus_jcj/AboutUs_jcj";
@@ -37,6 +43,7 @@ import MentorResourcehub from "./mentor-components/mentor-resourcehub/MentorReso
 import MentorManageResourses from "./mentor-components/mentor-resourcehub/MentorResourceManage";
 import MentorArticle from "./mentor-components/mentor-article/MentorArticle";
 import MentorCareerSession from "./mentor-components/mentor-career-session/MentorCareerSession";
+import MentorCareerResourcehub from "./mentor-components/mentot-career-resourcehub/MentorCareerResourcehub";
 
 const StudentLayout = () => (
   <div className="app-layout">
@@ -51,20 +58,21 @@ const StudentLayout = () => (
         <Route path="/student/career-session" element={<StuCareerSession />} />
         <Route path="/student/articales" element={<StuArticales />} />
         <Route path="/student/articales/:id" element={<StuFullArticle />} />
+        <Route path="/student/resume/" element={<StuResume />} />
         <Route path="/student/courses" element={<StuCourses />} />
         <Route path="/all-courses" element={<Stu_AllCourses />} />
         <Route path="/courses/:id" element={<Stu_CourseDetails />} />
         <Route path="/courses/:id/content" element={<Stu_CourseContent />} />
         <Route path="/courses/:id/quiz" element={<Stu_CourseQuiz />} />
-        <Route
-          path="/student/interview_quiz"
-          element={<StudentInterviewQuiz />}
-        />
-        <Route
-          path="/student/career-resources"
-          element={<CareerResourceHub />}
-        />
-        <Route path="/student/resume" element={<ResumeTemplate1 />} />
+
+        <Route path="/student/interview_quiz" element={<StudentInterviewQuiz />} />
+        <Route path="/student/career-resources" element={<CareerResourceHub />} />
+        <Route path="/student/exam-support" element={<ExamPrepOverview />} />
+        <Route path="/student/exam/strategies" element={<ExamStrategies />} />
+        <Route path="/student/exam/past-papers" element={<StuExamPastPaper/>} />
+        <Route path="/student/exam/practice-tests" element={<PracticeTestsOverview/>} />
+        <Route path="/student/exam/practice-tests/quiz/:quizId" element={<StuExamQuiz/>} />
+
       </Routes>
     </main>
     <StuFooter />
@@ -75,26 +83,16 @@ const MentorLayout = () => (
   <div className="App">
     <React.Fragment>
       <Routes>
-        <Route path="/mentor-dashboard" element={<MentorDashboard />} />
-        <Route
-          path="/mentor-session-create"
-          element={<MentorSessionCreate />}
-        />
-        <Route path="/mentor-guidance" element={<MentorGuidance />} />
-        <Route
-          path="/mentor-announcement"
-          element={<MentorshipAnnouncementForm />}
-        />
-        <Route path="/mentor-resourcehub" element={<MentorResourcehub />} />
-        <Route
-          path="/mentor-manage-resources"
-          element={<MentorManageResourses />}
-        />
-        <Route path="/mentor-article" element={<MentorArticle />} />
-        <Route
-          path="/mentor-career-session"
-          element={<MentorCareerSession />}
-        />
+
+         <Route path="/mentor-dashboard" element={<MentorDashboard />} />
+         <Route path="/mentor-session-create" element={<MentorSessionCreate />} />
+         <Route path="/mentor-guidance" element={<MentorGuidance />} />
+         <Route path="/mentor-announcement" element={<MentorshipAnnouncementForm />} />
+         <Route path="/mentor-resourcehub" element={<MentorResourcehub />} />
+         <Route path="/mentor-manage-resources" element={<MentorManageResourses />} />
+         <Route path="/mentor-article" element={<MentorArticle />} />
+         <Route path="/mentor-career-session" element={<MentorCareerSession/>} />
+         <Route path="/mentor-career-resourcehub" element={<MentorCareerResourcehub />} />
       </Routes>
     </React.Fragment>
   </div>
@@ -140,8 +138,8 @@ function App() {
     <div className="app-container">
       <Routes>
         <Route path="/landing/*" element={<LandingPageLayout />} />
-        <Route path="/*" element={<StudentLayout />} />
-        <Route path="/h*" element={<MentorLayout />} />
+        <Route path="/a*" element={<StudentLayout />} />
+        <Route path="/*" element={<MentorLayout />} />
         <Route path="/MIPage*" element={<MIPageLayout />} />
       </Routes>
     </div>

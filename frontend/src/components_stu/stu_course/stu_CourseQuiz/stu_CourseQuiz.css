@@ -42,7 +42,7 @@
     ) 0 0 / 40px 40px;
   opacity: 0.3;
   z-index: 0;
-  animation: gridMove 30s linear infinite;
+  animation: gridMove 100s linear infinite;
   pointer-events: none;
 }
 

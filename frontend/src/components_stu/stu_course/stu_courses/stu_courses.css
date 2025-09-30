@@ -47,7 +47,7 @@
   will-change: transform;
   backface-visibility: hidden;
   transform: translate3d(0,0,0);
-  animation: gridMove 30s linear infinite;
+  animation: gridMove 100000000000s linear infinite;
   pointer-events: none;
   backface-visibility: hidden;
   transform: translate3d(0, 0, 0);
