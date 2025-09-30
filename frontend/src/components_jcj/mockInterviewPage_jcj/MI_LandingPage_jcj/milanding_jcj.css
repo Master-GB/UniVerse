@@ -3,7 +3,7 @@
 .black-bg-jcj {
   position: relative;    /* create stacking context for children */
   z-index: 0;            /* baseline stacking context */
-  background-color: #121212;
+  background-color: #01012b; /* if you change this make sure to change the LogoLoop component's bg color */
   color: #ffffff;
   min-height: 100vh;
   overflow: hidden;

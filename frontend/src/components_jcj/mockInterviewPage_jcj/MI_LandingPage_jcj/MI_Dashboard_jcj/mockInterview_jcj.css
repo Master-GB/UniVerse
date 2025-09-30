@@ -3,10 +3,10 @@
   
   margin: 0 auto;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   position: relative;
   overflow: hidden;
+  width: 100%;
 }
 
 .interview-container-jcj::before {
@@ -16,7 +16,6 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='m0 40l40-40h-40v40zm40 0v-40h-40l40 40z'/%3E%3C/g%3E%3C/svg%3E") repeat;
   pointer-events: none;
 }
 
@@ -87,17 +86,24 @@
   justify-content: center;
   min-height: calc(100vh - 100px);
   padding: 40px;
+  position: relative;
+  z-index: 1;
+  /* background-image: url(https://images.pexels.com/photos/4862865/pexels-photo-4862865.jpeg); */
+  background-size: cover;
+  background-position: center;
+  backdrop-filter: blur(5px); /* Optional glass effect */
 }
 
 .welcome-content-jcj {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(20px);
   border-radius: 24px;
   padding: 60px;
   text-align: center;
-  max-width: 600px;
+  max-width: 956px;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  position: relative;
 }
 
 .gemini-logo-jcj {
@@ -111,12 +117,12 @@
   50% { transform: translateY(-10px); }
 }
 
-.welcome-title-jcj {
+.welcome-title-jcj-MI {
   font-size: 32px;
   font-weight: 800;
   color: #1f2937;
   margin-bottom: 20px;
-  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  background: white;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -124,7 +130,7 @@
 
 .welcome-description-jcj {
   font-size: 16px;
-  color: #6b7280;
+  color: #ffffff;
   line-height: 1.6;
   margin-bottom: 30px;
 }
@@ -146,7 +152,6 @@
   border-radius: 12px;
   font-size: 14px;
   font-weight: 500;
-  color: #4f46e5;
 }
 
 .feature-icon-jcj {
@@ -176,6 +181,9 @@
   display: flex;
   flex-direction: column;
   height: calc(100vh - 100px);
+  position: relative;
+  z-index: 1;
+  background: rgba(0, 0, 0, 0.8); /* Semi-transparent overlay */
 }
 
 .chat-container-jcj {
@@ -221,9 +229,9 @@
 }
 
 .ai-message-jcj .message-content-jcj {
-  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  background: linear-gradient(135deg, #0c0a28, #1a1621);
   color: white;
-  border-left: 4px solid #fbbf24;
+  border-left: 4px solid #62605d;
 }
 
 .user-message-jcj .message-content-jcj {
@@ -278,22 +286,23 @@
 /* Input Section */
 .input-section-jcj {
   padding: 30px;
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(17, 24, 39, 0.95); /* Dark background */
   backdrop-filter: blur(20px);
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .input-container-jcj {
   display: flex;
   gap: 15px;
-  align-items: flex-end;
+  align-items: center;
   max-width: 1000px;
   margin: 0 auto;
+  flex-wrap: wrap;
 }
 
 .answer-input-jcj {
   flex: 1;
-  border: 2px solid #e5e7eb;
+  border: 2px solid rgba(75, 85, 99, 0.4);
   border-radius: 12px;
   padding: 16px;
   font-size: 15px;
@@ -301,15 +310,16 @@
   min-height: 50px;
   font-family: inherit;
   transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(31, 41, 55, 0.7);
   backdrop-filter: blur(10px);
+  color: #e5e7eb; /* Light text color */
 }
 
 .answer-input-jcj:focus {
   outline: none;
   border-color: #4f46e5;
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
-  background: white;
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+  background: rgba(31, 41, 55, 0.9);
 }
 
 .answer-input-jcj:disabled {
@@ -360,6 +370,91 @@
   100% { transform: rotate(360deg); }
 }
 
+/* Animated Start Button (scoped with -jcj-MI) */
+.animated-button-jcj-MI {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 16px 36px;
+  border: 4px solid transparent;
+  font-size: 16px;
+  background: transparent;
+  border-radius: 100px;
+  font-weight: 600;
+  color: #adff2f; /* greenyellow variant */
+  box-shadow: 0 0 0 2px #adff2f;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  isolation: isolate; /* keep circle layering self-contained */
+}
+
+.animated-button-jcj-MI svg {
+  position: absolute;
+  width: 24px;
+  fill: #adff2f;
+  z-index: 2;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  pointer-events: none;
+}
+
+.animated-button-jcj-MI .arr-1-jcj-MI { right: 16px; }
+.animated-button-jcj-MI .arr-2-jcj-MI { left: -25%; }
+
+.animated-button-jcj-MI .circle-jcj-MI {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  background: #adff2f;
+  border-radius: 50%;
+  opacity: 0;
+  z-index: 1;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated-button-jcj-MI .text-jcj-MI {
+  position: relative;
+  z-index: 3;
+  transform: translateX(-12px);
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  white-space: nowrap;
+}
+
+.animated-button-jcj-MI:hover {
+  box-shadow: 0 0 0 12px transparent;
+  color: #121212;
+  border-radius: 32px;
+}
+
+.animated-button-jcj-MI:hover .arr-1-jcj-MI { right: -25%; }
+.animated-button-jcj-MI:hover .arr-2-jcj-MI { left: 16px; }
+.animated-button-jcj-MI:hover .text-jcj-MI { transform: translateX(12px); }
+.animated-button-jcj-MI:hover svg { fill: #121212; }
+.animated-button-jcj-MI:hover .circle-jcj-MI {
+  width: 320px;
+  height: 220px;
+  opacity: 1;
+}
+
+.animated-button-jcj-MI:active {
+  transform: scale(0.95);
+  box-shadow: 0 0 0 4px #adff2f;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .animated-button-jcj-MI,
+  .animated-button-jcj-MI svg,
+  .animated-button-jcj-MI .text-jcj-MI,
+  .animated-button-jcj-MI .circle-jcj-MI { transition: none; }
+  .animated-button-jcj-MI:hover .circle-jcj-MI { width: 0; height: 0; opacity: 0; }
+  .animated-button-jcj-MI:hover .text-jcj-MI { transform: none; }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .interview-container-jcj {
@@ -381,7 +476,7 @@
     margin: 20px;
   }
 
-  .welcome-title-jcj {
+  .welcome-title-jcj-MI {
     font-size: 24px;
   }
 
@@ -421,7 +516,7 @@
     font-size: 40px;
   }
 
-  .welcome-title-jcj {
+  .welcome-title-jcj-MI {
     font-size: 20px;
   }
 

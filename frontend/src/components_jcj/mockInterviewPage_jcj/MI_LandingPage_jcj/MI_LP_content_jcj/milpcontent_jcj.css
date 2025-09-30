@@ -3,7 +3,7 @@
 .milp-hero-container-jcj {
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  min-height: 110vh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -28,7 +28,8 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(179deg, #001234 -68.48%, #001233eb 44%);
+  background: #000e5c;
+  background: linear-gradient(181deg, rgb(2 9 46 / 67%) 0%, rgb(1 1 43) 86%);
   z-index: -1;
 }
 
@@ -174,6 +175,11 @@
   color: #ffffff;
   opacity: 1;
   transform: scale(1.05);
+}
+
+/* Want to make the logo loop stay above the blue gradient */
+.logoloop_jcj{
+  z-index: 2;
 }
 
 /* Responsive Design */

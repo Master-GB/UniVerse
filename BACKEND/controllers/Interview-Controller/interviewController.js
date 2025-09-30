@@ -3,12 +3,13 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const askAI = async (req, res) => {
-  // console.log("askAI function called"); // <-- Add this
-  // console.log("API Key exists:", !!process.env.GEMINI_API_KEY); // <-- Add this to check the key
+  console.log("askAI function called"); // <-- Add this
+  console.log("API Key exists:", !!process.env.GEMINI_API_KEY); // <-- Add this to check the key
   try {
     const { userAnswer, chatHistory } = req.body;
 
     // Pick a model (Gemini 1.5 for conversations is common)
+    // Ado e meke welawkt 1.5 flash unavailable kynw ethkot pddk wenas krl blpn 2.5 wlt wge, mge credits iwrd khed
     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const prompt = `

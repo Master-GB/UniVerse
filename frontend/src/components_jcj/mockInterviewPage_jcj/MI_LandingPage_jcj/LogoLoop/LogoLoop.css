@@ -3,8 +3,28 @@
   overflow-x: hidden;
 
   --logoloop-gap: 32px;
-  --logoloop-logoHeight: 28px;
-  --logoloop-fadeColorAuto: #ffffff;
+  --logoloop-logoHeight: 48px;
+  --logoloop-fadeColorAuto: #0501fc;
+  --logoloop-iconColor: #ffffff;
+  --logoloop-iconHoverColor: #ffffff;
+}
+
+.logoloop__item,
+.logoloop__node,
+.logoloop__link {
+  color: var(--logoloop-iconColor);
+}
+
+.logoloop__link:link,
+.logoloop__link:visited {
+  color: var(--logoloop-iconColor);
+}
+
+.logoloop__link:hover,
+.logoloop__link:focus-visible,
+.logoloop--scale-hover .logoloop__item:hover .logoloop__node,
+.logoloop--scale-hover .logoloop__item:hover .logoloop__node * {
+  color: var(--logoloop-iconHoverColor);
 }
 
 .logoloop--scale-hover {
@@ -23,33 +43,13 @@
   width: max-content;
   will-change: transform;
   user-select: none;
-  animation-name: logoloop-marquee;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-  animation-duration: 0s;
-  animation-play-state: paused;
-}
-
-.logoloop__track[data-animated="false"] {
-  animation: none;
-  transform: translate3d(0, 0, 0);
-}
-
-@keyframes logoloop-marquee {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(var(--logoloop-animation-distance, -50%), 0, 0);
-  }
 }
 
 .logoloop__list {
+  list-style: none; /* Removes bullets/numbers */
+  padding-left: 0; /* Removes default left padding */
   display: flex;
   align-items: center;
-  list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
 .logoloop__item {
@@ -57,9 +57,6 @@
   margin-right: var(--logoloop-gap);
   font-size: var(--logoloop-logoHeight);
   line-height: 1;
-  color: #ffffff;
-  list-style: none;
-  background: transparent;
 }
 
 .logoloop__item:last-child {
@@ -69,11 +66,6 @@
 .logoloop__node {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  font-size: var(--logoloop-logoHeight);
-  line-height: 1;
-  color: inherit;
-  background: transparent;
 }
 
 .logoloop__item img {
@@ -102,20 +94,12 @@
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.logoloop__node svg {
-  width: auto;
-  height: var(--logoloop-logoHeight);
-  fill: currentColor;
-}
-
 .logoloop__link {
   display: inline-flex;
   align-items: center;
   text-decoration: none;
   border-radius: 4px;
   transition: opacity 0.2s ease;
-  color: inherit;
-  background: transparent;
 }
 
 .logoloop__link:hover {
@@ -129,7 +113,7 @@
 
 .logoloop--fade::before,
 .logoloop--fade::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   bottom: 0;
@@ -159,7 +143,6 @@
 @media (prefers-reduced-motion: reduce) {
   .logoloop__track {
     transform: translate3d(0, 0, 0) !important;
-    animation: none !important;
   }
 
   .logoloop__item img,
