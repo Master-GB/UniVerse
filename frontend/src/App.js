@@ -123,7 +123,7 @@ function App() {
     <div className="app-container">
       <Routes>
         <Route path="/landing/*" element={<LandingPageLayout />} />
-        <Route path="/a*" element={<StudentLayout />} />
+        <Route path="/h*" element={<StudentLayout />} />
         <Route path="/*" element={<MentorLayout />} />
         <Route path="/MIPage*" element={<MIPageLayout />} />
       </Routes>
