@@ -137,9 +137,9 @@ function App() {
   return (
     <div className="app-container">
       <Routes>
-        <Route path="/landing/*" element={<LandingPageLayout />} />
-        <Route path="/a*" element={<StudentLayout />} />
-        <Route path="/*" element={<MentorLayout />} />
+        <Route path="/*" element={<LandingPageLayout />} />
+        <Route path="/k*" element={<StudentLayout />} />
+        <Route path="/k*" element={<MentorLayout />} />
         <Route path="/MIPage*" element={<MIPageLayout />} />
       </Routes>
     </div>
