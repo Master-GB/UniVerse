@@ -2,7 +2,7 @@
   --bg: #0c0f14;
 }
 
-.courses-page {
+.courses-page-new {
   padding: 15px 0 0;
   background: radial-gradient(1000px 600px at 10% -10%, rgba(127,91,255,0.2), transparent),
              radial-gradient(1000px 600px at 100% 0%, rgba(91,156,255,0.15), transparent),
@@ -15,24 +15,18 @@
   left: 0;
   right: 0;
   box-sizing: border-box;
-  animation: fadeIn 0.4s ease;
   z-index: 1;
   overflow-x: hidden;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-
-.courses-page::before {
+.courses-page-new::before {
   content: '';
-  position: fixed;
+  position: absolute; /* Changed from fixed to absolute */
   top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  left: -60px;
+  right: -60px;
+  bottom: 70px; /* Stop before footer */
+  height: calc(100% - 3px); /* Adjust based on footer height */
   background: 
     linear-gradient(90deg, 
       var(--border) 1px, 
@@ -42,12 +36,10 @@
       var(--border) 1px, 
       transparent 1px
     ) 0 0 / 40px 40px;
+  background-attachment: fixed;
   opacity: 0.5;
   z-index: -1;
-  will-change: transform;
-  backface-visibility: hidden;
-  transform: translate3d(0,0,0);
-  animation: gridMove 100000000000s linear infinite;
+  animation: gridMove 100s linear infinite;
   pointer-events: none;
   backface-visibility: hidden;
   transform: translate3d(0, 0, 0);
@@ -74,8 +66,6 @@
   }
 }
 
-
-
 /* Container */
 .container-StuCourses {
   width: 90% !important;
@@ -84,6 +74,9 @@
   padding: 10px 15px 20px !important;
   background: none;
   font-family: 'Poppins', sans-serif;
+  min-height: 100vh;
+  opacity: 1;
+  transition: opacity 0.3s ease;
   position: relative;
   box-sizing: border-box !important;
   left: 0 !important;
@@ -94,34 +87,18 @@
 }
 
 /* Alerts */
+/* Removed loading and error message styles to prevent flash */
 .loading-StuCourses,
-.error-StuCourses,
-.no-courses-StuCourses {
-  color: #fff;
-  font-size: 1.2rem;
-  text-align: center;
-  padding: 15px;
-  border-radius: 10px;
-  margin: 60px 0;
-  animation: fadeIn 0.5s ease-in-out;
-}
-
-.loading-StuCourses {
-  background: rgba(0, 128, 128, 0.15);
-  color: #00CED1;
-  border: 2px solid #00CED1;
-}
-
 .error-StuCourses {
-  background: rgba(220, 20, 60, 0.15);
-  color: #FF4040;
-  border: 2px solid #FF4040;
+  display: none;
 }
 
 .no-courses-StuCourses {
-  background: rgba(255, 255, 255, 0.08);
   color: #B0B0B0;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+  opacity: 0.8;
 }
 
 /* Hero Section */
@@ -597,9 +574,7 @@
 
 @keyframes breathe {
   0%   { transform: scale(1); }
-  25%  { transform: scale(1.05); }
   50%  { transform: scale(1.1); }
-  75%  { transform: scale(1.05); }
   100% { transform: scale(1); }
 }
 
