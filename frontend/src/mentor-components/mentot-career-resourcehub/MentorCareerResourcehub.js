@@ -16,10 +16,10 @@ export default function CareerResourcesPage() {
     title: "",
     description: "",
     type: "interview",
-    category: "",
+    category: "Interview Prep",
     url: "",
     actionText: "View Resource",
-    level: "All Levels",
+    level: "All Level",
     duration: "",
     premium: false,
   });
@@ -50,10 +50,10 @@ export default function CareerResourcesPage() {
           title: "Mock Interview Prep Guide",
           description: "Comprehensive guide for technical interviews",
           type: "interview",
-          category: "Technical",
+          category: "Interview Prep",
           url: "https://example.com",
           actionText: "View Guide",
-          level: "All Levels",
+          level: "All Level",
           duration: "45 mins",
           premium: false,
         },
@@ -74,6 +74,9 @@ export default function CareerResourcesPage() {
 
   const handleSubmit = async () => {
     setLoading(true);
+    setError("");
+    setSuccess("");
+    
     if (!form.title || !form.description || !form.category || !form.url) {
       setError("Please fill all required fields");
       setLoading(false);
@@ -94,10 +97,10 @@ export default function CareerResourcesPage() {
         title: "",
         description: "",
         type: "interview",
-        category: "",
+        category: "Interview Prep",
         url: "",
         actionText: "View Resource",
-        level: "All Levels",
+        level: "All Level",
         duration: "",
         premium: false,
       });
@@ -121,7 +124,7 @@ export default function CareerResourcesPage() {
 
   const getTypeIcon = (type) => {
     switch (type) {
-      case "video":
+      case "professional":
         return "🎥";
       case "interview":
         return "💼";
@@ -134,6 +137,17 @@ export default function CareerResourcesPage() {
       default:
         return "📄";
     }
+  };
+
+  const getTypeLabel = (type) => {
+    const labels = {
+      professional: "Professional Skills",
+      interview: "Interview Prep",
+      skill: "Skill Development",
+      salary: "Salary Data",
+      company: "Company Insights"
+    };
+    return labels[type] || type;
   };
 
   return (
@@ -174,23 +188,38 @@ export default function CareerResourcesPage() {
                 value={form.title}
                 onChange={handleChange}
               />
-              <input
-                type="text"
+              <select
                 name="category"
-                placeholder="Category *"
                 value={form.category}
                 onChange={handleChange}
-              />
+              >
+                <option value="Interview Prep">Interview Prep</option>
+                <option value="Salary data">Salary data</option>
+                <option value="Skill Development">Skill Development</option>
+                <option value="Company Insights">Company Insights</option>
+                <option value="Professional Skill">Professional Skill</option>
+              </select>
               <select
                 name="type"
                 value={form.type}
                 onChange={handleChange}
               >
-                <option value="interview">Interview Prep</option>
-                <option value="skill">Skill Development</option>
+                <option value="interview">Interview</option>
                 <option value="salary">Salary</option>
+                <option value="skill">Skill</option>
                 <option value="company">Company</option>
-                <option value="video">Video</option>
+                <option value="professional">Professional</option>
+              </select>
+              <select
+                name="level"
+                value={form.level}
+                onChange={handleChange}
+              >
+                <option value="All Level">All Level</option>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Mid-Senior">Mid-Senior</option>
+                <option value="Senior">Senior</option>
               </select>
               <input
                 type="url"
@@ -202,7 +231,7 @@ export default function CareerResourcesPage() {
               <input
                 type="text"
                 name="duration"
-                placeholder="Duration"
+                placeholder="Duration (e.g., 30 mins)"
                 value={form.duration}
                 onChange={handleChange}
               />
@@ -247,10 +276,10 @@ export default function CareerResourcesPage() {
             >
               <option value="all">All Types</option>
               <option value="interview">Interview</option>
-              <option value="skill">Skill</option>
               <option value="salary">Salary</option>
+              <option value="skill">Skill</option>
               <option value="company">Company</option>
-              <option value="video">Video</option>
+              <option value="professional">Professional</option>
             </select>
           </div>
         </div>
@@ -271,12 +300,15 @@ export default function CareerResourcesPage() {
                     <div className="careerR-icon">{getTypeIcon(r.type)}</div>
                     <div>
                       <h3>{r.title}</h3>
-                      <span className="careerR-type">{r.type}</span>
+                      <span className="careerR-type">{getTypeLabel(r.type)}</span>
                     </div>
                   </div>
                   <p>{r.description}</p>
                   <div className="careerR-meta">
                     <span>📁 {r.category}</span>
+                    {r.level && (
+                      <span>📊 {r.level}</span>
+                    )}
                     {r.duration && (
                       <span>
                         <Clock size={12} /> {r.duration}
