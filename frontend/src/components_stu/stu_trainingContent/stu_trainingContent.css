@@ -654,6 +654,81 @@
   box-shadow: 0 4px 12px rgba(67, 97, 238, 0.2);
 }
 
+/* Loading State */
+.career-resource-hub__loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.career-resource-hub__spinner {
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  color: var(--cr-primary);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Error State */
+.career-resource-hub__error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  text-align: center;
+  background: rgba(220, 53, 69, 0.05);
+  border-radius: var(--cr-radius-md);
+  border: 1px solid rgba(220, 53, 69, 0.2);
+  margin: 2rem 0;
+}
+
+.career-resource-hub__error-icon {
+  margin-bottom: 1.5rem;
+  color: var(--cr-danger);
+}
+
+.career-resource-hub__error-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 0.5rem;
+}
+
+.career-resource-hub__error-text {
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 1.5rem;
+  max-width: 500px;
+  line-height: 1.6;
+}
+
+.career-resource-hub__retry-btn {
+  background: var(--cr-primary);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--cr-radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--cr-transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.career-resource-hub__retry-btn:hover {
+  background: var(--cr-primary-light);
+  transform: translateY(-2px);
+}
+
 .resource-card__action-icon {
   font-size: 0.8rem;
 }

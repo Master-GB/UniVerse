@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './stu_trainingContent.css';
+import axios from 'axios';
 import { 
   FaSearch, 
   FaExternalLinkAlt, 
@@ -11,7 +12,8 @@ import {
   FaRegBookmark,
   FaBookmark,
   FaFilter,
-  FaTimes
+  FaTimes,
+  FaSpinner
 } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -109,141 +111,40 @@ const CareerResourceHub = () => {
   const [savedResourceIds, setSavedResourceIds] = useState([]);
   const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [showSavedOnly, setShowSavedOnly] = useState(false);
-  const [resources] = useState([
-    {
-      id: 1,
-      title: 'Tech Industry Salary Guide 2025',
-      description: 'Comprehensive salary benchmarks for tech roles across different experience levels and locations',
-      type: 'salary',
-      category: 'Salary Data',
-      url: '#',
-      actionText: 'View Report',
-      level: 'All Levels',
-      duration: '15 min read',
-      premium: true
-    },
-    {
-      id: 2,
-      title: 'System Design Interview Masterclass',
-      description: 'Learn to design scalable systems with real-world examples and case studies',
-      type: 'interview',
-      category: 'Interview Prep',
-      url: '#',
-      level: 'Mid-Senior',
-      duration: '2h 30m',
-      premium: true
-    },
-    {
-      id: 3,
-      title: 'Python for Data Science',
-      description: 'Master Python libraries for data analysis and visualization',
-      type: 'skill',
-      category: 'Skill Development',
-      url: '#',
-      level: 'Beginner',
-      duration: '8h',
-      premium: false
-    },
-    {
-      id: 4,
-      title: 'FAANG Interview Questions',
-      description: 'Top 100 coding questions asked in FAANG interviews',
-      type: 'interview',
-      category: 'Interview Prep',
-      url: '#',
-      level: 'All Levels',
-      duration: '5h',
-      premium: false
-    },
-    {
-      id: 5,
-      title: 'Cloud Architecture Patterns',
-      description: 'Best practices for designing cloud-native applications',
-      type: 'skill',
-      category: 'Skill Development',
-      url: '#',
-      level: 'Senior',
-      duration: '4h',
-      premium: true
-    },
-    {
-      id: 6,
-      title: 'Tech Company Culture Guide',
-      description: 'Insider look at work cultures in top tech companies',
-      type: 'company',
-      category: 'Company Insights',
-      url: '#',
-      level: 'All Levels',
-      duration: '20 min read',
-      premium: false
-    },
-    {
-      id: 7,
-      title: 'Negotiation Strategies for Tech Jobs',
-      description: 'Learn how to negotiate your salary and benefits package',
-      type: 'salary',
-      category: 'Professional Skills',
-      url: '#',
-      level: 'All Levels',
-      duration: '45 min',
-      premium: false
-    },
-    {
-      id: 8,
-      title: 'Machine Learning Fundamentals',
-      description: 'Introduction to ML concepts and algorithms',
-      type: 'skill',
-      category: 'Skill Development',
-      url: '#',
-      level: 'Intermediate',
-      duration: '6h',
-      premium: true
-    },
-    {
-      id: 9,
-      title: 'Behavioral Interview Prep',
-      description: 'Master the STAR method and common behavioral questions',
-      type: 'interview',
-      category: 'Interview Prep',
-      url: '#',
-      level: 'All Levels',
-      duration: '1h 30m',
-      premium: false
-    },
-    {
-      id: 10,
-      title: 'Startup vs Big Tech',
-      description: 'Comparing career paths in different company sizes',
-      type: 'company',
-      category: 'Company Insights',
-      url: '#',
-      level: 'All Levels',
-      duration: '25 min read',
-      premium: false
-    },
-    {
-      id: 11,
-      title: 'DevOps Best Practices',
-      description: 'CI/CD, Infrastructure as Code, and more',
-      type: 'skill',
-      category: 'Skill Development',
-      url: '#',
-      level: 'Intermediate',
-      duration: '5h 30m',
-      premium: true
-    },
-    {
-      id: 12,
-      title: 'Remote Work Guide',
-      description: 'Thriving in distributed teams and remote work environments',
-      type: 'company',
-      category: 'Professional Skills',
-      url: '#',
-      level: 'All Levels',
-      duration: '35 min',
-      premium: false
-    }
-  ]);
+  const [resources, setResources] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch resources from backend API
+  useEffect(() => {
+    const fetchResources = async () => {
+      try {
+        const response = await axios.get('http://localhost:8070/mentor-career-resource/display');
+        // Map the backend data to match the frontend structure
+        const formattedResources = response.data.map(resource => ({
+          id: resource._id,
+          title: resource.title,
+          description: resource.description || '',
+          type: resource.type,
+          category: resource.category,
+          url: resource.url || '#',
+          actionText: resource.actionText || 'View Resource',
+          level: resource.level || 'All Levels',
+          duration: resource.duration || 'N/A',
+          premium: resource.premium || false
+        }));
+        setResources(formattedResources);
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching resources:', err);
+        setError('Failed to load resources. Please try again later.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchResources();
+  }, []);
 
   useEffect(() => {
     const saved = JSON.parse(localStorage.getItem('savedResources') || '[]');
@@ -405,7 +306,30 @@ const CareerResourceHub = () => {
             </div>
           </div>
 
-          {filteredResources.length > 0 ? (
+          {isLoading ? (
+            <div className="career-resource-hub__loading">
+              <FaSpinner className="career-resource-hub__spinner" />
+              <p>Loading resources...</p>
+            </div>
+          ) : error ? (
+            <div className="career-resource-hub__error">
+              <div className="career-resource-hub__error-icon">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                  <circle cx="12" cy="12" r="10" stroke="#ef4444" strokeWidth="1.5"></circle>
+                  <path d="M12 8v4" stroke="#ef4444" strokeWidth="2" strokeLinecap="round"></path>
+                  <path d="M12 16h.01" stroke="#ef4444" strokeWidth="2" strokeLinecap="round"></path>
+                </svg>
+              </div>
+              <h3 className="career-resource-hub__error-title">Error Loading Resources</h3>
+              <p className="career-resource-hub__error-text">{error}</p>
+              <button 
+                className="career-resource-hub__retry-btn"
+                onClick={() => window.location.reload()}
+              >
+                Retry
+              </button>
+            </div>
+          ) : filteredResources.length > 0 ? (
             <div className="career-resource-hub__resources-grid">
               <AnimatePresence>
                 {filteredResources.map(resource => (
