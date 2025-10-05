@@ -197,10 +197,28 @@ exports.deleteQuiz = async (req, res) => {
 // @desc    Submit quiz answers
 // @route   POST /api/quizzes/:id/submit
 // @access  Private/Student
+// @desc    Submit quiz answers
+// @route   POST /api/quizzes/:id/submit
+// @access  Private/Student
 exports.submitQuiz = async (req, res) => {
   try {
     const { answers, timeSpent } = req.body;
     const quizId = req.params.id;
+    
+    // Add validation
+    if (!answers || !Array.isArray(answers)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid answers format. Expected an array.'
+      });
+    }
+    
+    if (typeof timeSpent !== 'number') {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid timeSpent format. Expected a number.'
+      });
+    }
     
     const quiz = await Quiz.findById(quizId);
     
@@ -235,8 +253,9 @@ exports.submitQuiz = async (req, res) => {
     
     const percentage = totalPoints > 0 ? (score / totalPoints) * 100 : 0;
     
+    // Make student field optional for now
     const quizResult = await QuizResult.create({
-      student: req.user?._id,
+      student: req.user?._id || null, // Allow null if no user
       quiz: quizId,
       answers: processedAnswers,
       score,
@@ -244,10 +263,6 @@ exports.submitQuiz = async (req, res) => {
       percentage: Math.round(percentage * 100) / 100,
       timeSpent
     });
-    
-    // Populate quiz result with detailed information
-    const detailedResult = await QuizResult.findById(quizResult._id)
-      .populate('quiz', 'title subject');
     
     // Get questions with explanations for the response
     const questionsWithExplanations = quiz.questions.map((q, index) => ({
@@ -264,14 +279,15 @@ exports.submitQuiz = async (req, res) => {
       success: true,
       message: 'Quiz submitted successfully',
       data: {
-        resultId: detailedResult._id,
+        resultId: quizResult._id,
         score,
         totalPoints,
-        percentage: detailedResult.percentage,
+        percentage: Math.round(percentage * 100) / 100,
         questions: questionsWithExplanations
       }
     });
   } catch (error) {
+    console.error('Submit quiz error:', error);
     res.status(400).json({
       success: false,
       message: 'Error submitting quiz',

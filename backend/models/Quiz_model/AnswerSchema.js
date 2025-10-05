@@ -27,7 +27,7 @@ const quizResultSchema = new mongoose.Schema({
   student: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: true
+    required: false  // Changed from true to false
   },
   quiz: {
     type: mongoose.Schema.Types.ObjectId,

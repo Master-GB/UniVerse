@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { FiSearch, FiClock, FiAward, FiBookOpen } from 'react-icons/fi';
 import './PracticeTestsOverview.css';
+import axios from 'axios';
 
 const PracticeTestsOverview = () => {
   const navigate = useNavigate();
@@ -14,91 +15,64 @@ const PracticeTestsOverview = () => {
   });
   
   const [isLoading, setIsLoading] = useState(true);
-  
-  // Simulate loading
+  const [allQuizzes, setAllQuizzes] = useState([]);
+  const [filterOptions, setFilterOptions] = useState({
+    years: [],
+    subjects: [],
+    semesters: ['1', '2']
+  });
+  const [error, setError] = useState(null);
+
+  // Fetch filter options on component mount
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 800);
-    return () => clearTimeout(timer);
+    fetchFilterOptions();
   }, []);
 
-  // Sample quiz data - replace with actual data
-  const allQuizzes = [
-    {
-      id: 1,
-      title: 'SE3080 - 2023',
-      subject: 'Software Project Management',
-      year: 2023,
-      semester: '2',
-      questions: 30,
-      duration: 60, // minutes
-      difficulty: 'Medium',
-      isNew: true,
-      lastUpdated: '2023-09-20'
-    },
-    {
-      id: 2,
-      title: 'SE3050 - 2023',
-      subject: 'Advanced Software Engineering',
-      year: 2023,
-      semester: '1',
-      questions: 25,
-      duration: 45,
-      difficulty: 'Easy',
-      isNew: false,
-      lastUpdated: '2023-08-15'
-    },
-    {
-      id: 3,
-      title: 'SE3070 - 2023',
-      subject: 'Machine Learning',
-      year: 2023,
-      semester: '2',
-      questions: 35,
-      duration: 75,
-      difficulty: 'Hard',
-      isNew: true,
-      lastUpdated: '2023-09-22'
-    },
-    {
-      id: 4,
-      title: 'SE3040 - 2023',
-      subject: 'Database Systems',
-      year: 2023,
-      semester: '1',
-      questions: 28,
-      duration: 50,
-      difficulty: 'Medium',
-      isNew: false,
-      lastUpdated: '2023-07-10'
-    }
-  ];
+  // Fetch quizzes when filters change
+  useEffect(() => {
+    fetchQuizzes();
+  }, [filters]);
 
-  // Filter quizzes based on selected filters and search query
-  const filteredQuizzes = allQuizzes.filter(quiz => {
-    const searchLower = filters.searchQuery.toLowerCase();
-    const matchesSearch = 
-      quiz.title.toLowerCase().includes(searchLower) ||
-      quiz.subject.toLowerCase().includes(searchLower);
+  const fetchFilterOptions = async () => {
+    try {
+      const response = await axios.get('http://localhost:8070/quiz/filters/options');
+      if (response.data.success) {
+        setFilterOptions(response.data.data);
+      }
+    } catch (err) {
+      console.error('Error fetching filter options:', err);
+      // Don't set error state here as this is not critical
+    }
+  };
+
+  const fetchQuizzes = async () => {
+    setIsLoading(true);
+    setError(null);
+    
+    try {
+      const params = new URLSearchParams();
       
-    return (
-      (filters.year === 'all' || quiz.year === parseInt(filters.year)) &&
-      (filters.semester === 'all' || quiz.semester === filters.semester) &&
-      (filters.subject === 'all' || quiz.subject === filters.subject) &&
-      (filters.searchQuery === '' || matchesSearch)
-    );
-  });
-  
-  // Sort quizzes: newest first
-  const sortedQuizzes = [...filteredQuizzes].sort((a, b) => 
-    new Date(b.lastUpdated) - new Date(a.lastUpdated)
-  );
-  
-  // Get unique values for filters
-  const years = [...new Set(allQuizzes.map(quiz => quiz.year))].sort((a, b) => b - a);
-  const semesters = ['1', '2'];
-  const subjects = [...new Set(allQuizzes.map(quiz => quiz.subject))].sort();
+      if (filters.year !== 'all') params.append('year', filters.year);
+      if (filters.semester !== 'all') params.append('semester', filters.semester);
+      if (filters.subject !== 'all') params.append('subject', filters.subject);
+      if (filters.searchQuery) params.append('search', filters.searchQuery);
+      
+      const response = await axios.get(`http://localhost:8070/quiz/display?${params.toString()}`);
+      
+      if (response.data.success) {
+        // Backend returns array in response.data.data
+        setAllQuizzes(response.data.data || []);
+      } else {
+        setAllQuizzes([]);
+      }
+    } catch (err) {
+      console.error('Error fetching quizzes:', err);
+      setError('Failed to load quizzes. Please try again later.');
+      setAllQuizzes([]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleStartQuiz = (quizId) => {
     navigate(`/student/exam/practice-tests/quiz/${quizId}`);
@@ -107,6 +81,20 @@ const PracticeTestsOverview = () => {
   const handleBack = () => {
     window.history.back();
   };
+
+  const handleClearFilters = () => {
+    setFilters({
+      year: 'all',
+      semester: 'all',
+      subject: 'all',
+      searchQuery: ''
+    });
+  };
+
+  const isFiltersActive = filters.year !== 'all' || 
+                          filters.semester !== 'all' || 
+                          filters.subject !== 'all' || 
+                          filters.searchQuery !== '';
 
   return (
     <div className="practice-tests-overview">
@@ -117,6 +105,7 @@ const PracticeTestsOverview = () => {
       >
         ← Back
       </button>
+      
       <motion.div 
         className="page-header"
         initial={{ opacity: 0, y: -20 }}
@@ -150,7 +139,7 @@ const PracticeTestsOverview = () => {
                 className="filter-select"
               >
                 <option value="all">All Years</option>
-                {years.map(year => (
+                {filterOptions.years.map(year => (
                   <option key={year} value={year}>{year}</option>
                 ))}
               </select>
@@ -175,7 +164,7 @@ const PracticeTestsOverview = () => {
                 className="filter-select"
               >
                 <option value="all">All Subjects</option>
-                {subjects.map((subject, index) => (
+                {filterOptions.subjects.map((subject, index) => (
                   <option key={index} value={subject}>{subject}</option>
                 ))}
               </select>
@@ -184,13 +173,8 @@ const PracticeTestsOverview = () => {
           
           <button 
             className="clear-filters"
-            onClick={() => setFilters({
-              year: 'all',
-              semester: 'all',
-              subject: 'all',
-              searchQuery: ''
-            })}
-            disabled={filters.year === 'all' && filters.semester === 'all' && filters.subject === 'all' && filters.searchQuery === ''}
+            onClick={handleClearFilters}
+            disabled={!isFiltersActive}
           >
             Clear all filters
           </button>
@@ -198,8 +182,15 @@ const PracticeTestsOverview = () => {
       </div>
 
       <div className="quizzes-header">
-        <h3>{sortedQuizzes.length} {sortedQuizzes.length === 1 ? 'quiz' : 'quizzes'} found</h3>
+        <h3>{allQuizzes.length} {allQuizzes.length === 1 ? 'quiz' : 'quizzes'} found</h3>
       </div>
+
+      {error && (
+        <div className="error-message">
+          <p>{error}</p>
+          <button onClick={fetchQuizzes}>Try Again</button>
+        </div>
+      )}
 
       {isLoading ? (
         <div className="quizzes-grid">
@@ -213,9 +204,9 @@ const PracticeTestsOverview = () => {
             </div>
           ))}
         </div>
-      ) : sortedQuizzes.length > 0 ? (
+      ) : allQuizzes.length > 0 ? (
         <div className="quizzes-grid">
-          {sortedQuizzes.map(quiz => (
+          {allQuizzes.map(quiz => (
             <div key={quiz.id} className="quiz-card">
               {quiz.isNew && <span className="new-badge">New</span>}
               <div className="quiz-card-header">
@@ -246,7 +237,9 @@ const PracticeTestsOverview = () => {
                 </div>
               </div>
               <div className="quiz-card-footer">
-                <span className="last-updated">Updated: {new Date(quiz.lastUpdated).toLocaleDateString()}</span>
+                <span className="last-updated">
+                  Updated: {new Date(quiz.lastUpdated).toLocaleDateString()}
+                </span>
                 <button 
                   className="start-quiz-btn"
                   onClick={() => handleStartQuiz(quiz.id)}
@@ -270,12 +263,7 @@ const PracticeTestsOverview = () => {
           <p>We couldn't find any quizzes matching your filters. Try adjusting your search or filters.</p>
           <button 
             className="clear-filters-btn"
-            onClick={() => setFilters({
-              year: 'all',
-              semester: 'all',
-              subject: 'all',
-              searchQuery: ''
-            })}
+            onClick={handleClearFilters}
           >
             Clear all filters
           </button>

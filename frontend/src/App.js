@@ -76,7 +76,6 @@ const StudentLayout = () => (
         <Route path="/student/exam/past-papers" element={<StuExamPastPaper/>} />
         <Route path="/student/exam/practice-tests" element={<PracticeTestsOverview/>} />
         <Route path="/student/exam/practice-tests/quiz/:quizId" element={<StuExamQuiz/>} />
-
       </Routes>
     </main>
     <StuFooter />
@@ -145,8 +144,8 @@ function App() {
     <div className="app-container">
       <Routes>
         <Route path="/landing/" element={<LandingPageLayout />} />
-        <Route path="/j*" element={<StudentLayout />} />
-        <Route path="/*" element={<MentorLayout />} />
+        <Route path="/*" element={<StudentLayout />} />
+        <Route path="/f*" element={<MentorLayout />} />
         <Route path="/MIPage*" element={<MIPageLayout />} />
       </Routes>
     </div>
