@@ -1349,18 +1349,6 @@ useEffect(() => {
         </section>
 
       </div>
-
-      {/* Footer callout */}
-      <div className="sd-callout">
-        <div className="sd-callout-left">
-          <div className="sd-callout-title">Level up consistently</div>
-          <div className="sd-callout-sub">Schedule weekly goals and track progress effortlessly.</div>
-        </div>
-        <button className="sd-btn primary">
-          <Target size={16} />
-          Set Goals
-        </button>
-      </div>
     </div>
   );
 };

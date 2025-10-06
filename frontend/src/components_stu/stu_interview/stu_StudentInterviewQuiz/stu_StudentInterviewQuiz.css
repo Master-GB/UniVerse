@@ -1,105 +1,194 @@
 /* stu_StudentInterviewQuiz.css */
 
 :root {
-  --bg: #0c0f14;
-  --border: rgba(255, 255, 255, 0.08);
+  --bg: #0f172a;
+  --bg-secondary: #1e293b;
+  --primary: #6366f1;
+  --primary-hover: #4f46e5;
+  --accent: #8b5cf6;
+  --text: #f8fafc;
+  --text-secondary: #94a3b8;
+  --success: #10b981;
+  --error: #ef4444;
+  --border: rgba(255, 255, 255, 0.1);
+  --card-bg: rgba(30, 41, 59, 0.7);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --border-radius: 12px;
 }
 
 /* Global Styles */
 .studentinterview-body {
-  margin-top:-100px;
-  margin-bottom: -100px;
+  margin-top:-80px;
   padding: 0;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
   box-sizing: border-box;
   min-height: 100vh;
   background: var(--bg);
-  color: white;
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .studentinterview-container {
-  min-height: calc(100vh - 60px); /* Adjust 60px based on your header height */
-  background: radial-gradient(1000px 600px at 10% -10%, rgba(127,91,255,0.2), transparent),
-             radial-gradient(1000px 600px at 100% 0%, rgba(91,156,255,0.15), transparent),
+  min-height: 100vh;
+  background: radial-gradient(800px 800px at 10% -5%, rgba(99, 102, 241, 0.15), transparent),
+             radial-gradient(1000px 1000px at 90% 20%, rgba(139, 92, 246, 0.1), transparent),
              var(--bg);
-  padding-bottom: 0;
-  margin-bottom: 0;
+  padding: 2rem 0;
+  margin: 0;
+  position: relative;
+  overflow-x: hidden;
 }
 
 .studentinterview-content {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px 0;
-  color: white;
-  min-height: calc(100vh - 120px); /* Adjust based on header and footer heights */
+  padding: 2rem;
+  position: relative;
+  z-index: 1;
 }
 
 /* Intro Page Styles */
 .studentinterview-intro-hero {
   text-align: center;
-  padding: 60px 0;
+  padding: 4rem 2rem;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
 .studentinterview-intro-title {
   font-size: 3.5rem;
-  font-weight: bold;
-  margin-bottom: 20px;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(90deg, #fff, #a5b4fc);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
 }
 
 .studentinterview-intro-subtitle {
-  font-size: 1.3rem;
-  margin-bottom: 40px;
-  opacity: 0.9;
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  margin-bottom: 2.5rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
 }
 
 .studentinterview-get-started-btn {
-  background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+  background: linear-gradient(135deg, var(--primary), var(--accent));
   border: none;
-  padding: 15px 40px;
-  font-size: 1.2rem;
-  border-radius: 50px;
+  padding: 0.875rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  border-radius: 9999px;
   color: white;
   cursor: pointer;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.3);
+  transition: var(--transition);
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 0.75rem;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.studentinterview-get-started-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, var(--primary-hover), var(--accent));
+  opacity: 0;
+  transition: var(--transition);
+  z-index: -1;
 }
 
 .studentinterview-get-started-btn:hover {
-  transform: translateY(-3px);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px 0 rgba(99, 102, 241, 0.4);
+}
+
+.studentinterview-get-started-btn:hover::before {
+  opacity: 1;
 }
 
 /* Features Grid */
 .studentinterview-features-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
-  margin-bottom: 60px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin: 4rem 0;
 }
 
 .studentinterview-feature-card {
-  background: rgba(255,255,255,0.1);
+  background: var(--card-bg);
   backdrop-filter: blur(10px);
-  padding: 30px;
-  border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.2);
-  text-align: center;
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border);
+  text-align: left;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.studentinterview-feature-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.6s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.studentinterview-feature-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+.studentinterview-feature-card:hover::before {
+  transform: scaleX(1);
 }
 
 .studentinterview-feature-icon {
-  margin-bottom: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
 }
 
 .studentinterview-feature-title {
-  font-size: 1.5rem;
-  margin-bottom: 15px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--text);
 }
 
 .studentinterview-feature-description {
-  opacity: 0.8;
+  color: var(--text-secondary);
+  font-size: 1rem;
+  line-height: 1.7;
+  margin: 0;
 }
 
 /* Success Stories */
@@ -187,129 +276,260 @@
 /* Selection Page Styles */
 .studentinterview-selection-container {
   min-height: 100vh;
-  background: radial-gradient(1000px 600px at 10% -10%, rgba(127,91,255,0.2), transparent),
-             radial-gradient(1000px 600px at 100% 0%, rgba(91,156,255,0.15), transparent),
+  background: radial-gradient(800px 800px at 10% -5%, rgba(99, 102, 241, 0.15), transparent),
+             radial-gradient(1000px 1000px at 90% 20%, rgba(139, 92, 246, 0.1), transparent),
              var(--bg);
-             margin-bottom: -35px;
-  padding: 40px 20px;
-}
-
-.studentinterview-selection-wrapper {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.studentinterview-selection-form {
-  background: rgba(255,255,255,0.95);
-  border-radius: 20px;
-  padding: 40px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-}
-
-.studentinterview-selection-title {
-  font-size: 2.5rem;
-  text-align: center;
-  margin-bottom: 30px;
-  color: #333;
+  padding: 4rem 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 15px;
+}
+
+.studentinterview-selection-wrapper {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.studentinterview-selection-form {
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border-radius: var(--border-radius);
+  padding: 2.5rem;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.studentinterview-selection-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+}
+
+.studentinterview-selection-title {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  font-weight: 700;
+  line-height: 1.3;
 }
 
 .studentinterview-selection-fields {
   display: grid;
-  gap: 25px;
+  gap: 1.5rem;
 }
 
 .studentinterview-field-group {
   display: block;
+  position: relative;
 }
 
 .studentinterview-field-label {
   display: block;
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #555;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text);
 }
 
 .studentinterview-field-select {
   width: 100%;
-  padding: 15px;
-  font-size: 1.1rem;
-  border-radius: 10px;
-  border: 2px solid #e0e0e0;
-  background: white;
+  padding: 0.875rem 1rem;
+  font-size: 1rem;
+  font-family: inherit;
+  border-radius: 0.5rem;
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
   cursor: pointer;
+  transition: var(--transition);
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1em;
+}
+
+.studentinterview-field-select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
 }
 
 .studentinterview-field-select:disabled {
-  background: #f5f5f5;
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--text-secondary);
   cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.studentinterview-field-select option {
+  background: var(--bg);
+  color: var(--text);
+  padding: 0.5rem;
 }
 
 /* Difficulty Selection */
 .studentinterview-difficulty-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1rem;
+  margin: 0.5rem 0;
 }
 
 .studentinterview-difficulty-btn {
-  padding: 20px;
-  border: none;
-  border-radius: 10px;
-  font-size: 1.1rem;
-  font-weight: bold;
+  padding: 1rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  background: white;
-  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.03);
+  transition: var(--transition);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 0.75rem;
+  color: var(--text);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.studentinterview-difficulty-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.1;
+  transition: var(--transition);
+  z-index: -1;
 }
 
 .studentinterview-difficulty-btn.easy {
-  color: #4ECDC4;
-  border: 2px solid #4ECDC4;
+  color: #10b981;
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.studentinterview-difficulty-btn.easy::before {
+  background: #10b981;
 }
 
 .studentinterview-difficulty-btn.easy.selected {
-  background: #4ECDC4;
-  color: white;
+  background: rgba(16, 185, 129, 0.1);
+  border-color: #10b981;
+  color: #10b981;
 }
 
 .studentinterview-difficulty-btn.medium {
-  color: #FFD93D;
-  border: 2px solid #FFD93D;
+  color: #f59e0b;
+  border-color: rgba(245, 158, 11, 0.2);
+}
+
+.studentinterview-difficulty-btn.medium::before {
+  background: #f59e0b;
 }
 
 .studentinterview-difficulty-btn.medium.selected {
-  background: #FFD93D;
-  color: white;
+  background: rgba(245, 158, 11, 0.1);
+  border-color: #f59e0b;
+  color: #f59e0b;
 }
 
 .studentinterview-difficulty-btn.hard {
-  color: #FF6B6B;
-  border: 2px solid #FF6B6B;
+  color: #ef4444;
+  border-color: rgba(239, 68, 68, 0.2);
+}
+
+.studentinterview-difficulty-btn.hard::before {
+  background: #ef4444;
 }
 
 .studentinterview-difficulty-btn.hard.selected {
-  background: #FF6B6B;
-  color: white;
+  background: rgba(239, 68, 68, 0.1);
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.studentinterview-difficulty-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.studentinterview-difficulty-btn:active {
+  transform: translateY(0);
 }
 
 /* Action Buttons */
 .studentinterview-action-buttons {
   display: flex;
-  gap: 15px;
-  margin-top: 20px;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.studentinterview-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition);
+  gap: 0.5rem;
+}
+
+.studentinterview-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.studentinterview-btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white;
+  box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.3);
+}
+
+.studentinterview-btn-primary:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px 0 rgba(99, 102, 241, 0.4);
+}
+
+.studentinterview-btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.studentinterview-btn-secondary:not(:disabled):hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
 }
 
 .studentinterview-back-btn {
-  padding: 15px 30px;
+  padding: 0.75rem 1.5rem;
   border: 2px solid #ccc;
   background: white;
   border-radius: 10px;
@@ -341,182 +561,429 @@
 /* Quiz Page Styles */
 .studentinterview-quiz-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 20px;
+  background: radial-gradient(800px 800px at 10% -5%, rgba(99, 102, 241, 0.15), transparent),
+             radial-gradient(1000px 1000px at 90% 20%, rgba(139, 92, 246, 0.1), transparent),
+             var(--bg);
+  padding: 2rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .studentinterview-quiz-wrapper {
-  max-width: 900px;
+  width: 100%;
+  max-width: 800px;
   margin: 0 auto;
+  animation: fadeIn 0.5s ease-out;
 }
 
 .studentinterview-quiz-content {
-  background: rgba(255,255,255,0.95);
-  border-radius: 20px;
-  padding: 40px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border-radius: var(--border-radius);
+  padding: 2.5rem;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.studentinterview-quiz-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
 }
 
 /* Progress Section */
 .studentinterview-progress-section {
-  margin-bottom: 30px;
+  margin-bottom: 2rem;
 }
 
 .studentinterview-progress-info {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
-  font-size: 1.1rem;
-  color: #666;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  font-weight: 500;
 }
 
 .studentinterview-progress-bar {
-  background: #e0e0e0;
-  border-radius: 10px;
-  height: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 9999px;
+  height: 8px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .studentinterview-progress-fill {
-  background: linear-gradient(45deg, #667eea, #764ba2);
-  border-radius: 10px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
   height: 100%;
-  transition: width 0.3s ease;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 9999px;
+  position: relative;
+  overflow: hidden;
+}
+
+.studentinterview-progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
+  animation: shimmer 2s infinite linear;
+  background-size: 200% 100%;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
 }
 
 /* Question */
 .studentinterview-question-section {
-  margin-bottom: 30px;
+  margin: 2rem 0 2.5rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: var(--border-radius);
+  border-left: 4px solid var(--primary);
 }
 
 .studentinterview-question-text {
-  font-size: 1.8rem;
-  color: #333;
-  line-height: 1.4;
+  font-size: 1.5rem;
+  color: var(--text);
+  line-height: 1.6;
+  margin: 0;
+  font-weight: 500;
+}
+
+.studentinterview-question-number {
+  display: inline-block;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--primary);
+  background: rgba(99, 102, 241, 0.1);
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
 }
 
 /* Options */
 .studentinterview-options-grid {
   display: grid;
-  gap: 15px;
-  margin-bottom: 30px;
+  gap: 1rem;
+  margin: 0 0 2.5rem;
 }
 
 .studentinterview-option-label {
   display: flex;
   align-items: center;
-  padding: 20px;
-  border: 2px solid #e0e0e0;
-  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
   cursor: pointer;
-  background: white;
-  transition: all 0.3s ease;
+  background: rgba(255, 255, 255, 0.03);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.studentinterview-option-label:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .studentinterview-option-label.selected {
-  border-color: #667eea;
-  background: rgba(102, 126, 234, 0.1);
+  border-color: var(--primary);
+  background: rgba(99, 102, 241, 0.1);
+  box-shadow: 0 0 0 1px var(--primary);
 }
 
 .studentinterview-option-radio {
-  margin-right: 15px;
-  transform: scale(1.2);
+  margin-right: 1rem;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: var(--transition);
+}
+
+.studentinterview-option-label.selected .studentinterview-option-radio {
+  border-color: var(--primary);
+  background: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.studentinterview-option-radio::after {
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: white;
+  opacity: 0;
+  transform: scale(0);
+  transition: var(--transition);
+}
+
+.studentinterview-option-label.selected .studentinterview-option-radio::after {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .studentinterview-option-text {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
+  color: var(--text);
+  line-height: 1.5;
+  margin: 0;
+  text-align: left;
+  flex-grow: 1;
 }
 
-/* Next Button */
+/* Navigation Buttons */
+.studentinterview-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
 .studentinterview-next-section {
-  text-align: center;
+  display: flex;
+  justify-content: flex-end;
+  flex-grow: 1;
 }
 
 .studentinterview-next-btn {
-  padding: 15px 40px;
+  padding: 0.875rem 2rem;
   border: none;
-  background: linear-gradient(45deg, #667eea, #764ba2);
+  background: linear-gradient(135deg, var(--primary), var(--accent));
   color: white;
-  border-radius: 10px;
-  font-size: 1.2rem;
+  border-radius: 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 600;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 0.75rem;
+  transition: var(--transition);
+  box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.3);
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.studentinterview-next-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, var(--primary-hover), var(--accent));
+  opacity: 0;
+  transition: var(--transition);
+  z-index: -1;
+}
+
+.studentinterview-next-btn:hover::before {
+  opacity: 1;
+}
+
+.studentinterview-next-btn:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px 0 rgba(99, 102, 241, 0.4);
+}
+
+.studentinterview-next-btn:disabled {
+  background: var(--border);
+  color: var(--text-secondary);
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.studentinterview-next-btn:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 /* Results Page Styles */
 .studentinterview-results-container {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 40px 20px;
+  background: radial-gradient(800px 800px at 10% -5%, rgba(99, 102, 241, 0.15), transparent),
+             radial-gradient(1000px 1000px at 90% 20%, rgba(139, 92, 246, 0.1), transparent),
+             var(--bg);
+  padding: 2rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .studentinterview-results-wrapper {
+  width: 100%;
   max-width: 800px;
   margin: 0 auto;
+  animation: fadeIn 0.5s ease-out;
 }
 
 .studentinterview-results-content {
-  background: rgba(255,255,255,0.95);
-  border-radius: 20px;
-  padding: 40px;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border-radius: var(--border-radius);
+  padding: 2.5rem;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
   text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.studentinterview-results-content::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
 }
 
 .studentinterview-results-title {
-  font-size: 2.5rem;
-  margin-bottom: 20px;
-  color: #333;
+  font-size: 2rem;
+  margin: 0 0 1.5rem;
+  color: var(--text);
+  line-height: 1.3;
+  font-weight: 700;
 }
 
 /* Score Display */
 .studentinterview-score-display {
-  margin-bottom: 30px;
+  margin: 0 0 2.5rem;
+  position: relative;
+  display: inline-block;
+}
+
+.studentinterview-score-circle {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  position: relative;
+  background: conic-gradient(
+    var(--primary) 0%,
+    var(--accent) 100%
+  );
+  box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+}
+
+.studentinterview-score-circle-inner {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: var(--card-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
 }
 
 .studentinterview-score-number {
-  font-size: 4rem;
-  font-weight: bold;
-  margin-bottom: 10px;
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin: 0 0 0.25rem;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
 }
 
 .studentinterview-score-percentage {
-  font-size: 1.5rem;
-  color: #666;
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  margin: 0;
+}
+
+.studentinterview-score-message {
+  font-size: 1.25rem;
+  color: var(--text);
+  margin: 1.5rem 0 0;
+  font-weight: 500;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
 }
 
 /* Badge */
 .studentinterview-badge-container {
   display: inline-flex;
   align-items: center;
-  gap: 15px;
-  padding: 20px 40px;
-  border-radius: 15px;
-  margin-bottom: 30px;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  border-radius: 9999px;
+  margin: 0 0 2.5rem;
+  position: relative;
+  overflow: hidden;
+  font-weight: 600;
+  font-size: 1.25rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.studentinterview-badge-icon {
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
 }
 
 .studentinterview-badge-text {
-  font-size: 1.5rem;
-  font-weight: bold;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.5px;
 }
 
 .studentinterview-badge-exceptional {
-  background: #FFD70020;
-  color: #FFD700;
-  border: 2px solid #FFD70040;
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.2);
 }
 
 .studentinterview-badge-ready {
-  background: #4ECDC420;
-  color: #4ECDC4;
-  border: 2px solid #4ECDC440;
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.2);
 }
 
 .studentinterview-badge-learning {
-  background: #FFD93D20;
-  color: #FFD93D;
-  border: 2px solid #FFD93D40;
+  background: rgba(99, 102, 241, 0.15);
+  color: var(--primary);
+  border: 1px solid rgba(99, 102, 241, 0.2);
 }
 
 .studentinterview-badge-practice {
