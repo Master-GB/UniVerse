@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const fs = require("fs/promises");
 const User = require("../../models/User_Model/UserModel");
 
 const sanitizeUser = (user) => ({
@@ -8,6 +9,7 @@ const sanitizeUser = (user) => ({
   email: user.email,
   phone: user.phone,
   role: user.role,
+  profilePicture: user.profilePicture,
   isActive: user.isActive,
   isEmailVerified: user.isEmailVerified,
   createdAt: user.createdAt,
@@ -16,21 +18,40 @@ const sanitizeUser = (user) => ({
 
 // User Registration
 exports.register = async (req, res) => {
+  const removeUploadedProfilePicture = async () => {
+    if (!req.file?.path) return;
+    try {
+      await fs.unlink(req.file.path);
+    } catch (cleanupError) {
+      if (cleanupError.code !== "ENOENT") {
+        console.error(
+          "Failed to remove uploaded profile picture:",
+          cleanupError
+        );
+      }
+    }
+  };
+
+  let userCreated = false;
+
   try {
     const { name, username, email, phone, password, confirmPassword, role } =
       req.body;
 
     if (!name || !username || !email || !phone || !password || !role) {
+      await removeUploadedProfilePicture();
       return res.status(400).json({ message: "Missing required fields" });
     }
 
     if (password.length < 6) {
+      await removeUploadedProfilePicture();
       return res
         .status(400)
         .json({ message: "Password must be at least 6 characters long" });
     }
 
     if (confirmPassword !== undefined && password !== confirmPassword) {
+      await removeUploadedProfilePicture();
       return res.status(400).json({ message: "Passwords do not match" });
     }
 
@@ -41,8 +62,13 @@ exports.register = async (req, res) => {
       $or: [{ username: normalizedUsername }, { email: normalizedEmail }],
     });
     if (existingUser) {
+      await removeUploadedProfilePicture();
       return res.status(409).json({ message: "User already exists" });
     }
+
+    const profilePicturePath = req.file
+      ? `/uploads/profile-pictures/${req.file.filename}`
+      : null;
 
     const newUser = new User({
       name,
@@ -51,9 +77,11 @@ exports.register = async (req, res) => {
       phone,
       password,
       role,
+      profilePicture: profilePicturePath,
     });
 
     await newUser.save();
+    userCreated = true;
 
     if (!process.env.JWT_SECRET) {
       console.warn("JWT_SECRET is not configured. Skipping token generation.");
@@ -74,6 +102,9 @@ exports.register = async (req, res) => {
     });
   } catch (error) {
     console.error("Register error", error);
+    if (!userCreated) {
+      await removeUploadedProfilePicture();
+    }
     res.status(500).json({ error: error.message });
   }
 };
