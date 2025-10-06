@@ -17,6 +17,8 @@ const courseRouter = require("./routes/Course_routes/courseRoutes");
 const enrollmentRouter = require("./routes/Course_routes/enrollmentR");
 const interviewQuizRouter = require("./routes/Interview_routes/interviewQuizRoutes");
 const interviewroutes = require("./routes/InterviewRoutes/interviewRoute_jcj");
+const passpaperRoute = require('./routes/passpaper_routes/PasspaperR');
+const examQuizRoute = require('./routes/Quiz_routes/QuizR');
 
 const userRoutes = require("./routes/User_Routes/userRoute");
 const CareerSession = require("./routes/Resource_Router/CareerResourcesR");
@@ -70,6 +72,9 @@ app.use("/guidance", guidanceRouter);
 app.use("/resource", resourcesRouter);
 app.use("/api/auth", userRoutes);
 app.use('/resumes', resumeRoutes);
+app.use('/passpaper', passpaperRoute);
+app.use('/quiz', examQuizRoute);
+
 
 // Mentorship Routes
 app.use("/mentorshipResponse", mentorshipResponseRoute);
