@@ -1,135 +1,77 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import './stu_examQuiz.css';
 import axios from 'axios';
+import './stu_examQuiz.css';
 
 const ExamQuiz = () => {
   const { quizId } = useParams();
-  const navigate = useNavigate();
-  
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [timeLeft, setTimeLeft] = useState(0);
   const [quizCompleted, setQuizCompleted] = useState(false);
+  const [score, setScore] = useState(0);
   const [showResults, setShowResults] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  
-  const [quizData, setQuizData] = useState(null);
-  const [quizResult, setQuizResult] = useState(null);
-  const [startTime, setStartTime] = useState(null);
+  const [quizData, setQuizData] = useState({
+    title: '',
+    subject: '',
+    questions: [],
+    duration: 0 // Will be set from the database
+  });
+  const navigate = useNavigate();
 
-  // Fetch quiz data on component mount
+  // Fetch quiz data when component mounts
   useEffect(() => {
-    const loadQuiz = async () => {
-      if (!quizId) {
-        console.log('No quizId found in URL params');
-        setError('No quiz ID provided');
-        setIsLoading(false);
-        return;
-      }
-
-      console.log('Loading quiz with ID:', quizId);
-      setIsLoading(true);
-      setError(null);
-      
+    const fetchQuiz = async () => {
       try {
-        console.log('Fetching quiz with ID:', quizId);
+        setIsLoading(true);
         const response = await axios.get(`http://localhost:8070/quiz/${quizId}`);
-        
-        console.log('API Response:', response.data);
-        
-        if (response.data.success && response.data.data) {
+        if (response.data.success) {
           const quiz = response.data.data;
-          console.log('Quiz Data:', quiz);
+          // Get duration in minutes from database
+          const quizDurationInMinutes = parseInt(quiz.duration) || 30;
+          // Convert minutes to seconds for the timer
+          const quizDurationInSeconds = quizDurationInMinutes * 60;
           
-          if (!quiz.questions || !Array.isArray(quiz.questions) || quiz.questions.length === 0) {
-            setError('This quiz has no questions');
-            setIsLoading(false);
-            return;
-          }
+          console.log('Quiz duration (minutes):', quizDurationInMinutes);
+          console.log('Setting timer to (seconds):', quizDurationInSeconds);
           
-          setQuizData(quiz);
-          setTimeLeft(quiz.duration * 60);
-          setStartTime(Date.now());
-          setSelectedOptions(new Array(quiz.questions.length).fill(null));
-        } else {
-          console.error('Invalid response structure:', response.data);
-          setError('Quiz not found or unavailable');
-        }
-      } catch (err) {
-        console.error('Error fetching quiz:', err);
-        console.error('Error details:', err.response?.data);
-        
-        if (err.response?.status === 404) {
-          setError('Quiz not found');
-        } else if (err.response?.data?.message) {
-          setError(err.response.data.message);
+          setQuizData({
+            title: quiz.title,
+            subject: quiz.subject,
+            questions: quiz.questions || [],
+            duration: quizDurationInMinutes // Store in minutes
+          });
+          setTimeLeft(quizDurationInSeconds); // Set timer in seconds
         } else {
           setError('Failed to load quiz. Please try again.');
         }
+      } catch (err) {
+        console.error('Error fetching quiz:', err);
+        setError('Failed to load quiz. Please try again later.');
       } finally {
         setIsLoading(false);
       }
     };
 
-    loadQuiz();
+    if (quizId) {
+      fetchQuiz();
+    } else {
+      setError('No quiz ID provided');
+      setIsLoading(false);
+    }
   }, [quizId]);
 
   // Timer effect
   useEffect(() => {
-    if (timeLeft > 0 && !quizCompleted) {
-      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+    if (timeLeft > 0 && !quizCompleted && !isLoading) {
+      const timer = setTimeout(() => setTimeLeft(prevTime => prevTime - 1), 1000);
       return () => clearTimeout(timer);
-    } else if (timeLeft === 0 && quizData && !quizCompleted) {
+    } else if (timeLeft === 0 && !quizCompleted) {
       handleSubmit();
     }
-  }, [timeLeft, quizCompleted, quizData]);
-
-  const fetchQuizData = async () => {
-    setIsLoading(true);
-    setError(null);
-    
-    try {
-      console.log('Fetching quiz with ID:', quizId); // Debug log
-      const response = await axios.get(`http://localhost:8070/quiz/${quizId}`);
-      
-      console.log('API Response:', response.data); // Debug log
-      
-      if (response.data.success && response.data.data) {
-        const quiz = response.data.data;
-        console.log('Quiz Data:', quiz); // Debug log
-        
-        // Validate quiz structure
-        if (!quiz.questions || !Array.isArray(quiz.questions) || quiz.questions.length === 0) {
-          setError('This quiz has no questions');
-          setIsLoading(false);
-          return;
-        }
-        
-        setQuizData(quiz);
-        setTimeLeft(quiz.duration * 60); // Convert minutes to seconds
-        setStartTime(Date.now());
-        setSelectedOptions(new Array(quiz.questions.length).fill(null));
-      } else {
-        console.error('Invalid response structure:', response.data);
-        setError('Quiz not found or unavailable');
-      }
-    } catch (err) {
-      console.error('Error fetching quiz:', err);
-      console.error('Error details:', err.response?.data);
-      
-      if (err.response?.status === 404) {
-        setError('Quiz not found');
-      } else if (err.response?.data?.message) {
-        setError(err.response.data.message);
-      } else {
-        setError('Failed to load quiz. Please try again.');
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  }, [timeLeft, quizCompleted, isLoading]);
 
   const handleOptionSelect = (option) => {
     const newSelectedOptions = [...selectedOptions];
@@ -150,44 +92,53 @@ const ExamQuiz = () => {
   };
 
   const handleSubmit = async () => {
-    if (quizCompleted) return;
+    // Calculate score and time spent
+    let totalScore = 0;
+    const results = [];
+    // Calculate time spent in minutes (convert both to minutes for calculation)
+    const totalTimeMinutes = Math.max(1, Math.round(((quizData.duration * 60) - timeLeft) / 60));
+    console.log('Time spent (minutes):', totalTimeMinutes);
     
-    const timeSpent = Math.floor((Date.now() - startTime) / 1000);
-    
-    console.log('Submitting quiz with:', {
-      quizId,
-      answers: selectedOptions,
-      timeSpent,
-      answersCount: selectedOptions.length
-    });
-    
-    try {
-      const response = await axios.post(`http://localhost:8070/quiz/${quizId}/submit`, {
-        answers: selectedOptions,
-        timeSpent: timeSpent
-      });
-      
-      console.log('Submit response:', response.data);
-      
-      if (response.data.success && response.data.data) {
-        setQuizResult(response.data.data);
-        setQuizCompleted(true);
-        setShowResults(true);
-      } else {
-        alert('Failed to submit quiz. Please try again.');
+    quizData.questions.forEach((question, index) => {
+      const isCorrect = selectedOptions[index] === question.correctAnswer;
+      if (isCorrect) {
+        totalScore += question.points || 1;
       }
+      results.push(selectedOptions[index] || ''); // Just send the selected answer
+    });
+
+    // Get JWT token from localStorage
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.error('No authentication token found');
+      setQuizCompleted(true);
+      setShowResults(true);
+      return;
+    }
+
+    // Save results to the server
+    try {
+      await axios.post(
+        `http://localhost:8070/quiz/${quizId}/submit`,
+        {
+          answers: results,
+          timeSpent: totalTimeMinutes
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        }
+      );
     } catch (err) {
       console.error('Error submitting quiz:', err);
-      console.error('Error response:', err.response?.data);
-      
-      if (err.response?.data?.message) {
-        alert(`Error: ${err.response.data.message}`);
-      } else if (err.response?.data?.error) {
-        alert(`Error: ${err.response.data.error}`);
-      } else {
-        alert('Failed to submit quiz. Please try again.');
-      }
+      // Continue with showing results even if submission fails
     }
+
+    setScore(totalScore);
+    setQuizCompleted(true);
+    setShowResults(true);
   };
 
   const formatTime = (seconds) => {
@@ -197,10 +148,16 @@ const ExamQuiz = () => {
   };
 
   const restartQuiz = () => {
-    navigate(0); // Reload the page to restart
+    setCurrentQuestion(0);
+    setSelectedOptions([]);
+    // Convert minutes to seconds when restarting
+    setTimeLeft((quizData.duration || 30) * 60);
+    setQuizCompleted(false);
+    setScore(0);
+    setShowResults(false);
   };
 
-  // Loading state
+  // Show loading state
   if (isLoading) {
     return (
       <div className="exam-quiz-container">
@@ -212,111 +169,72 @@ const ExamQuiz = () => {
     );
   }
 
-  // Error state
+  // Show error state
   if (error) {
     return (
       <div className="exam-quiz-container">
         <div className="exam-quiz-error">
-          <h2>Error</h2>
+          <h3>Error</h3>
           <p>{error}</p>
-          <button onClick={() => navigate(-1)} className="exam-quiz-back-btn">
-            Back to Quizzes
-          </button>
+          <button onClick={() => window.location.reload()}>Try Again</button>
+          <button onClick={() => navigate(-1)}>Go Back</button>
         </div>
       </div>
     );
   }
 
-  // Results view
-  if (showResults && quizResult) {
+  // Show no questions message
+  if (!quizData.questions || quizData.questions.length === 0) {
+    return (
+      <div className="exam-quiz-container">
+        <div className="exam-quiz-error">
+          <h3>No Questions Available</h3>
+          <p>This quiz doesn't have any questions yet.</p>
+          <button onClick={() => navigate(-1)}>Go Back</button>
+        </div>
+      </div>
+    );
+  }
+
+  if (showResults) {
     return (
       <div className="exam-quiz-container">
         <div className="exam-quiz-results">
           <h2 className="exam-quiz-results-title">Quiz Results</h2>
-          <div className="exam-quiz-score-summary">
-            <p className="exam-quiz-score">
-              Score: {quizResult.score} / {quizResult.totalPoints}
-            </p>
-            <p className="exam-quiz-percentage">
-              Percentage: {quizResult.percentage.toFixed(2)}%
-            </p>
-          </div>
-          
+          <p className="exam-quiz-score">Your score: {score} out of {quizData.questions.length}</p>
           <div className="exam-quiz-results-details">
-            {quizResult.questions && quizResult.questions.map((question, index) => (
+            {quizData.questions.map((question, index) => (
               <div 
-                key={question.id} 
+                key={question._id || index}
                 className={`exam-quiz-result-item ${
-                  question.isCorrect ? 'exam-quiz-correct' : 'exam-quiz-incorrect'
+                  selectedOptions[index] === question.correctAnswer ? 
+                  'exam-quiz-correct' : 'exam-quiz-incorrect'
                 }`}
               >
                 <p className="exam-quiz-question-text">
                   <strong>Question {index + 1}:</strong> {question.question}
                 </p>
-                
-                <div className="exam-quiz-options-display">
-                  {question.options.map((option, optIndex) => (
-                    <div 
-                      key={optIndex}
-                      className={`exam-quiz-option-display ${
-                        option === question.correctAnswer ? 'correct-option' : ''
-                      } ${
-                        option === question.userAnswer && !question.isCorrect ? 'incorrect-option' : ''
-                      }`}
-                    >
-                      {String.fromCharCode(65 + optIndex)}. {option}
-                      {option === question.correctAnswer && (
-                        <span className="option-badge correct">✓ Correct</span>
-                      )}
-                      {option === question.userAnswer && !question.isCorrect && (
-                        <span className="option-badge incorrect">✗ Your answer</span>
-                      )}
-                    </div>
-                  ))}
-                </div>
-                
                 <p className="exam-quiz-user-answer">
-                  <strong>Your answer:</strong> {question.userAnswer || 'Not answered'}
+                  Your answer: {selectedOptions[index] || 'Not answered'}
                 </p>
-                
-                {!question.isCorrect && (
+                {selectedOptions[index] !== question.correctAnswer && (
                   <p className="exam-quiz-correct-answer">
-                    <strong>Correct answer:</strong> {question.correctAnswer}
+                    Correct answer: {question.correctAnswer}
+                    {question.explanation && (
+                      <span className="exam-quiz-explanation">
+                        <br />Explanation: {question.explanation}
+                      </span>
+                    )}
                   </p>
-                )}
-                
-                {question.explanation && (
-                  <div className="exam-quiz-explanation">
-                    <strong>Explanation:</strong>
-                    <p>{question.explanation}</p>
-                  </div>
                 )}
               </div>
             ))}
           </div>
-          
-          <div className="exam-quiz-results-actions">
-            <button className="exam-quiz-restart-btn" onClick={restartQuiz}>
-              Retake Quiz
-            </button>
-            <button className="exam-quiz-back-btn" onClick={() => navigate('/student/exam/practice-tests')}>
-              Back to Quizzes
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  // Quiz taking view
-  if (!quizData || !quizData.questions || quizData.questions.length === 0) {
-    return (
-      <div className="exam-quiz-container">
-        <div className="exam-quiz-error">
-          <h2>Quiz Unavailable</h2>
-          <p>This quiz has no questions or is unavailable.</p>
-          <button onClick={() => navigate(-1)} className="exam-quiz-back-btn">
-            Back to Quizzes
+          <button className="exam-quiz-restart-btn" onClick={restartQuiz}>
+            Restart Quiz
+          </button>
+          <button className="exam-quiz-back-btn" onClick={() => navigate(-1)}>
+            Back to Dashboard
           </button>
         </div>
       </div>
@@ -326,16 +244,11 @@ const ExamQuiz = () => {
   return (
     <div className="exam-quiz-container">
       <div className="exam-quiz-header">
-        <div className="exam-quiz-info">
-          <h2>{quizData.title}</h2>
-          <p>{quizData.subject}</p>
-        </div>
-        <div className="exam-quiz-meta">
-          <div className="exam-quiz-timer">
-            <span>Time Left:</span>
-            <span className={timeLeft < 300 ? 'time-warning' : ''}>
-              {formatTime(timeLeft)}
-            </span>
+        <h2 className="exam-quiz-title">{quizData.title}</h2>
+        <p className="exam-quiz-subject">{quizData.subject}</p>
+        <div className="exam-quiz-timer">
+          <div className={timeLeft <= 60 ? 'critical-time' : ''}>
+            Time Left: {formatTime(timeLeft)}
           </div>
           <div className="exam-quiz-progress">
             Question {currentQuestion + 1} of {quizData.questions.length}
@@ -347,7 +260,6 @@ const ExamQuiz = () => {
         <h3 className="exam-quiz-question">
           {quizData.questions[currentQuestion].question}
         </h3>
-        
         <div className="exam-quiz-options">
           {quizData.questions[currentQuestion].options.map((option, index) => (
             <div 
@@ -357,14 +269,9 @@ const ExamQuiz = () => {
               }`}
               onClick={() => handleOptionSelect(option)}
             >
-              <span className="option-letter">{String.fromCharCode(65 + index)}</span>
-              <span className="option-text">{option}</span>
+              {String.fromCharCode(65 + index)}. {option}
             </div>
           ))}
-        </div>
-        
-        <div className="exam-quiz-question-info">
-          <span>Points: {quizData.questions[currentQuestion].points}</span>
         </div>
       </div>
 
@@ -374,46 +281,24 @@ const ExamQuiz = () => {
           disabled={currentQuestion === 0}
           className="exam-quiz-nav-btn"
         >
-          ← Previous
+          Previous
         </button>
-        
-        <div className="exam-quiz-question-indicator">
-          {quizData.questions.map((_, index) => (
-            <div
-              key={index}
-              className={`question-dot ${
-                selectedOptions[index] !== null ? 'answered' : ''
-              } ${
-                index === currentQuestion ? 'active' : ''
-              }`}
-              onClick={() => setCurrentQuestion(index)}
-              title={`Question ${index + 1}`}
-            />
-          ))}
-        </div>
         
         {currentQuestion === quizData.questions.length - 1 ? (
           <button 
-            onClick={handleSubmit} 
+            onClick={handleSubmit}
             className="exam-quiz-submit-btn"
-            disabled={quizCompleted}
           >
             Submit Quiz
           </button>
         ) : (
           <button 
-            onClick={handleNext} 
+            onClick={handleNext}
             className="exam-quiz-nav-btn"
           >
-            Next →
+            Next
           </button>
         )}
-      </div>
-      
-      <div className="exam-quiz-footer">
-        <p>
-          {selectedOptions.filter(opt => opt !== null).length} / {quizData.questions.length} questions answered
-        </p>
       </div>
     </div>
   );

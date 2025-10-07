@@ -208,7 +208,6 @@ const PracticeTestsOverview = () => {
         <div className="quizzes-grid">
           {allQuizzes.map(quiz => (
             <div key={quiz.id} className="quiz-card">
-              {quiz.isNew && <span className="new-badge">New</span>}
               <div className="quiz-card-header">
                 <h3>{quiz.title}</h3>
                 <span className={`difficulty-badge ${quiz.difficulty.toLowerCase()}`}>
