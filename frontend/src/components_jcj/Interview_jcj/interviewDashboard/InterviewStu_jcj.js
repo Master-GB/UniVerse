@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { BsCalendar, BsThreeDots } from 'react-icons/bs'
 import "./interviewStuJCJ.css"
 
 function InterviewStu_jcj() {
@@ -71,9 +73,12 @@ function InterviewStu_jcj() {
       <div className="upcoming-interviews-section-jcj">
         <div className="section-header-with-button-jcj">
           <h2 className="section-title-jcj">Upcoming Interviews</h2>
-          <button className="schedule-interview-btn-jcj">
-            + Schedule Interview
-          </button>
+          {/* Navigate user to the schedule interview page */}
+          <Link to="/MIPage/schedule">
+            <button className="schedule-interview-btn-jcj">
+              + Schedule Interview
+            </button>
+          </Link>
         </div>
         <div className="interviews-grid-jcj">
           {upcomingInterviews.map((interview) => (
@@ -81,7 +86,7 @@ function InterviewStu_jcj() {
               <div className="interview-card-header-jcj">
                 <h3 className="interview-card-title-jcj">{interview.title}</h3>
                 <div className="interview-menu-jcj">
-                  <span className="menu-icon-jcj">⋮</span>
+                  <BsThreeDots className="menu-icon-jcj" />
                 </div>
               </div>
 
@@ -97,7 +102,7 @@ function InterviewStu_jcj() {
 
                 <div className="interview-details-jcj">
                   <div className="interview-datetime-jcj">
-                    <span className="datetime-icon-jcj">📅</span>
+                    <BsCalendar className="datetime-icon-jcj" />
                     <span>{interview.date} at {interview.time}</span>
                   </div>
                 </div>
