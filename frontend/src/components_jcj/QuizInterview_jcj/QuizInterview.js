@@ -532,13 +532,13 @@ const App = () => {
 
         .jcj-quiz-app {
           min-height: 100vh;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
 
         .jcj-quiz-header {
-          background: rgba(255, 255, 255, 0.95);
-          box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+          background: rgba(30, 30, 30, 0.95);
+          box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
           position: sticky;
           top: 0;
           z-index: 100;
@@ -558,7 +558,7 @@ const App = () => {
         .jcj-quiz-logo {
           font-size: 1.8rem;
           font-weight: 700;
-          color: #667eea;
+          color: #1d4ed8;
           display: flex;
           align-items: center;
           gap: 0.5rem;
@@ -576,8 +576,8 @@ const App = () => {
         .jcj-quiz-nav-btn {
           padding: 0.75rem 1.5rem;
           border: 2px solid transparent;
-          background: white;
-          color: #4a5568;
+          background: #2d3748;
+          color: #e2e8f0;
           font-size: 1rem;
           font-weight: 600;
           border-radius: 8px;
@@ -589,12 +589,12 @@ const App = () => {
         }
 
         .jcj-quiz-nav-btn:hover {
-          background: #f7fafc;
+          background: #4a5568;
           transform: translateY(-2px);
         }
 
         .jcj-quiz-nav-btn-active {
-          background: #667eea;
+          background: #1d4ed8;
           color: white;
         }
 
@@ -620,11 +620,11 @@ const App = () => {
         }
 
         .jcj-quiz-filters {
-          background: white;
+          background: #1a202c;
           padding: 1.5rem;
           border-radius: 12px;
           margin-bottom: 2rem;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
 
         .jcj-quiz-filter-group {
@@ -638,7 +638,7 @@ const App = () => {
         .jcj-quiz-filter-label {
           display: block;
           font-weight: 600;
-          color: #2d3748;
+          color: #e2e8f0;
           margin-bottom: 0.5rem;
           font-size: 0.9rem;
           text-transform: uppercase;
@@ -653,9 +653,9 @@ const App = () => {
 
         .jcj-quiz-filter-btn {
           padding: 0.5rem 1rem;
-          border: 2px solid #e2e8f0;
-          background: white;
-          color: #4a5568;
+          border: 2px solid #4a5568;
+          background: #2d3748;
+          color: #e2e8f0;
           font-size: 0.9rem;
           font-weight: 500;
           border-radius: 6px;
@@ -664,14 +664,14 @@ const App = () => {
         }
 
         .jcj-quiz-filter-btn:hover {
-          border-color: #667eea;
-          color: #667eea;
+          border-color: #1d4ed8;
+          color: #1d4ed8;
         }
 
         .jcj-quiz-filter-btn-active {
-          background: #667eea;
+          background: #1d4ed8;
           color: white;
-          border-color: #667eea;
+          border-color: #1d4ed8;
         }
 
         .jcj-quiz-grid {
@@ -681,17 +681,17 @@ const App = () => {
         }
 
         .jcj-quiz-card {
-          background: white;
+          background: #1a202c;
           border-radius: 12px;
           padding: 1.5rem;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
           transition: all 0.3s ease;
           cursor: pointer;
         }
 
         .jcj-quiz-card:hover {
           transform: translateY(-5px);
-          box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+          box-shadow: 0 8px 15px rgba(0, 0, 0, 0.4);
         }
 
         .jcj-quiz-card-header {
@@ -729,7 +729,7 @@ const App = () => {
         .jcj-quiz-card-title {
           font-size: 1.25rem;
           font-weight: 700;
-          color: #2d3748;
+          color: #e2e8f0;
           margin-bottom: 0.5rem;
         }
 
@@ -737,7 +737,7 @@ const App = () => {
           display: flex;
           align-items: center;
           gap: 0.5rem;
-          color: #667eea;
+          color: #1d4ed8;
           font-size: 0.9rem;
           font-weight: 500;
           margin-bottom: 1rem;
@@ -748,17 +748,17 @@ const App = () => {
           justify-content: space-between;
           align-items: center;
           padding-top: 1rem;
-          border-top: 1px solid #e2e8f0;
+          border-top: 1px solid #4a5568;
         }
 
         .jcj-quiz-question-count {
-          color: #718096;
+          color: #a0aec0;
           font-size: 0.9rem;
         }
 
         .jcj-quiz-start-btn {
           padding: 0.6rem 1.2rem;
-          background: #667eea;
+          background: #1d4ed8;
           color: white;
           border: none;
           border-radius: 6px;
@@ -768,7 +768,7 @@ const App = () => {
         }
 
         .jcj-quiz-start-btn:hover {
-          background: #5568d3;
+          background: #1e40af;
           transform: scale(1.05);
         }
 
@@ -777,17 +777,17 @@ const App = () => {
         }
 
         .jcj-quiz-page-header {
-          background: white;
+          background: #1a202c;
           padding: 2rem;
           border-radius: 12px;
           margin-bottom: 2rem;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
 
         .jcj-quiz-page-title {
           font-size: 2rem;
           font-weight: 700;
-          color: #2d3748;
+          color: #e2e8f0;
           margin-bottom: 0.5rem;
         }
 
@@ -798,16 +798,16 @@ const App = () => {
         }
 
         .jcj-quiz-progress-bar {
-          background: white;
+          background: #1a202c;
           padding: 1.5rem;
           border-radius: 12px;
           margin-bottom: 2rem;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
 
         .jcj-quiz-progress-text {
           font-size: 0.9rem;
-          color: #4a5568;
+          color: #a0aec0;
           margin-bottom: 0.5rem;
           font-weight: 600;
         }
@@ -820,21 +820,21 @@ const App = () => {
         }
 
         .jcj-quiz-progress-fill {
-          background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+          background: linear-gradient(90deg, #1d4ed8 0%, #1e40af 100%);
           height: 100%;
           transition: width 0.3s ease;
         }
 
         .jcj-quiz-question-card {
-          background: white;
+          background: #1a202c;
           padding: 2rem;
           border-radius: 12px;
           margin-bottom: 1.5rem;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
 
         .jcj-quiz-question-number {
-          color: #667eea;
+          color: #1d4ed8;
           font-weight: 700;
           font-size: 0.9rem;
           margin-bottom: 0.5rem;
@@ -843,7 +843,7 @@ const App = () => {
         .jcj-quiz-question-text {
           font-size: 1.25rem;
           font-weight: 600;
-          color: #2d3748;
+          color: #e2e8f0;
           margin-bottom: 1.5rem;
           line-height: 1.6;
         }
@@ -856,34 +856,35 @@ const App = () => {
 
         .jcj-quiz-option {
           padding: 1rem 1.25rem;
-          border: 2px solid #e2e8f0;
+          border: 2px solid #4a5568;
           border-radius: 8px;
-          background: white;
+          background: #2d3748;
           cursor: pointer;
           transition: all 0.2s ease;
           font-size: 1rem;
           text-align: left;
+          color: #e2e8f0;
         }
 
         .jcj-quiz-option:hover {
-          border-color: #667eea;
-          background: #f7fafc;
+          border-color: #1d4ed8;
+          background: #4a5568;
         }
 
         .jcj-quiz-option-selected {
-          border-color: #667eea;
-          background: #eef2ff;
+          border-color: #1d4ed8;
+          background: #1e3a8a;
           font-weight: 600;
         }
 
         .jcj-quiz-option-correct {
           border-color: #48bb78;
-          background: #c6f6d5;
+          background: #1a5f2e;
         }
 
         .jcj-quiz-option-incorrect {
           border-color: #f56565;
-          background: #fed7d7;
+          background: #7f1d1d;
         }
 
         .jcj-quiz-option-disabled {
@@ -894,8 +895,8 @@ const App = () => {
         .jcj-quiz-explanation {
           margin-top: 1rem;
           padding: 1rem;
-          background: #eef2ff;
-          border-left: 4px solid #667eea;
+          background: #1e3a8a;
+          border-left: 4px solid #1d4ed8;
           border-radius: 4px;
           animation: jcjQuizSlideDown 0.3s ease;
         }
@@ -912,7 +913,7 @@ const App = () => {
         }
 
         .jcj-quiz-explanation-text {
-          color: #4a5568;
+          color: #a0aec0;
           font-size: 0.95rem;
           line-height: 1.6;
         }
@@ -935,25 +936,25 @@ const App = () => {
         }
 
         .jcj-quiz-btn-primary {
-          background: #667eea;
+          background: #1d4ed8;
           color: white;
         }
 
         .jcj-quiz-btn-primary:hover {
-          background: #5568d3;
+          background: #1e40af;
           transform: translateY(-2px);
-          box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+          box-shadow: 0 4px 8px rgba(29, 78, 216, 0.3);
         }
 
         .jcj-quiz-btn-secondary {
-          background: white;
-          color: #4a5568;
-          border: 2px solid #e2e8f0;
+          background: #2d3748;
+          color: #e2e8f0;
+          border: 2px solid #4a5568;
         }
 
         .jcj-quiz-btn-secondary:hover {
-          background: #f7fafc;
-          border-color: #cbd5e0;
+          background: #4a5568;
+          border-color: #718096;
         }
 
         .jcj-quiz-btn-disabled {
@@ -962,10 +963,10 @@ const App = () => {
         }
 
         .jcj-quiz-results {
-          background: white;
+          background: #1a202c;
           padding: 3rem 2rem;
           border-radius: 12px;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
           text-align: center;
           animation: jcjQuizFadeIn 0.5s ease;
         }
@@ -978,20 +979,20 @@ const App = () => {
         .jcj-quiz-results-title {
           font-size: 2rem;
           font-weight: 700;
-          color: #2d3748;
+          color: #e2e8f0;
           margin-bottom: 0.5rem;
         }
 
         .jcj-quiz-results-score {
           font-size: 3rem;
           font-weight: 700;
-          color: #667eea;
+          color: #1d4ed8;
           margin: 1rem 0;
         }
 
         .jcj-quiz-results-message {
           font-size: 1.1rem;
-          color: #718096;
+          color: #a0aec0;
           margin-bottom: 2rem;
         }
 
@@ -1011,7 +1012,7 @@ const App = () => {
         .jcj-quiz-results-stat-value {
           font-size: 2rem;
           font-weight: 700;
-          color: #667eea;
+          color: #1d4ed8;
         }
 
         .jcj-quiz-results-stat-label {
@@ -1025,17 +1026,17 @@ const App = () => {
         }
 
         .jcj-quiz-progress-header {
-          background: white;
+          background: #1a202c;
           padding: 2rem;
           border-radius: 12px;
           margin-bottom: 2rem;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
 
         .jcj-quiz-progress-title {
           font-size: 2rem;
           font-weight: 700;
-          color: #2d3748;
+          color: #e2e8f0;
           margin-bottom: 1rem;
         }
 
@@ -1046,7 +1047,7 @@ const App = () => {
         }
 
         .jcj-quiz-stat-card {
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
           padding: 1.5rem;
           border-radius: 12px;
           color: white;
@@ -1064,16 +1065,16 @@ const App = () => {
         }
 
         .jcj-quiz-history {
-          background: white;
+          background: #1a202c;
           padding: 2rem;
           border-radius: 12px;
-          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
 
         .jcj-quiz-history-title {
           font-size: 1.5rem;
           font-weight: 700;
-          color: #2d3748;
+          color: #e2e8f0;
           margin-bottom: 1.5rem;
         }
 
@@ -1107,13 +1108,13 @@ const App = () => {
         .jcj-quiz-history-item-title {
           font-size: 1.1rem;
           font-weight: 600;
-          color: #2d3748;
+          color: #e2e8f0;
         }
 
         .jcj-quiz-history-item-score {
           font-size: 1.5rem;
           font-weight: 700;
-          color: #667eea;
+          color: #1d4ed8;
         }
 
         .jcj-quiz-history-item-meta {
@@ -1121,7 +1122,7 @@ const App = () => {
           gap: 1rem;
           flex-wrap: wrap;
           font-size: 0.85rem;
-          color: #718096;
+          color: #a0aec0;
         }
 
         .jcj-quiz-history-item-meta span {
@@ -1133,7 +1134,7 @@ const App = () => {
         .jcj-quiz-no-data {
           text-align: center;
           padding: 3rem;
-          color: #718096;
+          color: #a0aec0;
         }
 
         .jcj-quiz-no-data-icon {

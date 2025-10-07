@@ -1,0 +1,319 @@
+/* Interview Student Dashboard - Dark Theme */
+
+/* Main Container */
+.interview-dashboard-container-jcj {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  padding: 2rem;
+  padding-top: 83px;
+  color: #e2e8f0;
+}
+
+/* Section Header with Button */
+.section-header-with-button-jcj {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.schedule-interview-btn-jcj {
+  background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 100%);
+  color: white;
+  border: none;
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(29, 78, 216, 0.3);
+}
+
+.schedule-interview-btn-jcj:hover {
+  background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(29, 78, 216, 0.4);
+}
+
+/* Section Titles */
+.section-title-jcj {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin: 0;
+}
+
+/* Upcoming Interviews Grid */
+.upcoming-interviews-section-jcj {
+  margin-bottom: 3rem;
+}
+
+.interviews-grid-jcj {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Interview Cards */
+.interview-card-jcj {
+  background: #1e293b;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 1px solid #334155;
+  transition: all 0.3s ease;
+}
+
+.interview-card-jcj:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+  border-color: #475569;
+}
+
+.interview-card-header-jcj {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.interview-card-title-jcj {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin: 0;
+  flex: 1;
+}
+
+.interview-menu-jcj {
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+}
+
+.interview-menu-jcj:hover {
+  background-color: #334155;
+}
+
+.menu-icon-jcj {
+  font-size: 1.25rem;
+  color: #94a3b8;
+}
+
+/* Interview Card Content */
+.interview-card-content-jcj {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.interviewer-info-jcj {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.interviewer-avatar-jcj {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #1d4ed8;
+}
+
+.interviewer-name-jcj {
+  font-weight: 500;
+  color: #cbd5e1;
+}
+
+.interview-details-jcj {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.interview-datetime-jcj {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.datetime-icon-jcj {
+  font-size: 1rem;
+}
+
+/* Interview Actions */
+.interview-actions-jcj {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.status-badge-jcj {
+  padding: 0.375rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.join-meeting-btn-jcj {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border: none;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+}
+
+.join-meeting-btn-jcj:hover {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+/* Past Interviews Section */
+.past-interviews-section-jcj {
+  margin-top: 2rem;
+}
+
+.past-interviews-header-jcj {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.view-summary-btn-jcj {
+  background: #334155;
+  color: #e2e8f0;
+  border: 1px solid #475569;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.view-summary-btn-jcj:hover {
+  background: #475569;
+  border-color: #64748b;
+}
+
+/* Past Interviews List */
+.past-interviews-list-jcj {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.past-interview-item-jcj {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #1e293b;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #334155;
+  transition: all 0.2s ease;
+}
+
+.past-interview-item-jcj:hover {
+  background: #2d3748;
+  border-color: #475569;
+}
+
+.past-interview-info-jcj {
+  flex: 1;
+}
+
+.past-interview-title-jcj {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  margin: 0 0 0.25rem 0;
+}
+
+.past-interview-details-jcj {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+.past-interview-rating-jcj {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rating-stars-jcj {
+  color: #fbbf24;
+  font-size: 1rem;
+}
+
+.rating-score-jcj {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #e2e8f0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .interview-dashboard-container-jcj {
+    padding: 1rem;
+  }
+
+  .section-header-with-button-jcj {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .interviews-grid-jcj {
+    grid-template-columns: 1fr;
+  }
+
+  .interview-card-jcj {
+    padding: 1rem;
+  }
+
+  .interview-actions-jcj {
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+
+  .past-interview-item-jcj {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .past-interviews-header-jcj {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-title-jcj {
+    font-size: 1.5rem;
+  }
+
+  .schedule-interview-btn-jcj {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9rem;
+  }
+}

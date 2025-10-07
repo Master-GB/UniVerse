@@ -91,6 +91,7 @@ exports.register = async (req, res) => {
       });
     }
 
+    // creates a JWT token after successfull login
     const token = jwt.sign({ userId: newUser._id }, process.env.JWT_SECRET, {
       expiresIn: "24h",
     });
