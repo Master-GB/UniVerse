@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const fs = require("fs/promises");
+const path = require("path");
 const User = require("../../models/User_Model/UserModel");
 
 const sanitizeUser = (user) => ({
@@ -15,6 +16,25 @@ const sanitizeUser = (user) => ({
   createdAt: user.createdAt,
   updatedAt: user.updatedAt,
 });
+
+const deleteFileIfExists = async (absolutePath) => {
+  if (!absolutePath) return;
+  try {
+    await fs.unlink(absolutePath);
+  } catch (error) {
+    if (error?.code !== "ENOENT") {
+      console.error("Failed to remove file", absolutePath, error);
+    }
+  }
+};
+
+const resolveStoredUploadPath = (storedPath) => {
+  if (!storedPath) return null;
+  const normalized = storedPath.startsWith("/")
+    ? storedPath.slice(1)
+    : storedPath;
+  return path.join(__dirname, "..", "..", normalized);
+};
 
 // User Registration
 exports.register = async (req, res) => {
@@ -106,6 +126,166 @@ exports.register = async (req, res) => {
     if (!userCreated) {
       await removeUploadedProfilePicture();
     }
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Get authenticated user profile
+exports.getProfile = async (req, res) => {
+  try {
+    const userId = req.user?.userId;
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({ user: sanitizeUser(user) });
+  } catch (error) {
+    console.error("Get profile error", error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Update authenticated user profile
+exports.updateProfile = async (req, res) => {
+  const cleanupNewUpload = async () => {
+    if (req.file?.path) {
+      await deleteFileIfExists(req.file.path);
+    }
+  };
+
+  try {
+    const userId = req.user?.userId;
+    if (!userId) {
+      await cleanupNewUpload();
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      await cleanupNewUpload();
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const updates = {
+      name: req.body?.name?.trim(),
+      username: req.body?.username?.trim()?.toLowerCase(),
+      email: req.body?.email?.trim()?.toLowerCase(),
+      phone: req.body?.phone?.trim(),
+      password: req.body?.password,
+      removeProfilePicture: ["true", true].includes(
+        req.body?.removeProfilePicture
+      ),
+    };
+
+    if (updates.password && updates.password.length < 6) {
+      await cleanupNewUpload();
+      return res
+        .status(400)
+        .json({ message: "Password must be at least 6 characters long" });
+    }
+
+    if (updates.username && updates.username !== user.username) {
+      const existingUsername = await User.findOne({
+        username: updates.username,
+        _id: { $ne: userId },
+      });
+      if (existingUsername) {
+        await cleanupNewUpload();
+        return res.status(409).json({ message: "Username already in use" });
+      }
+    } else {
+      updates.username = undefined;
+    }
+
+    if (updates.email && updates.email !== user.email) {
+      const existingEmail = await User.findOne({
+        email: updates.email,
+        _id: { $ne: userId },
+      });
+      if (existingEmail) {
+        await cleanupNewUpload();
+        return res.status(409).json({ message: "Email already in use" });
+      }
+    } else {
+      updates.email = undefined;
+    }
+
+    if (updates.name) {
+      user.name = updates.name;
+    }
+
+    if (updates.phone) {
+      user.phone = updates.phone;
+    }
+
+    if (updates.username) {
+      user.username = updates.username;
+    }
+
+    if (updates.email) {
+      user.email = updates.email;
+    }
+
+    if (updates.password) {
+      user.password = updates.password;
+    }
+
+    const previousPicturePath = user.profilePicture;
+    if (req.file) {
+      user.profilePicture = `/uploads/profile-pictures/${req.file.filename}`;
+    } else if (updates.removeProfilePicture) {
+      user.profilePicture = null;
+    }
+
+    await user.save();
+
+    if (req.file && previousPicturePath) {
+      const absolutePreviousPath = resolveStoredUploadPath(previousPicturePath);
+      await deleteFileIfExists(absolutePreviousPath);
+    }
+
+    if (updates.removeProfilePicture && previousPicturePath) {
+      const absolutePreviousPath = resolveStoredUploadPath(previousPicturePath);
+      await deleteFileIfExists(absolutePreviousPath);
+    }
+
+    res.json({
+      message: "Profile updated successfully",
+      user: sanitizeUser(user),
+    });
+  } catch (error) {
+    console.error("Update profile error", error);
+    if (req.file?.path) {
+      await deleteFileIfExists(req.file.path);
+    }
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Logout user (stateless JWT - client should discard token)
+exports.logout = async (req, res) => {
+  try {
+    const userId = req.user?.userId;
+    if (!userId) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.lastLogout = new Date();
+    await user.save({ validateBeforeSave: false });
+
+    res.json({ message: "Logged out successfully" });
+  } catch (error) {
+    console.error("Logout error", error);
     res.status(500).json({ error: error.message });
   }
 };
