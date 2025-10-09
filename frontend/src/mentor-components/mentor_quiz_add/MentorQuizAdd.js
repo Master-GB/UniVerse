@@ -6,10 +6,20 @@ import { useNavigate } from "react-router-dom";
 
 const MentorQuizAdd = () => {
   const navigate = useNavigate();
+  
+  // Year levels according to model
+  const yearLevels = [
+    '1st Year',
+    '2nd Year',
+    '3rd Year',
+    '4th Year',
+    '5th Year'
+  ];
+
   const [quizData, setQuizData] = useState({
     title: '',
     subject: '',
-    year: new Date().getFullYear(),
+    year: '1st Year', // Changed from numeric year to year level
     semester: '1',
     duration: 60,
     difficulty: 'Medium',
@@ -77,6 +87,10 @@ const MentorQuizAdd = () => {
       setMessage({ type: 'error', text: 'Subject is required' });
       return false;
     }
+    if (!yearLevels.includes(quizData.year)) {
+      setMessage({ type: 'error', text: 'Invalid year level' });
+      return false;
+    }
     if (quizData.duration < 1) {
       setMessage({ type: 'error', text: 'Duration must be at least 1 minute' });
       return false;
@@ -131,7 +145,7 @@ const MentorQuizAdd = () => {
         setQuizData({
           title: '',
           subject: '',
-          year: new Date().getFullYear(),
+          year: '1st Year',
           semester: '1',
           duration: 60,
           difficulty: 'Medium',
@@ -159,7 +173,7 @@ const MentorQuizAdd = () => {
     setQuizData({
       title: '',
       subject: '',
-      year: new Date().getFullYear(),
+      year: '1st Year',
       semester: '1',
       duration: 60,
       difficulty: 'Medium',
@@ -223,7 +237,7 @@ const MentorQuizAdd = () => {
                     type="text"
                     value={quizData.title}
                     onChange={(e) => handleQuizChange('title', e.target.value)}
-                    placeholder="e.g., SE3080 - 2023"
+                    placeholder="e.g., SE3080 - Software Project Management Quiz"
                     className="input-mqa"
                     required
                   />
@@ -240,16 +254,19 @@ const MentorQuizAdd = () => {
                   />
                 </div>
                 <div>
-                  <label className="label-mqa">Year *</label>
-                  <input
-                    type="number"
+                  <label className="label-mqa">Year Level *</label>
+                  <select
                     value={quizData.year}
-                    onChange={(e) => handleQuizChange('year', parseInt(e.target.value))}
-                    min="2020"
-                    max="2030"
-                    className="input-mqa"
+                    onChange={(e) => handleQuizChange('year', e.target.value)}
+                    className="select-mqa"
                     required
-                  />
+                  >
+                    {yearLevels.map(yearLevel => (
+                      <option key={yearLevel} value={yearLevel}>
+                        {yearLevel}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div>
                   <label className="label-mqa">Semester *</label>

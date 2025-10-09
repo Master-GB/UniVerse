@@ -13,10 +13,10 @@ const pastPaperSchema = new mongoose.Schema({
     uppercase: true
   },
   year: {
-    type: Number,
+    type: String,
     required: [true, 'Year is required'],
-    min: 2000,
-    max: new Date().getFullYear() + 1
+    enum: ['1st Year', '2nd Year', '3rd Year', '4th Year', '5th Year']
+   
   },
   semester: {
     type: String,

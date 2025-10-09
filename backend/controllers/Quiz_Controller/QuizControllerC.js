@@ -11,7 +11,7 @@ exports.getAllQuizzes = async (req, res) => {
     let query = { isActive: true };
     
     if (year && year !== 'all') {
-      query.year = parseInt(year);
+      query.year = year; // Now handles year levels like '1st Year', '2nd Year', etc.
     }
     
     if (semester && semester !== 'all') {
@@ -87,8 +87,8 @@ exports.getQuizById = async (req, res) => {
         id: q._id,
         question: q.question,
         options: q.options,
-        correctAnswer: q.correctAnswer,  // ✓ Now included
-        explanation: q.explanation,      // ✓ Now included
+        correctAnswer: q.correctAnswer,
+        explanation: q.explanation,
         points: q.points
       }))
     };
@@ -105,11 +105,21 @@ exports.getQuizById = async (req, res) => {
     });
   }
 };
+
 // @desc    Create new quiz
 // @route   POST /api/quizzes
 // @access  Private/Admin
 exports.createQuiz = async (req, res) => {
   try {
+    // Validate year enum
+    const validYears = ['1st Year', '2nd Year', '3rd Year', '4th Year', '5th Year'];
+    if (req.body.year && !validYears.includes(req.body.year)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid year. Must be one of: ' + validYears.join(', ')
+      });
+    }
+
     const quizData = {
       ...req.body,
       createdBy: req.user?._id // Assuming auth middleware sets req.user
@@ -136,6 +146,17 @@ exports.createQuiz = async (req, res) => {
 // @access  Private/Admin
 exports.updateQuiz = async (req, res) => {
   try {
+    // Validate year enum if provided
+    if (req.body.year) {
+      const validYears = ['1st Year', '2nd Year', '3rd Year', '4th Year', '5th Year'];
+      if (!validYears.includes(req.body.year)) {
+        return res.status(400).json({
+          success: false,
+          message: 'Invalid year. Must be one of: ' + validYears.join(', ')
+        });
+      }
+    }
+
     const quiz = await Quiz.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -194,9 +215,6 @@ exports.deleteQuiz = async (req, res) => {
   }
 };
 
-// @desc    Submit quiz answers
-// @route   POST /api/quizzes/:id/submit
-// @access  Private/Student
 // @desc    Submit quiz answers
 // @route   POST /api/quizzes/:id/submit
 // @access  Private/Student
@@ -328,10 +346,14 @@ exports.getFilterOptions = async (req, res) => {
     const years = await Quiz.distinct('year', { isActive: true });
     const subjects = await Quiz.distinct('subject', { isActive: true });
     
+    // Sort years in proper order
+    const yearOrder = ['1st Year', '2nd Year', '3rd Year', '4th Year', '5th Year'];
+    const sortedYears = years.sort((a, b) => yearOrder.indexOf(a) - yearOrder.indexOf(b));
+    
     res.status(200).json({
       success: true,
       data: {
-        years: years.sort((a, b) => b - a),
+        years: sortedYears,
         subjects: subjects.sort(),
         semesters: ['1', '2']
       }
@@ -344,5 +366,3 @@ exports.getFilterOptions = async (req, res) => {
     });
   }
 };
-
-
