@@ -35,8 +35,9 @@ const quizSchema = new mongoose.Schema({
     trim: true
   },
   year: {
-    type: Number,
-    required: true
+    type: String,
+    required: true,
+    enum: ['1st Year', '2nd Year', '3rd Year', '4th Year', '5th Year']
   },
   semester: {
     type: String,

@@ -14,7 +14,7 @@ const getPastPapers = async (req, res, next) => {
       searchQuery,
       page = 1,
       limit = 10,
-      sortBy = 'year',
+      sortBy = 'createdAt',
       sortOrder = 'desc'
     } = req.query;
 
@@ -22,7 +22,7 @@ const getPastPapers = async (req, res, next) => {
     const filter = { isActive: true };
 
     if (year && year !== 'all') {
-      filter.year = parseInt(year);
+      filter.year = year; // Now handles year levels like '1st Year', '2nd Year', etc.
     }
 
     if (semester && semester !== 'all') {
@@ -127,6 +127,15 @@ const createPastPaper = async (req, res, next) => {
       });
     }
 
+    // Validate year enum
+    const validYears = ['1st Year', '2nd Year', '3rd Year', '4th Year', '5th Year'];
+    if (!validYears.includes(year)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid year. Must be one of: ' + validYears.join(', ')
+      });
+    }
+
     // Create paper WITHOUT uploadedBy
     const paper = await PastPaper.create({
       title,
@@ -141,7 +150,6 @@ const createPastPaper = async (req, res, next) => {
       difficulty: difficulty || 'Medium',
       tags: tags || [],
       department
-      // Remove uploadedBy field entirely
     });
 
     res.status(201).json({
@@ -149,7 +157,7 @@ const createPastPaper = async (req, res, next) => {
       data: paper
     });
   } catch (error) {
-    console.error('Create paper error:', error); // Add this for debugging
+    console.error('Create paper error:', error);
     next(error);
   }
 };
@@ -168,8 +176,10 @@ const updatePastPaper = async (req, res, next) => {
       });
     }
 
-    // Check if user is authorized (paper uploader or admin)
-    if (paper.uploadedBy.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
+    // Check if user is authorized (paper uploader or admin) - only if uploadedBy exists
+    if (paper.uploadedBy && req.user && 
+        paper.uploadedBy.toString() !== req.user._id.toString() && 
+        req.user.role !== 'admin') {
       return res.status(403).json({
         success: false,
         message: 'Not authorized to update this paper'
@@ -284,10 +294,14 @@ const getFilterOptions = async (req, res, next) => {
       { $sort: { code: 1 } }
     ]);
 
+    // Sort years in proper order
+    const yearOrder = ['1st Year', '2nd Year', '3rd Year', '4th Year', '5th Year'];
+    const sortedYears = years.sort((a, b) => yearOrder.indexOf(a) - yearOrder.indexOf(b));
+
     res.status(200).json({
       success: true,
       data: {
-        years: years.sort((a, b) => b - a),
+        years: sortedYears,
         semesters,
         subjects,
         examTypes: tags.filter(tag => ['Midterm', 'Final Exam'].includes(tag))
@@ -305,7 +319,7 @@ const getPaperStatistics = async (req, res, next) => {
   try {
     const stats = await PastPaper.getStatistics();
 
-    // Papers by year
+    // Papers by year (year level)
     const papersByYear = await PastPaper.aggregate([
       { $match: { isActive: true } },
       {
@@ -314,7 +328,7 @@ const getPaperStatistics = async (req, res, next) => {
           count: { $sum: 1 }
         }
       },
-      { $sort: { _id: -1 } }
+      { $sort: { _id: 1 } }
     ]);
 
     // Papers by subject

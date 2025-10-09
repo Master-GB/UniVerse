@@ -7,7 +7,7 @@ const MentorPasspaper = () => {
   const [formData, setFormData] = useState({
     title: '',
     code: '',
-    year: new Date().getFullYear(),
+    year: '1st Year',
     semester: '1st Semester',
     questions: '',
     timeAllowed: '',
@@ -24,6 +24,15 @@ const MentorPasspaper = () => {
   const [message, setMessage] = useState({ type: '', text: '' });
 
   const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8070';
+
+  // Year levels according to model
+  const yearLevels = [
+    '1st Year',
+    '2nd Year',
+    '3rd Year',
+    '4th Year',
+    '5th Year'
+  ];
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -71,7 +80,7 @@ const MentorPasspaper = () => {
         setFormData({
           title: '',
           code: '',
-          year: new Date().getFullYear(),
+          year: '1st Year',
           semester: '1st Semester',
           questions: '',
           timeAllowed: '',
@@ -97,7 +106,7 @@ const MentorPasspaper = () => {
     setFormData({
       title: '',
       code: '',
-      year: new Date().getFullYear(),
+      year: '1st Year',
       semester: '1st Semester',
       questions: '',
       timeAllowed: '',
@@ -111,9 +120,6 @@ const MentorPasspaper = () => {
     setTagInput('');
     setMessage({ type: '', text: '' });
   };
-
-  const currentYear = new Date().getFullYear();
-  const years = Array.from({ length: 10 }, (_, i) => currentYear - i);
 
   return (
     <div>
@@ -159,7 +165,7 @@ const MentorPasspaper = () => {
                   value={formData.title}
                   onChange={handleChange}
                   className="a-m-pass-input"
-                  placeholder="e.g., Software Engineering - 2024"
+                  placeholder="e.g., Software Engineering - Final Exam"
                   required
                 />
               </div>
@@ -199,7 +205,7 @@ const MentorPasspaper = () => {
               <div className="a-m-pass-form-row">
                 <div className="a-m-pass-form-group">
                   <label htmlFor="year" className="a-m-pass-label">
-                    Year <span className="a-m-pass-required">*</span>
+                    Year Level <span className="a-m-pass-required">*</span>
                   </label>
                   <select
                     id="year"
@@ -209,8 +215,8 @@ const MentorPasspaper = () => {
                     className="a-m-pass-select"
                     required
                   >
-                    {years.map(year => (
-                      <option key={year} value={year}>{year}</option>
+                    {yearLevels.map(yearLevel => (
+                      <option key={yearLevel} value={yearLevel}>{yearLevel}</option>
                     ))}
                   </select>
                 </div>
