@@ -20,6 +20,7 @@ const ExamQuiz = () => {
     duration: 0 // Will be set from the database
   });
   const navigate = useNavigate();
+  
 
   // Fetch quiz data when component mounts
   useEffect(() => {
@@ -29,21 +30,27 @@ const ExamQuiz = () => {
         const response = await axios.get(`http://localhost:8070/quiz/${quizId}`);
         if (response.data.success) {
           const quiz = response.data.data;
-          // Get duration in minutes from database
+          // Get duration in minutes from database and convert to seconds
           const quizDurationInMinutes = parseInt(quiz.duration) || 30;
-          // Convert minutes to seconds for the timer
           const quizDurationInSeconds = quizDurationInMinutes * 60;
           
           console.log('Quiz duration (minutes):', quizDurationInMinutes);
           console.log('Setting timer to (seconds):', quizDurationInSeconds);
           
+          // First set the quiz data
           setQuizData({
             title: quiz.title,
             subject: quiz.subject,
             questions: quiz.questions || [],
             duration: quizDurationInMinutes // Store in minutes
           });
-          setTimeLeft(quizDurationInSeconds); // Set timer in seconds
+          
+          // Then set the time left to start the timer
+          setTimeLeft(quizDurationInSeconds);
+          
+          // Reset completion states
+          setQuizCompleted(false);
+          setShowResults(false);
         } else {
           setError('Failed to load quiz. Please try again.');
         }
@@ -65,18 +72,25 @@ const ExamQuiz = () => {
 
   // Timer effect
   useEffect(() => {
-    if (timeLeft > 0 && !quizCompleted && !isLoading) {
-      const timer = setTimeout(() => setTimeLeft(prevTime => prevTime - 1), 1000);
-      return () => clearTimeout(timer);
-    } else if (timeLeft === 0 && !quizCompleted) {
-      handleSubmit();
+    // Only start the timer if we have questions loaded
+    if (quizData.questions && quizData.questions.length > 0) {
+      if (timeLeft > 0 && !quizCompleted && !isLoading) {
+        const timer = setTimeout(() => setTimeLeft(prevTime => prevTime - 1), 1000);
+        return () => clearTimeout(timer);
+      } else if (timeLeft === 0 && !quizCompleted) {
+        handleSubmit();
+      }
     }
-  }, [timeLeft, quizCompleted, isLoading]);
+  }, [timeLeft, quizCompleted, isLoading, quizData.questions]);
 
   const handleOptionSelect = (option) => {
     const newSelectedOptions = [...selectedOptions];
+    // Make sure we're storing the exact option text that matches the correctAnswer
     newSelectedOptions[currentQuestion] = option;
     setSelectedOptions(newSelectedOptions);
+    
+    // Debug: Log the current selection
+    console.log('Selected option for question', currentQuestion + 1, ':', option);
   };
 
   const handleNext = () => {
@@ -92,37 +106,81 @@ const ExamQuiz = () => {
   };
 
   const handleSubmit = async () => {
+    // Don't submit if quiz is already completed
+    if (quizCompleted) return;
+    
     // Calculate score and time spent
     let totalScore = 0;
     const results = [];
+    
     // Calculate time spent in minutes (convert both to minutes for calculation)
     const totalTimeMinutes = Math.max(1, Math.round(((quizData.duration * 60) - timeLeft) / 60));
     console.log('Time spent (minutes):', totalTimeMinutes);
     
+    // Make sure we have questions to grade
+    if (!quizData.questions || quizData.questions.length === 0) {
+      console.error('No questions available to grade');
+      return;
+    }
+    
+    // Debug: Log the questions and selected options
+    console.log('=== QUIZ SUBMISSION DEBUG ===');
+    console.log('Questions:', quizData.questions);
+    console.log('Selected options:', selectedOptions);
+    
+    // Calculate score
     quizData.questions.forEach((question, index) => {
-      const isCorrect = selectedOptions[index] === question.correctAnswer;
+      const selectedOption = selectedOptions[index];
+      const correctAnswer = question.correctAnswer;
+      
+      // Normalize both the selected option and correct answer for comparison
+      const normalizedSelected = String(selectedOption || '').trim();
+      const normalizedCorrect = String(correctAnswer || '').trim();
+      
+      // Check if the selected option matches any part of the correct answer
+      // This handles cases where the correct answer might be just the text without the prefix
+      const isCorrect = normalizedSelected === normalizedCorrect || 
+                       normalizedCorrect.includes(normalizedSelected) ||
+                       normalizedSelected.includes(normalizedCorrect);
+      
+      console.log(`\nQuestion ${index + 1}: ${question.question}`);
+      console.log('Options:', question.options);
+      console.log('- Selected option:', `"${selectedOption}"`);
+      console.log('- Correct answer:', `"${correctAnswer}"`);
+      console.log('- Normalized selected:', `"${normalizedSelected}"`);
+      console.log('- Normalized correct:', `"${normalizedCorrect}"`);
+      console.log('- Is correct:', isCorrect);
+      
       if (isCorrect) {
         totalScore += question.points || 1;
       }
-      results.push(selectedOptions[index] || ''); // Just send the selected answer
+      results.push(selectedOption || '');
     });
+    
+    console.log('\n=== FINAL SCORE ===');
+    console.log('Total score:', totalScore, 'out of', quizData.questions.length);
+
+    // Always show results to the user first
+    setScore(totalScore);
+    setQuizCompleted(true);
+    setShowResults(true);
 
     // Get JWT token from localStorage
     const token = localStorage.getItem('token');
     if (!token) {
-      console.error('No authentication token found');
-      setQuizCompleted(true);
-      setShowResults(true);
+      console.log('User not authenticated - results will not be saved');
       return;
     }
 
-    // Save results to the server
+    // Save results to the server in the background
     try {
       await axios.post(
         `http://localhost:8070/quiz/${quizId}/submit`,
         {
           answers: results,
-          timeSpent: totalTimeMinutes
+          timeSpent: totalTimeMinutes,
+          score: totalScore,
+          totalQuestions: quizData.questions.length
         },
         {
           headers: {
@@ -131,14 +189,11 @@ const ExamQuiz = () => {
           }
         }
       );
+      console.log('Quiz results saved successfully');
     } catch (err) {
-      console.error('Error submitting quiz:', err);
-      // Continue with showing results even if submission fails
+      console.error('Error saving quiz results:', err);
+      // Don't show error to user, just log it
     }
-
-    setScore(totalScore);
-    setQuizCompleted(true);
-    setShowResults(true);
   };
 
   const formatTime = (seconds) => {
@@ -168,6 +223,7 @@ const ExamQuiz = () => {
       </div>
     );
   }
+  
 
   // Show error state
   if (error) {

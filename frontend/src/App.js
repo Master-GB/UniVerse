@@ -144,8 +144,8 @@ function App() {
     <div className="app-container">
       <Routes>
         <Route path="/landing/" element={<LandingPageLayout />} />
-        <Route path="/s*" element={<StudentLayout />} />
-        <Route path="/*" element={<MentorLayout />} />
+        <Route path="/*" element={<StudentLayout />} />
+        <Route path="/j*" element={<MentorLayout />} />
         <Route path="/MIPage*" element={<MIPageLayout />} />
       </Routes>
     </div>

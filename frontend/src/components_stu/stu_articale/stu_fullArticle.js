@@ -66,10 +66,11 @@ export default function FullArticle() {
 
   return (
     <div className="article-wrapper">
-      <div className="article-container">
-        <button className="back-button" onClick={() => navigate(-1)}>
+      <button className="back-button" onClick={() => navigate(-1)}>
           <ArrowLeft size={18} /> Back to Articles
         </button>
+      <div className="article-container">
+        
 
         <article className="article-content">
           <header className="article-header">
