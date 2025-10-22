@@ -101,7 +101,7 @@ const PracticeTestsOverview = () => {
   const subjects = [...new Set(allQuizzes.map(quiz => quiz.subject))].sort();
 
   const handleStartQuiz = (quizId) => {
-    navigate(`/student/exam/practice-tests/quiz/${quizId}`);
+    navigate(`/s/student/exam/practice-tests/quiz/${quizId}`);
   };
 
   const handleBack = () => {

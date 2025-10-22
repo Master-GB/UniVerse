@@ -153,7 +153,7 @@ function ManageCourses() {
       } else {
         res = await axios.post(`${API_URL}/`, formData);
         setSuccess("🎉 Course added successfully!");
-        navigate(`/student/courses/${res.data._id}/questions`);
+        navigate(`/s/student/courses/${res.data._id}/questions`);
       }
       resetForm();
       fetchCourses();
@@ -350,7 +350,7 @@ function ManageCourses() {
                     </button>
                     <button
                       className="manage-courses-questions-btn"
-                      onClick={() => navigate(`/student/courses/${course._id}/questions`)}
+                      onClick={() => navigate(`/s/student/courses/${course._id}/questions`)}
                     >
                       <QuestionIcon /> Questions
                     </button>

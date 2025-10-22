@@ -152,7 +152,7 @@ function SignUp() {
 
       // Optionally store token here if auto-login is desired: localStorage.setItem("token", data.token)
       setTimeout(() => {
-        navigate("/landing/login");
+        navigate("/login");
       }, 1800);
 
       setFormData({

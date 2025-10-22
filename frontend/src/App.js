@@ -17,7 +17,7 @@ import Stu_AllCourses from "./components_stu/stu_course/stu_AllCourses/stu_AllCo
 import Stu_CourseDetails from "./components_stu/stu_course/stu_CourseDetails/stu_CourseDetails";
 import Stu_CourseContent from "./components_stu/stu_course/stu_CourseContent/stu_CourseContent";
 import Stu_CourseQuiz from "./components_stu/stu_course/stu_CourseQuiz/stu_CourseQuiz";
-import StudentInterviewQuiz from "./components_stu/stu_interview/stu_StudentInterviewQuiz/stu_StudentInterviewQuiz";
+import StudentInterviewQuiz from "./components_jcj/QuizInterview_jcj/QuizInterview";
 import CareerResourceHub from "./components_stu/stu_trainingContent/stu_trainingContent";
 import ExamPrepOverview from "./components_stu/stu_examPrep/stu_examPrepOverview/stu_examPrepOverview";
 import ExamStrategies from "./components_stu/stu_examPrep/stu_examStrategies/stu_examStrategies";
@@ -34,6 +34,8 @@ import LoginPageJCJ from "./components_jcj/LoginPage_jcj/LoginPageJCJ";
 import MIPage from "./components_jcj/mockInterviewPage_jcj/MI_LandingPage_jcj/MI_LandingPage_jcj";
 import MIDash from "./components_jcj/mockInterviewPage_jcj/MI_LandingPage_jcj/MI_Dashboard_jcj/MockInterview";
 import SignUp from "./components_jcj/SignUp_jcj/SignUp";
+import InterviewStu from "./components_jcj/Interview_jcj/interviewDashboard/InterviewStu_jcj";
+import ScheduleInterview from "./components_jcj/Interview_jcj/ScheduleInterview/ScheduleInterview";
 
 import MentorDashboard from "./mentor-components/mentor-dashboard/MentorDashboard";
 import MentorSessionCreate from "./mentor-components/mentor-session-create/MentorSessionCreate";
@@ -123,9 +125,10 @@ const MIPageLayout = () => (
     <div>
       <React.Fragment>
         <Routes>
-          <Route path="/" element={<MIPage />} />
-          <Route path="milanding" element={<MIPage />} />
+          <Route path="/*" element={<MIPage />} />
           <Route path="mockinterview" element={<MIDash />} />
+          <Route path="interview" element={<InterviewStu />} />
+          <Route path="schedule" element={<ScheduleInterview />} />
         </Routes>
       </React.Fragment>
     </div>
@@ -137,9 +140,9 @@ function App() {
   return (
     <div className="app-container">
       <Routes>
-        <Route path="/landing/*" element={<LandingPageLayout />} />
-        <Route path="/a*" element={<StudentLayout />} />
-        <Route path="/*" element={<MentorLayout />} />
+        <Route path="/*" element={<LandingPageLayout />} />
+        <Route path="/s*" element={<StudentLayout />} />
+        <Route path="/m*" element={<MentorLayout />} />
         <Route path="/MIPage*" element={<MIPageLayout />} />
       </Routes>
     </div>

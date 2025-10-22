@@ -47,7 +47,7 @@ function StuCourses() {
             <p className="hero-subtitle-StuCourses">
               “We are here to guide you every step of the way toward achieving your goals and unlocking your true potential.”
             </p>
-            <button className="explore-btn-StuCourses" onClick={() => navigate("/all-courses")}>
+            <button className="explore-btn-StuCourses" onClick={() => navigate("/s/all-courses")}>
               Explore All Courses →
             </button>
           </div>
@@ -158,7 +158,7 @@ function StuCourses() {
         <div
           key={course._id}
           className="course-card-StuCourses"
-          onClick={() => navigate(`/courses/${course._id}`, { state: { course } })}
+          onClick={() => navigate(`/s/courses/${course._id}`, { state: { course } })}
         >
           <img
             src={course.image ? `${API_URL}/Uploads/${course.image}` : "/resourses/DDDollars.png"}
@@ -184,7 +184,7 @@ function StuCourses() {
 
         {/* Explore All Courses Button */}
         <div className="explore-all-StuCourses">
-          <button className="explore-btn-StuCourses" onClick={() => navigate("/all-courses")}>
+          <button className="explore-btn-StuCourses" onClick={() => navigate("/s/all-courses")}>
             Explore All Courses →
           </button>
         </div>
