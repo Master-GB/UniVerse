@@ -540,7 +540,7 @@ const StuNavigation = () => {
               Courses
             </Link>
             <div className="stu-dropdown">
-              <Link to="#" className="stu-nav-link">
+              <Link to="#" className={`stu-nav-link ${isDropdownActive(['/student/academic-resources', '/student/career-resources']) ? 'active' : ''}`}>
                 Resources
                 <svg
                   className="stu-dropdown-icon"
@@ -599,7 +599,7 @@ const StuNavigation = () => {
                 <Link to="/s/student/resume" className="stu-dropdown-item">
                   Resume Builder
                 </Link>
-                <Link to="/MIPage" className="stu-dropdown-item">
+                <Link to="/MIPage" className={`stu-dropdown-item ${isActive('/MIPage') ? 'active' : ''}`}>
                   Mock Interview
                 </Link>
                 <Link to="/s/student/interview_quiz" className="stu-dropdown-item">
@@ -615,7 +615,7 @@ const StuNavigation = () => {
               Guidance
             </Link>
             <div className="stu-dropdown">
-              <Link to="#" className="stu-nav-link">
+              <Link to="#" className={`stu-nav-link ${isDropdownActive(['/student/academic-session', '/student/career-session']) ? 'active' : ''}`}>
                 Session
                 <svg
                   className="stu-dropdown-icon"

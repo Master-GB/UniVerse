@@ -28,8 +28,9 @@
 
 .stu-container {
   max-width: 1280px;
-  margin: 0 auto;
+  margin: 0;
   padding: 0 1.5rem;
+  width: 100%;
 }
 
 /* Header Content */
@@ -38,16 +39,25 @@
   align-items: center;
   height: 80px;
   width: 100%;
+  justify-content: flex-start;
+  padding-left: 0;
+  margin-left: 0;
 }
 
 /* Logo */
+.stu-logo {
+  padding-left: 0;
+  margin-right: auto;
+}
+
 .stu-logo a {
   display: flex;
   align-items: center;
   text-decoration: none;
-  color: var(--stu-primary-color);
+  color: white;
   font-weight: 700;
   font-size: 1.75rem;
+  gap: 10px;
   font-family: 'Poppins', sans-serif;
   transition: var(--stu-transition);
   padding-left: 1rem;
@@ -60,10 +70,8 @@
 }
 
 .stu-logo-img {
-  height: 63px;
-  width: 60px;
-  margin-right: 10px;
-  margin-left: -60px;
+  height: 50px;
+  width: 50px;
   margin-top: 0;
   margin-bottom: 0;
   padding-right: 0;
@@ -116,6 +124,16 @@
 }
 
 .stu-nav-link:hover::before {
+  width: 100%;
+}
+
+/* Active state for nav links */
+.stu-nav-link.active {
+  color: var(--stu-primary-color);
+  font-weight: 600;
+}
+
+.stu-nav-link.active::before {
   width: 100%;
 }
 
@@ -190,7 +208,14 @@
 .stu-dropdown-item:hover {
   background-color: rgba(67, 97, 238, 0.2);
   padding-left: 24px;
-  color: white;
+}
+
+/* Active state for dropdown items */
+.stu-dropdown-item.active {
+  background-color: rgba(67, 97, 238, 0.3);
+  color: #ffffff;
+  font-weight: 600;
+  border-left: 3px solid var(--stu-primary-color);
 }
 
 /* Ensure the parent link doesn't show underline on hover */
