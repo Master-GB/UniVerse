@@ -91,7 +91,7 @@ const MockInterview = () => {
 
   return (
     <div className="interview-container-jcj">
-      {/* Add DarkVeil as background */}
+      {/* Add DarkVeil as background, reactbits.dev eken gtte */}
       <div
         style={{
           position: "fixed",

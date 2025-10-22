@@ -75,7 +75,7 @@ function CourseQuiz() {
       <div className="container-CourseQuiz">
         <button 
           className="back-btn" 
-          onClick={() => navigate("/student/courses")}
+          onClick={() => navigate("/s/student/courses")}
         >
           Back to Course
         </button>

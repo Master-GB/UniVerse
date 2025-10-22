@@ -29,11 +29,11 @@ function Navbar() {
           <div className="navbar-main-links-jcj">
             <li className="navbar-item">
               <Link
-                to="/landing"
+                to="/"
                 className={`navbar-link ${
-                  activeLink === "/landing" ? "active-jcj" : ""
+                  activeLink === "/" ? "active-jcj" : ""
                 }`}
-                onClick={() => handleLinkClick("/landing")}
+                onClick={() => handleLinkClick("/")}
               >
                 Home
               </Link>
@@ -41,11 +41,11 @@ function Navbar() {
 
             <li className="navbar-item">
               <Link
-                to="/landing/about"
+                to="/about"
                 className={`navbar-link ${
-                  activeLink === "/landing/about" ? "active-jcj" : ""
+                  activeLink === "/about" ? "active-jcj" : ""
                 }`}
-                onClick={() => handleLinkClick("/landing/about")}
+                onClick={() => handleLinkClick("/about")}
               >
                 About Us
               </Link>
@@ -53,11 +53,11 @@ function Navbar() {
 
             <li className="navbar-item">
               <Link
-                to="/landing/courses_jcj"
+                to="/courses_jcj"
                 className={`navbar-link ${
-                  activeLink === "/landing/courses_jcj" ? "active-jcj" : ""
+                  activeLink === "/courses_jcj" ? "active-jcj" : ""
                 }`}
-                onClick={() => handleLinkClick("/landing/courses_jcj")}
+                onClick={() => handleLinkClick("/courses_jcj")}
               >
                 Courses
               </Link>
@@ -65,11 +65,11 @@ function Navbar() {
 
             <li className="navbar-item">
               <Link
-                to="/landing/support"
+                to="/support"
                 className={`navbar-link ${
-                  activeLink === "/landing/support" ? "active-jcj" : ""
+                  activeLink === "/support" ? "active-jcj" : ""
                 }`}
-                onClick={() => handleLinkClick("/landing/support")}
+                onClick={() => handleLinkClick("/support")}
               >
                 Support
               </Link>
@@ -79,11 +79,11 @@ function Navbar() {
           <div className="navbar-auth-links-jcj">
             <li className="navbar-item">
               <Link
-                to="/landing/login"
+                to="/login"
                 className={`navbar-auth-link-jcj ${
-                  activeLink === "/landing/login" ? "active-auth-jcj" : ""
+                  activeLink === "/login" ? "active-auth-jcj" : ""
                 }`}
-                onClick={() => handleLinkClick("/landing/login")}
+                onClick={() => handleLinkClick("/login")}
               >
                 Login
               </Link>
@@ -91,11 +91,11 @@ function Navbar() {
 
             <li className="navbar-item">
               <Link
-                to="/landing/signup"
+                to="/signup"
                 className={`navbar-auth-link-jcj navbar-signup-jcj ${
-                  activeLink === "/landing/signup" ? "active-signup-jcj" : ""
+                  activeLink === "/signup" ? "active-signup-jcj" : ""
                 }`}
-                onClick={() => handleLinkClick("/landing/signup")}
+                onClick={() => handleLinkClick("/signup")}
               >
                 Sign Up
               </Link>

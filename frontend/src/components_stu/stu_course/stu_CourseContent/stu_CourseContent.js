@@ -39,7 +39,7 @@ function CourseContent() {
   };
 
   const handleTakeQuiz = () => {
-    navigate(`/courses/${id}/quiz`);
+    navigate(`/s/courses/${id}/quiz`);
   };
 
   if (loading) return <p className="loading-coursecontent">Loading course content...</p>;

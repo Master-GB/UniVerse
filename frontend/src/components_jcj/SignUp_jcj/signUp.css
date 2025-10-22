@@ -136,6 +136,118 @@
   gap: 20px;
 }
 
+.profile-upload-section-jcj {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  background: rgba(42, 42, 62, 0.6);
+  border: 2px dashed rgba(102, 126, 234, 0.25);
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.profile-preview-frame-jcj {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background: #2a2a3e;
+  border: 2px solid rgba(102, 126, 234, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.profile-preview-img-jcj {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profile-preview-placeholder-jcj {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 12px;
+}
+
+.profile-placeholder-text-jcj {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.profile-upload-content-jcj {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.profile-upload-title-jcj {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #e6e6ff;
+}
+
+.profile-upload-hint-jcj {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #a0a0c0;
+  line-height: 1.5;
+}
+
+.profile-upload-actions-jcj {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.profile-upload-btn-jcj {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 18px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.9), rgba(118, 75, 162, 0.9));
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.profile-upload-btn-jcj:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(102, 126, 234, 0.35);
+}
+
+.profile-remove-btn-jcj {
+  background: transparent;
+  border: 1px solid rgba(230, 80, 118, 0.6);
+  color: #ff6b91;
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.profile-remove-btn-jcj:hover {
+  background: rgba(230, 80, 118, 0.12);
+  color: #ff8bb0;
+}
+
+.profile-file-input-jcj {
+  display: none;
+}
+
 .form-row-jcj {
   display: flex;
   gap: 15px;

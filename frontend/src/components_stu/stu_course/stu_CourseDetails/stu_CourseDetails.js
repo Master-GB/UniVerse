@@ -35,7 +35,7 @@ function CourseDetails() {
   const handleEnroll = async () => {
     try {
       await axios.post(`${API_URL}/api/enrollments`, { courseId: id });
-      navigate(`/courses/${id}/content`);
+      navigate(`/s/courses/${id}/content`);
     } catch (err) {
       setError("Error enrolling: " + err.message);
     }
