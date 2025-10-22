@@ -31,6 +31,11 @@ html, body, #root {
   box-sizing: border-box;
 }
 
+/* Remove top padding for resume page */
+.main-content:has(.resume-page) {
+  padding-top: 80px;
+}
+
 /* Make sure all direct children of main content take full width */
 .main-content > * {
   width: 100%;

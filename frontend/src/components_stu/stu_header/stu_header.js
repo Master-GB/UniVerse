@@ -1,12 +1,23 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./stu_header.css";
 
 const StuNavigation = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const location = useLocation();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  // Check if a path is active
+  const isActive = (path) => {
+    return location.pathname === path || location.pathname.startsWith(path + '/');
+  };
+
+  // Check if dropdown is active (any child route is active)
+  const isDropdownActive = (paths) => {
+    return paths.some(path => location.pathname.startsWith(path));
   };
 
   return (
@@ -25,14 +36,14 @@ const StuNavigation = () => {
           </div>
 
           <div className={`stu-nav-links ${isOpen ? "stu-active" : ""}`}>
-            <Link to="/student/dashboard" className="stu-nav-link">
+            <Link to="/student/dashboard" className={`stu-nav-link ${isActive('/student/dashboard') ? 'active' : ''}`}>
               Dashboard
             </Link>
-            <Link to="/student/courses" className="stu-nav-link">
+            <Link to="/student/courses" className={`stu-nav-link ${isActive('/student/courses') || isActive('/all-courses') || isActive('/courses') ? 'active' : ''}`}>
               Courses
             </Link>
             <div className="stu-dropdown">
-              <Link to="#" className="stu-nav-link">
+              <Link to="#" className={`stu-nav-link ${isDropdownActive(['/student/academic-resources', '/student/career-resources']) ? 'active' : ''}`}>
                 Resources
                 <svg
                   className="stu-dropdown-icon"
@@ -54,13 +65,13 @@ const StuNavigation = () => {
               <div className="stu-dropdown-content">
                 <Link
                   to="/student/academic-resources"
-                  className="stu-dropdown-item"
+                  className={`stu-dropdown-item ${isActive('/student/academic-resources') ? 'active' : ''}`}
                 >
                   Academic Resources
                 </Link>
                 <Link
                   to="/student/career-resources"
-                  className="stu-dropdown-item"
+                  className={`stu-dropdown-item ${isActive('/student/career-resources') ? 'active' : ''}`}
                 >
                   Career Resources
                 </Link>
@@ -68,7 +79,7 @@ const StuNavigation = () => {
             </div>
 
             <div className="stu-dropdown">
-              <Link to="/student/Career & Skills" className="stu-nav-link">
+              <Link to="/student/Career & Skills" className={`stu-nav-link ${isDropdownActive(['/student/resume', '/MIPage', '/student/interview_quiz']) ? 'active' : ''}`}>
                 Career & Skills
                 <svg
                   className="stu-dropdown-icon"
@@ -88,26 +99,26 @@ const StuNavigation = () => {
                 </svg>
               </Link>
               <div className="stu-dropdown-content">
-                <Link to="/student/resume" className="stu-dropdown-item">
+                <Link to="/student/resume" className={`stu-dropdown-item ${isActive('/student/resume') ? 'active' : ''}`}>
                   Resume Builder
                 </Link>
-                <Link to="/MIPage" className="stu-dropdown-item">
+                <Link to="/MIPage" className={`stu-dropdown-item ${isActive('/MIPage') ? 'active' : ''}`}>
                   Mock Interview
                 </Link>
-                <Link to="/student/interview_quiz" className="stu-dropdown-item">
+                <Link to="/student/interview_quiz" className={`stu-dropdown-item ${isActive('/student/interview_quiz') ? 'active' : ''}`}>
                   Interview Quisses
                 </Link>
               </div>
             </div>
 
-            <Link to="/student/exam-support" className="stu-nav-link">
+            <Link to="/student/exam-support" className={`stu-nav-link ${isActive('/student/exam-support') || location.pathname.startsWith('/student/exam') ? 'active' : ''}`}>
               Exam Support
             </Link>
-            <Link to="/student/guidance" className="stu-nav-link">
+            <Link to="/student/guidance" className={`stu-nav-link ${isActive('/student/guidance') ? 'active' : ''}`}>
               Guidance
             </Link>
             <div className="stu-dropdown">
-              <Link to="#" className="stu-nav-link">
+              <Link to="#" className={`stu-nav-link ${isDropdownActive(['/student/academic-session', '/student/career-session']) ? 'active' : ''}`}>
                 Session
                 <svg
                   className="stu-dropdown-icon"
@@ -129,13 +140,13 @@ const StuNavigation = () => {
               <div className="stu-dropdown-content">
                 <Link
                   to="/student/academic-session"
-                  className="stu-dropdown-item"
+                  className={`stu-dropdown-item ${isActive('/student/academic-session') ? 'active' : ''}`}
                 >
                   Academic Session
                 </Link>
                 <Link
                   to="/student/career-session"
-                  className="stu-dropdown-item"
+                  className={`stu-dropdown-item ${isActive('/student/career-session') ? 'active' : ''}`}
                 >
                   Career Session
                 </Link>
