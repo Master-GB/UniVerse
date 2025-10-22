@@ -1,115 +1,100 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import axios from 'axios';
 import './stu_examQuiz.css';
 
 const ExamQuiz = () => {
+  const { quizId } = useParams();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [selectedOptions, setSelectedOptions] = useState([]);
-  const [timeLeft, setTimeLeft] = useState(1800);
+  const [timeLeft, setTimeLeft] = useState(0);
   const [quizCompleted, setQuizCompleted] = useState(false);
   const [score, setScore] = useState(0);
   const [showResults, setShowResults] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [quizData, setQuizData] = useState({
+    title: '',
+    subject: '',
+    questions: [],
+    duration: 0 // Will be set from the database
+  });
   const navigate = useNavigate();
+  
 
-  const questions = [
-    {
-      id: 1,
-      question: "What is the capital of France?",
-      options: ["London", "Berlin", "Paris", "Madrid"],
-      correctAnswer: "Paris",
-      points: 1
-    },
-    {
-      id: 2,
-      question: "What is the time complexity of accessing an element in an array by index?",
-      options: ["O(1)", "O(n)", "O(log n)", "O(n²)"],
-      correctAnswer: "O(1)",
-      points: 1,
-      explanation: "Array elements are stored in contiguous memory locations, allowing direct access in constant time."
-    },
-    {
-      id: 3,
-      question: "Which of the following methods adds one or more elements to the end of an array and returns the new length?",
-      options: [".push()", ".pop()", ".shift()", ".unshift()"],
-      correctAnswer: ".push()",
-      points: 1,
-      explanation: "The push() method adds elements to the end of an array and returns the new length of the array."
-    },
-    {
-      id: 4,
-      question: "What is the output of [1, 2, 3, 4].slice(1, 3) in JavaScript?",
-      options: ["[1, 2]", "[2, 3]", "[1, 2, 3]", "[2, 3, 4]"],
-      correctAnswer: "[2, 3]",
-      points: 1,
-      explanation: "The slice() method returns a shallow copy of a portion of an array. It starts at the start index (1) and goes up to, but not including, the end index (3)."
-    },
-    {
-      id: 5,
-      question: "Which array method executes a provided function once for each array element?",
-      options: [".filter()", ".map()", ".forEach()", ".reduce()"],
-      correctAnswer: ".forEach()",
-      points: 1,
-      explanation: "The forEach() method executes a provided function once for each array element."
-    },
-    {
-      id: 6,
-      question: "What does the following code return? [1, 2, 3, 4, 5].filter(num => num % 2 === 0)",
-      options: ["[1, 3, 5]", "[2, 4]", "[true, false, true, false, true]", "[false, true, false, true, false]"],
-      correctAnswer: "[2, 4]",
-      points: 1,
-      explanation: "The filter() method creates a new array with all elements that pass the test implemented by the provided function. In this case, it returns even numbers."
-    },
-    {
-      id: 7,
-      question: "What is the output of [1, 2, 3].map(num => num * 2)?",
-      options: ["[1, 2, 3]", "[2, 4, 6]", "[1, 4, 9]", "[1, 2, 2, 4, 3, 6]"],
-      correctAnswer: "[2, 4, 6]",
-      points: 1,
-      explanation: "The map() method creates a new array with the results of calling a provided function on every element in the array. In this case, it doubles each number."
-    },
-    {
-      id: 8,
-      question: "Which method removes the first element from an array and returns that element?",
-      options: [".shift()", ".unshift()", ".pop()", ".slice()"],
-      correctAnswer: ".shift()",
-      points: 1,
-      explanation: "The shift() method removes the first element from an array and returns that removed element, changing the length of the array."
-    },
-    {
-      id: 9,
-      question: "What does [1, 2, 3, 4].reduce((a, b) => a + b) return?",
-      options: ["10", "[1, 2, 3, 4]", "[6, 4]", "24"],
-      correctAnswer: "10",
-      points: 1,
-      explanation: "The reduce() method executes a reducer function on each element of the array, resulting in a single output value. In this case, it sums all numbers: 1+2+3+4 = 10."
-    },
-    {
-      id: 10,
-      question: "Which method returns a string representing the array elements?",
-      options: [".toString()", ".join()", ".stringify()", ".concat()"],
-      correctAnswer: ".toString()",
-      points: 1,
-      explanation: "The toString() method returns a string representing the specified array and its elements, with elements separated by commas."
-    }
-  ];
-
+  // Fetch quiz data when component mounts
   useEffect(() => {
-    if (timeLeft > 0 && !quizCompleted) {
-      const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
-      return () => clearTimeout(timer);
-    } else if (timeLeft === 0) {
-      handleSubmit();
+    const fetchQuiz = async () => {
+      try {
+        setIsLoading(true);
+        const response = await axios.get(`http://localhost:8070/quiz/${quizId}`);
+        if (response.data.success) {
+          const quiz = response.data.data;
+          // Get duration in minutes from database and convert to seconds
+          const quizDurationInMinutes = parseInt(quiz.duration) || 30;
+          const quizDurationInSeconds = quizDurationInMinutes * 60;
+          
+          console.log('Quiz duration (minutes):', quizDurationInMinutes);
+          console.log('Setting timer to (seconds):', quizDurationInSeconds);
+          
+          // First set the quiz data
+          setQuizData({
+            title: quiz.title,
+            subject: quiz.subject,
+            questions: quiz.questions || [],
+            duration: quizDurationInMinutes // Store in minutes
+          });
+          
+          // Then set the time left to start the timer
+          setTimeLeft(quizDurationInSeconds);
+          
+          // Reset completion states
+          setQuizCompleted(false);
+          setShowResults(false);
+        } else {
+          setError('Failed to load quiz. Please try again.');
+        }
+      } catch (err) {
+        console.error('Error fetching quiz:', err);
+        setError('Failed to load quiz. Please try again later.');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (quizId) {
+      fetchQuiz();
+    } else {
+      setError('No quiz ID provided');
+      setIsLoading(false);
     }
-  }, [timeLeft, quizCompleted]);
+  }, [quizId]);
+
+  // Timer effect
+  useEffect(() => {
+    // Only start the timer if we have questions loaded
+    if (quizData.questions && quizData.questions.length > 0) {
+      if (timeLeft > 0 && !quizCompleted && !isLoading) {
+        const timer = setTimeout(() => setTimeLeft(prevTime => prevTime - 1), 1000);
+        return () => clearTimeout(timer);
+      } else if (timeLeft === 0 && !quizCompleted) {
+        handleSubmit();
+      }
+    }
+  }, [timeLeft, quizCompleted, isLoading, quizData.questions]);
 
   const handleOptionSelect = (option) => {
     const newSelectedOptions = [...selectedOptions];
+    // Make sure we're storing the exact option text that matches the correctAnswer
     newSelectedOptions[currentQuestion] = option;
     setSelectedOptions(newSelectedOptions);
+    
+    // Debug: Log the current selection
+    console.log('Selected option for question', currentQuestion + 1, ':', option);
   };
 
   const handleNext = () => {
-    if (currentQuestion < questions.length - 1) {
+    if (currentQuestion < quizData.questions.length - 1) {
       setCurrentQuestion(currentQuestion + 1);
     }
   };
@@ -120,16 +105,95 @@ const ExamQuiz = () => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    // Don't submit if quiz is already completed
+    if (quizCompleted) return;
+    
+    // Calculate score and time spent
     let totalScore = 0;
-    questions.forEach((question, index) => {
-      if (selectedOptions[index] === question.correctAnswer) {
-        totalScore += question.points;
+    const results = [];
+    
+    // Calculate time spent in minutes (convert both to minutes for calculation)
+    const totalTimeMinutes = Math.max(1, Math.round(((quizData.duration * 60) - timeLeft) / 60));
+    console.log('Time spent (minutes):', totalTimeMinutes);
+    
+    // Make sure we have questions to grade
+    if (!quizData.questions || quizData.questions.length === 0) {
+      console.error('No questions available to grade');
+      return;
+    }
+    
+    // Debug: Log the questions and selected options
+    console.log('=== QUIZ SUBMISSION DEBUG ===');
+    console.log('Questions:', quizData.questions);
+    console.log('Selected options:', selectedOptions);
+    
+    // Calculate score
+    quizData.questions.forEach((question, index) => {
+      const selectedOption = selectedOptions[index];
+      const correctAnswer = question.correctAnswer;
+      
+      // Normalize both the selected option and correct answer for comparison
+      const normalizedSelected = String(selectedOption || '').trim();
+      const normalizedCorrect = String(correctAnswer || '').trim();
+      
+      // Check if the selected option matches any part of the correct answer
+      // This handles cases where the correct answer might be just the text without the prefix
+      const isCorrect = normalizedSelected === normalizedCorrect || 
+                       normalizedCorrect.includes(normalizedSelected) ||
+                       normalizedSelected.includes(normalizedCorrect);
+      
+      console.log(`\nQuestion ${index + 1}: ${question.question}`);
+      console.log('Options:', question.options);
+      console.log('- Selected option:', `"${selectedOption}"`);
+      console.log('- Correct answer:', `"${correctAnswer}"`);
+      console.log('- Normalized selected:', `"${normalizedSelected}"`);
+      console.log('- Normalized correct:', `"${normalizedCorrect}"`);
+      console.log('- Is correct:', isCorrect);
+      
+      if (isCorrect) {
+        totalScore += question.points || 1;
       }
+      results.push(selectedOption || '');
     });
+    
+    console.log('\n=== FINAL SCORE ===');
+    console.log('Total score:', totalScore, 'out of', quizData.questions.length);
+
+    // Always show results to the user first
     setScore(totalScore);
     setQuizCompleted(true);
     setShowResults(true);
+
+    // Get JWT token from localStorage
+    const token = localStorage.getItem('token');
+    if (!token) {
+      console.log('User not authenticated - results will not be saved');
+      return;
+    }
+
+    // Save results to the server in the background
+    try {
+      await axios.post(
+        `http://localhost:8070/quiz/${quizId}/submit`,
+        {
+          answers: results,
+          timeSpent: totalTimeMinutes,
+          score: totalScore,
+          totalQuestions: quizData.questions.length
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          }
+        }
+      );
+      console.log('Quiz results saved successfully');
+    } catch (err) {
+      console.error('Error saving quiz results:', err);
+      // Don't show error to user, just log it
+    }
   };
 
   const formatTime = (seconds) => {
@@ -141,22 +205,63 @@ const ExamQuiz = () => {
   const restartQuiz = () => {
     setCurrentQuestion(0);
     setSelectedOptions([]);
-    setTimeLeft(1800);
+    // Convert minutes to seconds when restarting
+    setTimeLeft((quizData.duration || 30) * 60);
     setQuizCompleted(false);
     setScore(0);
     setShowResults(false);
   };
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="exam-quiz-container">
+        <div className="exam-quiz-loading">
+          <div className="spinner"></div>
+          <p>Loading quiz...</p>
+        </div>
+      </div>
+    );
+  }
+  
+
+  // Show error state
+  if (error) {
+    return (
+      <div className="exam-quiz-container">
+        <div className="exam-quiz-error">
+          <h3>Error</h3>
+          <p>{error}</p>
+          <button onClick={() => window.location.reload()}>Try Again</button>
+          <button onClick={() => navigate(-1)}>Go Back</button>
+        </div>
+      </div>
+    );
+  }
+
+  // Show no questions message
+  if (!quizData.questions || quizData.questions.length === 0) {
+    return (
+      <div className="exam-quiz-container">
+        <div className="exam-quiz-error">
+          <h3>No Questions Available</h3>
+          <p>This quiz doesn't have any questions yet.</p>
+          <button onClick={() => navigate(-1)}>Go Back</button>
+        </div>
+      </div>
+    );
+  }
 
   if (showResults) {
     return (
       <div className="exam-quiz-container">
         <div className="exam-quiz-results">
           <h2 className="exam-quiz-results-title">Quiz Results</h2>
-          <p className="exam-quiz-score">Your score: {score} out of {questions.length}</p>
+          <p className="exam-quiz-score">Your score: {score} out of {quizData.questions.length}</p>
           <div className="exam-quiz-results-details">
-            {questions.map((question, index) => (
+            {quizData.questions.map((question, index) => (
               <div 
-                key={question.id} 
+                key={question._id || index}
                 className={`exam-quiz-result-item ${
                   selectedOptions[index] === question.correctAnswer ? 
                   'exam-quiz-correct' : 'exam-quiz-incorrect'
@@ -171,6 +276,11 @@ const ExamQuiz = () => {
                 {selectedOptions[index] !== question.correctAnswer && (
                   <p className="exam-quiz-correct-answer">
                     Correct answer: {question.correctAnswer}
+                    {question.explanation && (
+                      <span className="exam-quiz-explanation">
+                        <br />Explanation: {question.explanation}
+                      </span>
+                    )}
                   </p>
                 )}
               </div>
@@ -190,16 +300,24 @@ const ExamQuiz = () => {
   return (
     <div className="exam-quiz-container">
       <div className="exam-quiz-header">
-        <div className="exam-quiz-timer">Time Left: {formatTime(timeLeft)}</div>
-        <div className="exam-quiz-progress">
-          Question {currentQuestion + 1} of {questions.length}
+        <h2 className="exam-quiz-title">{quizData.title}</h2>
+        <p className="exam-quiz-subject">{quizData.subject}</p>
+        <div className="exam-quiz-timer">
+          <div className={timeLeft <= 60 ? 'critical-time' : ''}>
+            Time Left: {formatTime(timeLeft)}
+          </div>
+          <div className="exam-quiz-progress">
+            Question {currentQuestion + 1} of {quizData.questions.length}
+          </div>
         </div>
       </div>
 
       <div className="exam-quiz-question-container">
-        <h3 className="exam-quiz-question">{questions[currentQuestion].question}</h3>
+        <h3 className="exam-quiz-question">
+          {quizData.questions[currentQuestion].question}
+        </h3>
         <div className="exam-quiz-options">
-          {questions[currentQuestion].options.map((option, index) => (
+          {quizData.questions[currentQuestion].options.map((option, index) => (
             <div 
               key={index}
               className={`exam-quiz-option ${
@@ -222,19 +340,17 @@ const ExamQuiz = () => {
           Previous
         </button>
         
-        {currentQuestion === questions.length - 1 ? (
+        {currentQuestion === quizData.questions.length - 1 ? (
           <button 
-            onClick={handleSubmit} 
+            onClick={handleSubmit}
             className="exam-quiz-submit-btn"
-            disabled={!selectedOptions[currentQuestion]}
           >
             Submit Quiz
           </button>
         ) : (
           <button 
-            onClick={handleNext} 
+            onClick={handleNext}
             className="exam-quiz-nav-btn"
-            disabled={!selectedOptions[currentQuestion]}
           >
             Next
           </button>

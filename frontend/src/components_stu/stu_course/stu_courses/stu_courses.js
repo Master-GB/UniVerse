@@ -26,17 +26,14 @@ function StuCourses() {
     fetchCourses();
   }, []);
 
-  if (loading) return <p className="loading-StuCourses">Loading...</p>;
-  if (error) return <p className="error-StuCourses">{error}</p>;
-
-  // Pick 1 unique course from each faculty for preview
+  // Initialize with empty array if still loading
   const faculties = ["Business", "Computing", "Engineering"];
-  const previewCourses = faculties
-    .map(f => courses.find(c => c.faculty === f))
-    .filter(Boolean);
+  const previewCourses = loading || !courses.length 
+    ? [] 
+    : faculties.map(f => courses.find(c => c.faculty === f)).filter(Boolean);
 
   return (
-    <div className="courses-page">
+    <div className="courses-page-new">
       <div className="courses-content-wrapper">
         <div className="container-StuCourses">
         {/* Hero Section */}

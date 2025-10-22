@@ -14,20 +14,57 @@
 
 /* Header */
 .exam-quiz-header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 2rem;
+  margin-bottom: 0.1rem;
   padding-bottom: 1rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.exam-quiz-title {
+  margin-bottom: 0.5rem;
+}
+
+.exam-quiz-subject {
+  color: #8b97a8;
+  margin-bottom: 0.1rem;
+  display: block;
 }
 
 .exam-quiz-timer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  text-align: right;
+}
+
+.exam-quiz-timer > div:first-child {
+  transition: color 0.3s ease;
+}
+
+.exam-quiz-timer .critical-time {
+  color: #ff4d4f !important;
+  font-weight: bold;
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+.exam-quiz-timer > div {
+  margin-bottom: 0.25rem;
+}
+
+.exam-quiz-timer > div:first-child {
   font-weight: 600;
   color: #5b9cff;
 }
 
 .exam-quiz-progress {
   color: #8b97a8;
+  font-size: 0.9rem;
 }
 
 /* Question */

@@ -11,11 +11,12 @@ const CareerResourceSchema = new Schema({
     },
     type: {
         type: String,
-        enum: ["interview", "skill", "salary", "company", "video"],
+        enum: ["salary","interview","skill","company","professional"],
         required: true
     },
     category: {
         type: String,
+        enum: ["Interview Prep", "Salary data", "Skill Development", "Company Insights", "Professional Skill"],
         required: [true, "category is required"],
     },
     url: {
@@ -23,7 +24,12 @@ const CareerResourceSchema = new Schema({
         required: [true, "URL is required"],
     },
     actionText: { type: String, default: "View Resource" },
-    level: { type: String, default: "All Levels" },
+
+    level: { 
+        type: String,
+        enum: ["Beginner","Mid-Senior", "All Level", "Senior", "Intermediate"],
+        default: "All Levels" 
+    },
     duration: { type: String },
     premium: { type: Boolean, default: false }
 }, { timestamps: true });

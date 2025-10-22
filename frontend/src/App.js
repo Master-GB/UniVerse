@@ -46,6 +46,10 @@ import MentorManageResourses from "./mentor-components/mentor-resourcehub/Mentor
 import MentorArticle from "./mentor-components/mentor-article/MentorArticle";
 import MentorCareerSession from "./mentor-components/mentor-career-session/MentorCareerSession";
 import MentorCareerResourcehub from "./mentor-components/mentot-career-resourcehub/MentorCareerResourcehub";
+import MentorPasspaper from "./mentor-components/mentor-passpaper/MentorPasspaper";
+import MentorQuizAdd from "./mentor-components/mentor_quiz_add/MentorQuizAdd";
+
+
 
 const StudentLayout = () => (
   <div className="app-layout">
@@ -74,7 +78,6 @@ const StudentLayout = () => (
         <Route path="/student/exam/past-papers" element={<StuExamPastPaper/>} />
         <Route path="/student/exam/practice-tests" element={<PracticeTestsOverview/>} />
         <Route path="/student/exam/practice-tests/quiz/:quizId" element={<StuExamQuiz/>} />
-
       </Routes>
     </main>
     <StuFooter />
@@ -95,6 +98,9 @@ const MentorLayout = () => (
          <Route path="/mentor-article" element={<MentorArticle />} />
          <Route path="/mentor-career-session" element={<MentorCareerSession/>} />
          <Route path="/mentor-career-resourcehub" element={<MentorCareerResourcehub />} />
+         <Route path="/mentor-add-passpaper" element={<MentorPasspaper />} />
+         <Route path="/mentor-add-quiz" element={<MentorQuizAdd />} />
+
       </Routes>
     </React.Fragment>
   </div>

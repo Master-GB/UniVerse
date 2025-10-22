@@ -1,11 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import MatrixEffect from './MatrixEffect';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios';
 import { 
-  BookOpen, 
-  Users, 
-  FileText, 
-  Award, 
   Briefcase, 
   GraduationCap,
   Calendar,
@@ -25,11 +22,16 @@ import {
   BookMarked,
   Megaphone,
   Video,
+  Award,
+  BookOpen,
+  Users,
+  FileText
 } from 'lucide-react';
 import "./stu_dashboard.css";
 
 
 const StuDashboard = () => {
+  const navigate = useNavigate();
   const [search, setSearch] = useState("");
   const [resourceFilter, setResourceFilter] = useState('all');
   const [now, setNow] = useState(new Date());
@@ -41,6 +43,11 @@ const StuDashboard = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  
+  // Quiz state - only declare once at the top level
+  const [quizzes, setQuizzes] = useState([]);
+  const [isLoadingQuizzes, setIsLoadingQuizzes] = useState(true);
+  const [quizzesError, setQuizzesError] = useState(null);
 
   // Tech News state
   const [techNews, setTechNews] = useState([
@@ -195,6 +202,65 @@ useEffect(() => {
 }, []);
 
 
+
+  // Fetch quizzes from API
+  useEffect(() => {
+    const fetchQuizzes = async () => {
+      setIsLoadingQuizzes(true);
+      try {
+        const response = await axios.get('http://localhost:8070/quiz/display?limit=3');
+        console.log('API Response:', response.data);
+        if (response.data.success) {
+          // Transform the data to match the expected format
+          const formattedQuizzes = response.data.data.map(quiz => ({
+            id: quiz._id || quiz.id, // Handle both _id and id
+            title: quiz.title,
+            level: quiz.difficulty || 'Intermediate',
+            est: quiz.duration || 30, // Duration in minutes
+            questions: typeof quiz.questions === 'number' ? quiz.questions : 0,
+            subject: quiz.subject || 'General',
+            _rawData: quiz // Store the raw quiz data for reference
+          }));
+          setQuizzes(formattedQuizzes);
+        } else {
+          setQuizzesError('Failed to load quizzes');
+        }
+      } catch (err) {
+        console.error('Error fetching quizzes:', err);
+        setQuizzesError('Failed to load quizzes. Please try again later.');
+      } finally {
+        setIsLoadingQuizzes(false);
+      }
+    };
+
+    fetchQuizzes();
+  }, []);
+
+  // Handle starting a quiz
+ 
+   const handleStartQuiz = (quiz) => {
+    try {
+      if (!quiz || !quiz.id) {
+        console.error('Invalid quiz data:', quiz);
+        navigate('/student/exam/practice-tests');
+        return;
+      }
+      
+      console.log('Starting quiz with ID:', quiz.id);
+      
+      // Navigate to the quiz taking interface with the quiz data
+      navigate(`/student/exam/practice-tests/quiz/${quiz.id}`, { 
+        state: { 
+          fromDashboard: true,
+          quizData: quiz._rawData || quiz // Pass the raw quiz data if available
+        } 
+      });
+    } catch (err) {
+      console.error('Error starting quiz:', err);
+      // Fallback to the practice tests overview if there's an error
+      navigate('/student/exam/practice-tests');
+    }
+  };
   // Fetch resources from API
 
 
@@ -717,13 +783,7 @@ useEffect(() => {
       // Revert to previous state on error
       setSessions(prevSessions);
     }
-};
-
-  const quizzes = [
-    { id: 1, title: "Algorithms Warm-up", questions: 10, est: 8, level: "Beginner" },
-    { id: 2, title: "DBMS Mastery", questions: 15, est: 12, level: "Intermediate" },
-    { id: 3, title: "Networking Quick Check", questions: 8, est: 6, level: "Beginner" }
-  ];
+  };
 
   const courses = [
     { id: 1, title: "Full-Stack Foundations", provider: "SkillHub", progress: 62, rating: 4.8 },
@@ -928,14 +988,14 @@ useEffect(() => {
             <Calendar size={16} />
             <span className='sd-chip-text'>Book a Session</span>   
          </Link>
-          <button className="sd-chip">
+          <Link to="/student/exam/practice-tests" className="sd-chip">
             <Award size={16} />
-            Take a Quiz
-          </button>
-          <button className="sd-chip">
+            <span className='sd-chip-text'>Take a Quiz</span>
+          </Link>
+          <Link to="/student/resume/" className="sd-chip">
             <Briefcase size={16} />
-            Career Tools
-          </button>
+            <span className='sd-chip-text'>CV Builder</span>
+          </Link>
         </div>
       </div>
 
@@ -946,7 +1006,7 @@ useEffect(() => {
             <Activity size={18} />
           </div>
           <div className="sd-stat-body">
-            <div className="sd-stat-value">7</div>
+            <div className="sd-stat-value">3</div>
             <div className="sd-stat-label">Day Streak</div>
           </div>
           <TrendingUp size={16} className="sd-stat-trend up" />
@@ -956,7 +1016,7 @@ useEffect(() => {
             <Target size={18} />
           </div>
           <div className="sd-stat-body">
-            <div className="sd-stat-value">5</div>
+            <div className="sd-stat-value">2</div>
             <div className="sd-stat-label">Skills Active</div>
           </div>
           <ChevronRight size={16} className="sd-stat-trend" />
@@ -976,7 +1036,7 @@ useEffect(() => {
             <Star size={18} />
           </div>
           <div className="sd-stat-body">
-            <div className="sd-stat-value">18</div>
+            <div className="sd-stat-value">3</div>
             <div className="sd-stat-label">Quizzes Done</div>
           </div>
           <ArrowUpRight size={16} className="sd-stat-trend up" />
@@ -1102,9 +1162,12 @@ useEffect(() => {
                     </div>
                   </div>
                   <div className="sd-list-right">
-                    <button className="sd-btn ghost" disabled>
-                      <Download size={16} />
-                      Get
+                    <button 
+                      className="sd-btn primary wide"
+                      disabled
+                    >
+                      <Play size={16} />
+                      Start
                     </button>
                   </div>
                 </div>
@@ -1168,51 +1231,55 @@ useEffect(() => {
           </div>
         </section>
 
-        {/* Exam Preparation */}
+        {/* Exam Preparation */
         <section className="sd-card">
           <header className="sd-card-header">
             <div className="sd-card-title">
               <Award size={18} />
               <h2>Exam Preparation</h2>
             </div>
-            <button className="sd-link">
+            <Link to="/student/exam/practice-tests" className="sd-link">
               Practice more
               <ChevronRight size={16} />
-            </button>
+            </Link>
           </header>
-          <div className="sd-tiles">
-            {quizzes
-              .filter(q => q.title.toLowerCase().includes(search.toLowerCase()))
-              .map((q) => (
-                <div key={q.id} className="sd-tile">
+          {isLoadingQuizzes ? (
+            <div className="loading">Loading quizzes...</div>
+          ) : quizzesError ? (
+            <div className="error">Error loading quizzes: {quizzesError}</div>
+          ) : (
+            <div className="sd-tiles">
+              {quizzes.map(quiz => (
+                <div key={quiz.id} className="sd-tile">
                   <div className="sd-tile-top">
-                    <div className="sd-badge info">{q.level}</div>
+                    <div className="sd-badge">{quiz.level}</div>
                     <Zap size={16} />
                   </div>
-                  <div className="sd-tile-title">{q.title}</div>
+                  <div className="sd-tile-title">{quiz.subject}</div>
                   <div className="sd-tile-meta">
-                    <Clock size={14} /> {q.est} min • {q.questions} Qs
+                    <Clock size={14} /> {quiz.est} min • {quiz.questions} Qs
                   </div>
-                  <button className="sd-btn primary wide">
+                  <button 
+                    className="sd-btn primary wide"
+                    onClick={() => handleStartQuiz(quiz)}
+                  >
                     <Play size={16} />
                     Start
                   </button>
                 </div>
               ))}
-          </div>
+            </div>
+          )}
         </section>
+}
 
-        {/* Career & Skills */}
+        {/* Career & Skills Section */}
         <section className="sd-card">
           <header className="sd-card-header">
             <div className="sd-card-title">
               <Briefcase size={18} />
               <h2>Career & Skills</h2>
             </div>
-            <button className="sd-link">
-              Explore tools
-              <ChevronRight size={16} />
-            </button>
           </header>
           <div className="sd-career">
             <div className="sd-career-item">
@@ -1223,7 +1290,13 @@ useEffect(() => {
                 <div className="sd-career-title">Interview Prep</div>
                 <div className="sd-career-meta">Mock interviews and feedback</div>
               </div>
-              <button className="sd-btn">Open</button>
+              
+              <button 
+                className="sd-btn"
+                onClick={() => navigate('/MIPage')}
+              >
+                Open
+              </button>
             </div>
             <div className="sd-career-item">
               <div className="sd-career-icon">
@@ -1233,7 +1306,12 @@ useEffect(() => {
                 <div className="sd-career-title">Resume Review</div>
                 <div className="sd-career-meta">ATS check and polishing</div>
               </div>
-              <button className="sd-btn">Open</button>
+              <button 
+                className="sd-btn"
+                onClick={() => navigate('/student/resume/')}
+              >
+                Open
+              </button>
             </div>
             <div className="sd-career-item">
               <div className="sd-career-icon">
@@ -1243,7 +1321,12 @@ useEffect(() => {
                 <div className="sd-career-title">Mentor Connect</div>
                 <div className="sd-career-meta">Book 1:1 guidance</div>
               </div>
-              <button className="sd-btn">Open</button>
+              <button 
+                className="sd-btn"
+                onClick={() => navigate('/student/career-session')}
+              >
+                Open
+              </button>
             </div>
           </div>
         </section>

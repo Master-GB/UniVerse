@@ -114,12 +114,17 @@ const MentorDashboard = () => {
               <div className="card-glow-md"></div>
             </div>
             
-            <div className="action-card-md quaternary-card-md">
+            <div className="action-card-md quaternary-card-md"
+            onClick={() => navigate("/mentor-add-quiz")}
+            style={{cursor:"pointer"}}
+            
+            >
               <div className="card-icon-md">
                 <Award size={32} />
               </div>
-              <h4 className="card-title-md">Achievements</h4>
-              <p className="card-description-md">Track student progress and milestones</p>
+              <h4 className="card-title-md">
+                Quiz & Papers</h4>
+              <p className="card-description-md">Add Pass Papers and Create Quiz</p>
               <div className="card-glow-md"></div>
             </div>
           </div>
