@@ -19,6 +19,7 @@ const techLogos = [
     href: "https://www.typescriptlang.org",
   },
   {
+    // bayawennepa tailwind css use krnw neme link ekak withri for the logo
     node: <SiTailwindcss />,
     title: "Tailwind CSS",
     href: "https://tailwindcss.com",

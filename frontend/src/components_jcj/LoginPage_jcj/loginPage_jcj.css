@@ -12,6 +12,7 @@
 .login-left-side-jcj {
   flex: 1;
   background-image: url('https://images.pexels.com/photos/4069292/pexels-photo-4069292.jpeg');
+  background-color: #000000;
   background-size: cover;
   background-position: center;
   position: relative;

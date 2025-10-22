@@ -117,7 +117,7 @@ function Stu_AllCourses() {
                       <button
                         className="course-btn-allcourse"
                         onClick={() =>
-                          navigate(`/courses/${course._id}`, { state: { course } })
+                          navigate(`/s/courses/${course._id}`, { state: { course } })
                         }
                       >
                         View Program Details

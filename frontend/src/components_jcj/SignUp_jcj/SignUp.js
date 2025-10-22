@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from "./images/logohorizontal.png";
 import { PiStudentFill } from "react-icons/pi";
@@ -24,6 +24,10 @@ function SignUp() {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
 
+  const [profilePictureFile, setProfilePictureFile] = useState(null);
+  const [profilePicturePreview, setProfilePicturePreview] = useState(null);
+  const profilePictureInputRef = useRef(null);
+
   const navigate = useNavigate();
   const API_BASE_URL = (
     process.env.REACT_APP_API_BASE_URL || "http://localhost:8070"
@@ -33,9 +37,68 @@ function SignUp() {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: value, // assign the new value to the correct field
     }));
   };
+
+  const handleProfilePictureChange = (e) => {
+    const file = e.target.files?.[0];
+
+    if (!file) {
+      // File cleared by the user
+      setProfilePictureFile(null);
+      setProfilePicturePreview((prev) => {
+        if (prev) URL.revokeObjectURL(prev);
+        return null;
+      });
+      return;
+    }
+
+    if (!file.type.startsWith("image/")) {
+      setErrorMessage("Please upload a valid image file (JPG, PNG, or WebP).");
+      if (profilePictureInputRef.current) {
+        profilePictureInputRef.current.value = "";
+      }
+      return;
+    }
+
+    const MAX_FILE_SIZE_BYTES = 3 * 1024 * 1024; // 3 MB
+    if (file.size > MAX_FILE_SIZE_BYTES) {
+      setErrorMessage("Profile picture must be smaller than 3 MB.");
+      if (profilePictureInputRef.current) {
+        profilePictureInputRef.current.value = "";
+      }
+      return;
+    }
+
+    setErrorMessage("");
+
+    setProfilePictureFile(file);
+    const nextPreviewUrl = URL.createObjectURL(file);
+    setProfilePicturePreview((prev) => {
+      if (prev) URL.revokeObjectURL(prev);
+      return nextPreviewUrl;
+    });
+  };
+
+  const clearProfilePicture = () => {
+    if (profilePictureInputRef.current) {
+      profilePictureInputRef.current.value = "";
+    }
+    setProfilePictureFile(null);
+    setProfilePicturePreview((prev) => {
+      if (prev) URL.revokeObjectURL(prev);
+      return null;
+    });
+  };
+
+  useEffect(() => {
+    return () => {
+      if (profilePicturePreview) {
+        URL.revokeObjectURL(profilePicturePreview);
+      }
+    };
+  }, [profilePicturePreview]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -57,20 +120,22 @@ function SignUp() {
     setIsSubmitting(true);
 
     try {
+      const payload = new FormData();
+      payload.append("name", formData.name.trim());
+      payload.append("username", formData.username.trim());
+      payload.append("email", formData.email.trim());
+      payload.append("phone", formData.phone.trim());
+      payload.append("password", formData.password);
+      payload.append("confirmPassword", formData.confirmPassword);
+      payload.append("role", formData.role);
+
+      if (profilePictureFile) {
+        payload.append("profilePicture", profilePictureFile);
+      }
+
       const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: formData.name.trim(),
-          username: formData.username.trim(),
-          email: formData.email.trim(),
-          phone: formData.phone.trim(),
-          password: formData.password,
-          confirmPassword: formData.confirmPassword,
-          role: formData.role,
-        }),
+        body: payload,
       });
 
       const data = await response.json();
@@ -87,7 +152,7 @@ function SignUp() {
 
       // Optionally store token here if auto-login is desired: localStorage.setItem("token", data.token)
       setTimeout(() => {
-        navigate("/landing/login");
+        navigate("/login");
       }, 1800);
 
       setFormData({
@@ -99,6 +164,7 @@ function SignUp() {
         confirmPassword: "",
         role: "",
       });
+      clearProfilePicture();
     } catch (error) {
       setErrorMessage(
         error.message || "Something went wrong. Please try again."
@@ -131,6 +197,58 @@ function SignUp() {
           </div>
 
           <form className="signup-form-jcj" onSubmit={handleSubmit}>
+            <div className="profile-upload-section-jcj">
+              <div className="profile-preview-frame-jcj">
+                {profilePicturePreview ? (
+                  <img
+                    src={profilePicturePreview}
+                    alt="Profile preview"
+                    className="profile-preview-img-jcj"
+                  />
+                ) : (
+                  <div className="profile-preview-placeholder-jcj">
+                    <span className="profile-placeholder-text-jcj">
+                      Add Photo
+                    </span>
+                  </div>
+                )}
+              </div>
+              <div className="profile-upload-content-jcj">
+                <h3 className="profile-upload-title-jcj">
+                  Profile picture (optional)
+                </h3>
+                <p className="profile-upload-hint-jcj">
+                  Upload a square image (JPG, PNG, or WebP) up to 3&nbsp;MB to
+                  personalize your account.
+                </p>
+                <div className="profile-upload-actions-jcj">
+                  <label
+                    htmlFor="profile-picture-input-jcj"
+                    className="profile-upload-btn-jcj"
+                  >
+                    Upload Photo
+                  </label>
+                  {profilePictureFile && (
+                    <button
+                      type="button"
+                      className="profile-remove-btn-jcj"
+                      onClick={clearProfilePicture}
+                    >
+                      Remove
+                    </button>
+                  )}
+                </div>
+                <input
+                  type="file"
+                  accept="image/png,image/jpeg,image/jpg,image/webp"
+                  id="profile-picture-input-jcj"
+                  className="profile-file-input-jcj"
+                  onChange={handleProfilePictureChange}
+                  ref={profilePictureInputRef}
+                />
+              </div>
+            </div>
+
             <div className="form-row-jcj">
               <div className="input-group-jcj">
                 <label className="input-label-jcj">Full Name</label>

@@ -1,77 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import './stu_examPastPaper.css';
 
-// Mock data - in a real app, this would come from an API
-const pastPapers = [
-  {
-    id: 1,
-    title: "Software Engineering - 2023",
-    code: "SE3080",
-    year: 2023,
-    semester: "1st Semester",
-    questions: 8,
-    timeAllowed: "3 Hours",
-    fileUrl: "/papers/se_2023.pdf",
-    modelAnswers: true,
-    difficulty: "Medium",
-    tags: ["SE", "Final Exam", "Model Answers"]
-  },
-  {
-    id: 2,
-    title: "Database Systems - 2022",
-    code: "CS2052",
-    year: 2022,
-    semester: "2nd Semester",
-    questions: 6,
-    timeAllowed: "2.5 Hours",
-    fileUrl: "/papers/db_2022.pdf",
-    modelAnswers: true,
-    difficulty: "Hard",
-    tags: ["Database", "Final Exam", "Model Answers"]
-  },
-  {
-    id: 3,
-    title: "Algorithms - 2023",
-    code: "CS2040",
-    year: 2023,
-    semester: "1st Semester",
-    questions: 5,
-    timeAllowed: "3 Hours",
-    fileUrl: "/papers/algo_2023.pdf",
-    modelAnswers: false,
-    difficulty: "Hard",
-    tags: ["Algorithms", "Midterm"]
-  },
-  {
-    id: 4,
-    title: "Web Development - 2023",
-    code: "CS2060",
-    year: 2023,
-    semester: "1st Semester",
-    questions: 7,
-    timeAllowed: "2 Hours",
-    fileUrl: "/papers/web_2023_mid.pdf",
-    modelAnswers: true,
-    difficulty: "Medium",
-    tags: ["Web", "Midterm", "Model Answers"]
-  },
-  {
-    id: 5,
-    title: "Data Structures - 2022",
-    code: "CS2030",
-    year: 2022,
-    semester: "2nd Semester",
-    questions: 6,
-    timeAllowed: "3 Hours",
-    fileUrl: "/papers/ds_2022_final.pdf",
-    modelAnswers: true,
-    difficulty: "Hard",
-    tags: ["Data Structures", "Final Exam", "Model Answers"]
-  }
-];
-
 const StuExamPastPaper = ({ history }) => {
+  // State for storing fetched past papers
+  const [papers, setPapers] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  // Year level is now handled by the backend
+
   const [filters, setFilters] = useState({
     year: 'all',
     semester: 'all',
@@ -84,31 +21,55 @@ const StuExamPastPaper = ({ history }) => {
   const [selectedPaper, setSelectedPaper] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // Fetch past papers from the backend
+  useEffect(() => {
+    const fetchPastPapers = async () => {
+      try {
+        setIsLoading(true);
+        const { year, semester, subject, examType, hasAnswers, searchQuery } = filters;
+        
+        // Build query parameters
+        const params = new URLSearchParams();
+        if (year && year !== 'all') params.append('year', year);
+        if (semester && semester !== 'all') params.append('semester', semester);
+        if (subject && subject !== 'all') params.append('subject', subject);
+        if (examType && examType !== 'all') params.append('examType', examType);
+        if (hasAnswers) params.append('hasAnswers', 'true');
+        if (searchQuery) params.append('searchQuery', searchQuery);
+
+        const response = await fetch(`http://localhost:8070/passpaper/display?${params.toString()}`, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }
+        });
+        if (!response.ok) {
+          throw new Error('Failed to fetch past papers');
+        }
+        
+        const data = await response.json();
+        if (data.success) {
+          setPapers(data.data);
+        } else {
+          throw new Error(data.message || 'Failed to fetch past papers');
+        }
+      } catch (err) {
+        console.error('Error fetching past papers:', err);
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPastPapers();
+  }, [filters]); // Re-run when filters change
+
   const handleBack = () => {
     window.history.back();
   };
 
-  const filteredPapers = pastPapers.filter(paper => {
-    const matchesExamType = 
-      filters.examType === 'all' || 
-      (filters.examType === 'Midterm' && paper.tags.includes('Midterm')) ||
-      (filters.examType === 'Final Exam' && paper.tags.includes('Final Exam'));
-      
-    const matchesSubject = 
-      filters.subject === 'all' || 
-      paper.code.toLowerCase() === filters.subject.toLowerCase() ||
-      paper.title.toLowerCase().includes(filters.subject.toLowerCase());
-      
-    return (
-      (filters.year === 'all' || paper.year === parseInt(filters.year)) &&
-      (filters.semester === 'all' || paper.semester === filters.semester) &&
-      matchesSubject &&
-      matchesExamType &&
-      (!filters.hasAnswers || paper.modelAnswers) &&
-      (paper.title.toLowerCase().includes(filters.searchQuery.toLowerCase()) ||
-       paper.code.toLowerCase().includes(filters.searchQuery.toLowerCase()))
-    );
-  });
+  // Use papers from state (filtering is now done on the server)
+  const filteredPapers = papers;
 
   const handleFilterChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -124,12 +85,35 @@ const StuExamPastPaper = ({ history }) => {
   };
 
   // Get unique values for filters
-  const years = [...new Set(pastPapers.map(paper => paper.year))].sort((a, b) => b - a);
-  const semesters = [...new Set(pastPapers.map(paper => paper.semester))];
-  const subjects = [...new Set(pastPapers.map(paper => ({
-    code: paper.code,
-    name: paper.title.split(' - ')[0] // Extract subject name from title
-  })))];
+  const yearLevels = ['1st Year', '2nd Year', '3rd Year', '4th Year'];
+  // These will be populated from the backend in a real app
+  const [semesters, setSemesters] = useState([]);
+  const [subjects, setSubjects] = useState([]);
+
+  // Fetch filter options from the backend
+  useEffect(() => {
+    const fetchFilterOptions = async () => {
+      try {
+        const response = await fetch('http://localhost:8070/passpaper/filters/options', {
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          }
+        });
+        if (response.ok) {
+          const data = await response.json();
+          if (data.success) {
+            setSemesters(data.data.semesters || []);
+            setSubjects(data.data.subjects || []);
+          }
+        }
+      } catch (err) {
+        console.error('Error fetching filter options:', err);
+      }
+    };
+
+    fetchFilterOptions();
+  }, []);
 
   return (
     <div className="stu-past-papers-container">
@@ -178,8 +162,8 @@ const StuExamPastPaper = ({ history }) => {
             className="stu-year-filter"
           >
             <option value="all">All Years</option>
-            {years.map(year => (
-              <option key={year} value={year}>{year}</option>
+            {yearLevels.map((level, index) => (
+              <option key={index} value={level}>{level}</option>
             ))}
           </select>
 
@@ -233,9 +217,14 @@ const StuExamPastPaper = ({ history }) => {
         </div>
       </div>
 
-      <div className="stu-papers-grid">
-        {filteredPapers.length > 0 ? (
-          filteredPapers.map(paper => (
+      {isLoading ? (
+        <div className="loading-indicator">Loading past papers...</div>
+      ) : error ? (
+        <div className="error-message">Error: {error}</div>
+      ) : (
+        <div className="stu-papers-grid">
+          {filteredPapers.length > 0 ? (
+            filteredPapers.map(paper => (
             <motion.div 
               key={paper.id}
               className="stu-paper-card"
@@ -258,13 +247,14 @@ const StuExamPastPaper = ({ history }) => {
                 ))}
               </div>
             </motion.div>
-          ))
-        ) : (
-          <div className="stu-no-results">
-            <p>No papers found matching your criteria. Try adjusting your filters.</p>
-          </div>
-        )}
-      </div>
+            ))
+          ) : (
+            <div className="stu-no-results">
+              <p>No papers found matching your criteria. Try adjusting your filters.</p>
+            </div>
+          )}
+        </div>
+      )}
 
       <AnimatePresence>
         {isModalOpen && selectedPaper && (

@@ -52,7 +52,10 @@ const PracticeTestsOverview = () => {
     try {
       const params = new URLSearchParams();
       
-      if (filters.year !== 'all') params.append('year', filters.year);
+      if (filters.year !== 'all') {
+        // Use the year as is (string format like '2nd year')
+        params.append('year', filters.year);
+      }
       if (filters.semester !== 'all') params.append('semester', filters.semester);
       if (filters.subject !== 'all') params.append('subject', filters.subject);
       if (filters.searchQuery) params.append('search', filters.searchQuery);
@@ -75,7 +78,7 @@ const PracticeTestsOverview = () => {
   };
 
   const handleStartQuiz = (quizId) => {
-    navigate(`/student/exam/practice-tests/quiz/${quizId}`);
+    navigate(`/s/student/exam/practice-tests/quiz/${quizId}`);
   };
 
   const handleBack = () => {
@@ -208,9 +211,8 @@ const PracticeTestsOverview = () => {
         <div className="quizzes-grid">
           {allQuizzes.map(quiz => (
             <div key={quiz.id} className="quiz-card">
-              {quiz.isNew && <span className="new-badge">New</span>}
               <div className="quiz-card-header">
-                <h3>{quiz.title}</h3>
+                <h3>{quiz.subject}</h3>
                 <span className={`difficulty-badge ${quiz.difficulty.toLowerCase()}`}>
                   {quiz.difficulty}
                 </span>
@@ -222,7 +224,9 @@ const PracticeTestsOverview = () => {
               <div className="quiz-card-details">
                 <div className="detail-item">
                   <span className="detail-label">Year/Semester:</span>
-                  <span className="detail-value">{quiz.year} - Semester {quiz.semester}</span>
+                  <span className="detail-value">
+                    {quiz.year} - Semester {quiz.semester}
+                  </span>
                 </div>
                 <div className="detail-item">
                   <span className="detail-label">Questions:</span>

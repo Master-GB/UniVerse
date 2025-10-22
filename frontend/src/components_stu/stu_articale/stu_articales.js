@@ -185,7 +185,7 @@ export default function StuArticales() {
             <article
               key={a._id || a.id}
               className="article-card"
-              onClick={() => navigate(`/student/articales/${a._id || a.id}`)}
+              onClick={() => navigate(`/s/student/articales/${a._id || a.id}`)}
               style={{ cursor: "pointer" }}
             >
               {a.article_image && (

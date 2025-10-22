@@ -62,9 +62,9 @@ function LoginPageJCJ() {
       // Redirect by role. Update the paths below if the team changes layouts.
       const role = data?.user?.role;
       if (role === "mentor") {
-        navigate("/mentor-dashboard"); // Mentor landing path hook
+        navigate("/m/mentor-dashboard"); // Mentor landing path hook
       } else {
-        navigate("/student/dashboard"); // Default student landing path
+        navigate("/s/student/dashboard"); // Default student landing path
       }
     } catch (error) {
       setErrorMessage(error.message || "Unable to sign you in right now");

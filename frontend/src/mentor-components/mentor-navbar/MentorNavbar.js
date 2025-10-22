@@ -33,25 +33,25 @@ const MentorNavbar = () => {
         // Use switch statement for cleaner navigation logic
         switch(tab) {
             case 'overview':
-                navigate('/mentor-dashboard');
+                navigate('/m/mentor-dashboard');
                 break;
             case 'academic-sessions':
-                navigate('/mentor-session-create');
+                navigate('/m/mentor-session-create');
                 break;
             case 'career-sessions':
-                navigate('/mentor-career-session');
+                navigate('/m/mentor-career-session');
                 break;
             case 'guidance':
-                navigate('/mentor-guidance');
+                navigate('/m/mentor-guidance');
                 break;
             case 'announcements':
-                navigate('/mentor-announcement');
+                navigate('/m/mentor-announcement');
                 break;
             case 'articles':
-                navigate('/mentor-article');
+                navigate('/m/mentor-article');
                 break;
             default:
-                navigate('/mentor-dashboard');
+                navigate('/m/mentor-dashboard');
         }
     };
 
