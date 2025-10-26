@@ -162,14 +162,35 @@
 }
 
 /* Sessions grid */
+.sessions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+  margin-bottom: 45px;
+}
+
 .academic-res-sessions-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 1.5rem;
   margin-top: 1rem;
 }
 
 /* Session card */
+.session-card {
+  background: var(--academic-res-card-bg);
+  border: 1px solid var(--academic-res-border);
+  border-radius: 8px;
+  padding: 1.25rem;
+  transition: all 0.2s;
+}
+
+.session-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
 .academic-res-session-card {
   background: var(--academic-res-card-bg);
   border: 1px solid var(--academic-res-border);
@@ -194,6 +215,51 @@
   margin: 0 0 1rem 0;
   font-size: 0.95rem;
   line-height: 1.5;
+}
+
+/* Session card paragraph styling */
+.session-card p,
+.session-description {
+  color: white !important;
+  margin: 0 0 0.5rem 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Truncated description with line clamp */
+.session-description.truncated {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Description wrapper for better spacing */
+.session-description-wrapper {
+  margin-bottom: 1rem;
+}
+
+/* Read more button */
+.read-more-btn {
+  background: transparent;
+  border: none;
+  color: var(--academic-res-primary);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  padding: 0.25rem 0;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.read-more-btn:hover {
+  color: #4338ca;
+  text-decoration: underline;
 }
 
 /* Session meta */
@@ -316,7 +382,8 @@
     margin-top: -60px;
   }
 
-  .academic-res-sessions-grid {
+  .academic-res-sessions-grid,
+  .sessions-grid {
     grid-template-columns: 1fr;
   }
 

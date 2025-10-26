@@ -532,7 +532,8 @@ const App = () => {
 
         .jcj-quiz-app {
           min-height: 100vh;
-          background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+          margin-top: -82px;
+          background: radial-gradient(1000px 600px at 10% -10%, rgba(127, 91, 255, 0.1), transparent), radial-gradient(1000px 600px at 100% 0%, rgba(91, 156, 255, 0.08), transparent), rgb(12, 15, 20);
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
 

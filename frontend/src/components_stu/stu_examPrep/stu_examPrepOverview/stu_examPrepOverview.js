@@ -49,7 +49,7 @@ const ExamPrepOverview = () => {
       title: 'Practice Tests',
       description: 'Take timed practice tests to assess your knowledge and improve time management.',
       icon: '📝',
-      path: '/student/exam/practice-tests',
+      path: '/s/student/exam/practice-tests',
       color: '#4e73df'
     },
     {
@@ -57,14 +57,14 @@ const ExamPrepOverview = () => {
       title: 'Past Papers',
       description: 'Solve previous years\' exam papers with model answers.',
       icon: '📄',
-      path: '/student/exam/past-papers'
+      path: '/s/student/exam/past-papers'
     },
     {
       id: 4,
       title: 'Exam Strategies',
       description: 'Learn effective exam techniques and time management strategies.',
       icon: '🎯',
-      path: '/student/exam/strategies'
+      path: '/s/student/exam/strategies'
     }
   ];
 

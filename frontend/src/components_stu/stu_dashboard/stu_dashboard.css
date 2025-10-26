@@ -262,6 +262,10 @@
   margin-bottom: 12px;
 }
 
+.session-card-header p{
+  color: white !important;
+}
+
 .session-card h3 {
   margin: 0;
   font-size: 1.1rem;

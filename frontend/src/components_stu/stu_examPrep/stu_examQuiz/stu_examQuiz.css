@@ -4,6 +4,7 @@
   min-height: calc(300vh - 2000px);
   margin: -90px auto -80px;
   padding: 3.5rem;
+  padding-top: 30px;
   background: #1a1f2e;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   color: #e8eef7;

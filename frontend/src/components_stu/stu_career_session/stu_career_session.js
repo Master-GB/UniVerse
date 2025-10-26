@@ -18,6 +18,7 @@ const StuCareerSession = () => {
   const [selectedSession, setSelectedSession] = useState(null);
   const [showCancelModal, setShowCancelModal] = useState(false);
   const [sessionToCancel, setSessionToCancel] = useState(null);
+  const [expandedSessions, setExpandedSessions] = useState(new Set());
 
   // Update current time every minute
   useEffect(() => {
@@ -284,6 +285,24 @@ const StuCareerSession = () => {
     session.mentor?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  // Toggle description expansion
+  const toggleExpanded = (sessionId) => {
+    setExpandedSessions(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(sessionId)) {
+        newSet.delete(sessionId);
+      } else {
+        newSet.add(sessionId);
+      }
+      return newSet;
+    });
+  };
+
+  // Check if description should be truncated
+  const shouldTruncate = (description) => {
+    return description && description.length > 200;
+  };
+
   return (
     <div className="session-wrapper">
       <div className="session-container">
@@ -340,7 +359,19 @@ const StuCareerSession = () => {
                     </div>
                   )}
                 </div>
-                <p>{session.description}</p>
+                <div className="session-description-wrapper">
+                  <p className={`session-description ${!expandedSessions.has(session.id) && shouldTruncate(session.description) ? 'truncated' : ''}`}>
+                    {session.description}
+                  </p>
+                  {shouldTruncate(session.description) && (
+                    <button 
+                      className="read-more-btn"
+                      onClick={() => toggleExpanded(session.id)}
+                    >
+                      {expandedSessions.has(session.id) ? 'Show less' : 'Read more'}
+                    </button>
+                  )}
+                </div>
                 
                 <div className="session-meta">
                   <div><Briefcase size={16} /> {session.company || 'Company TBA'}</div>

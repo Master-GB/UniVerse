@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   FiEdit2,
   FiLogOut,
@@ -211,6 +211,26 @@ const StuNavigation = () => {
   const popoverRef = useRef(null);
   const avatarButtonRef = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Helpers to determine active routes for nav dropdown highlighting.
+  // The app uses top-level prefixes like /s and /m for student/mentor routes
+  // so we check both the raw path and the prefixed variants to be robust.
+  const buildCandidates = (path) => {
+    const normalized = path.startsWith("/") ? path : `/${path}`;
+    return [normalized, `/s${normalized}`, `/m${normalized}`];
+  };
+
+  const isActive = (path) => {
+    const candidates = buildCandidates(path);
+    return candidates.some((candidate) =>
+      location.pathname === candidate || location.pathname.startsWith(candidate + "/") || location.pathname.startsWith(candidate)
+    );
+  };
+
+  const isDropdownActive = (paths = []) => {
+    return paths.some((p) => isActive(p));
+  };
 
   const API_BASE_URL = (process.env.REACT_APP_API_BASE_URL || "http://localhost:8070").replace(
     /\/$/,
