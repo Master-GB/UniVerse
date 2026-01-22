@@ -223,6 +223,7 @@ const StuNavigation = () => {
     return paths.some((path) => isActive(path));
   };
 
+
   const API_BASE_URL = (process.env.REACT_APP_API_BASE_URL || "http://localhost:8070").replace(
     /\/$/,
     ""
@@ -533,7 +534,7 @@ const StuNavigation = () => {
       <div className="stu-container">
         <div className="stu-header-content">
           <div className="stu-logo">
-            <Link to="/student/dashboard">
+            <Link to="/s/student/dashboard">
               <img
                 src="/Resources/gihan_res/logo.png"
                 alt="UniVerse Logo"
@@ -544,10 +545,10 @@ const StuNavigation = () => {
           </div>
 
           <div className={`stu-nav-links ${isOpen ? "stu-active" : ""}`}>
-            <Link to="/student/dashboard" className="stu-nav-link">
+            <Link to="/s/student/dashboard" className="stu-nav-link">
               Dashboard
             </Link>
-            <Link to="/student/courses" className="stu-nav-link">
+            <Link to="/s/student/courses" className="stu-nav-link">
               Courses
             </Link>
             <div className="stu-dropdown">
@@ -572,13 +573,13 @@ const StuNavigation = () => {
               </Link>
               <div className="stu-dropdown-content">
                 <Link
-                  to="/student/academic-resources"
+                  to="/s/student/academic-resources"
                   className="stu-dropdown-item"
                 >
                   Academic Resources
                 </Link>
                 <Link
-                  to="/student/career-resources"
+                  to="/s/student/career-resources"
                   className="stu-dropdown-item"
                 >
                   Career Resources
@@ -607,7 +608,7 @@ const StuNavigation = () => {
                 </svg>
               </Link>
               <div className="stu-dropdown-content">
-                <Link to="/student/resume" className="stu-dropdown-item">
+                <Link to="/s/student/resume" className="stu-dropdown-item">
                   Resume Builder
                 </Link>
                 <Link to="/mi/landing" className={`stu-dropdown-item ${isActive('/mi') ? 'active' : ''}`}>
@@ -619,10 +620,10 @@ const StuNavigation = () => {
               </div>
             </div>
 
-            <Link to="/student/exam-support" className="stu-nav-link">
+            <Link to="/s/student/exam-support" className="stu-nav-link">
               Exam Support
             </Link>
-            <Link to="/student/guidance" className="stu-nav-link">
+            <Link to="/s/student/guidance" className="stu-nav-link">
               Guidance
             </Link>
             <div className="stu-dropdown">
@@ -647,13 +648,13 @@ const StuNavigation = () => {
               </Link>
               <div className="stu-dropdown-content">
                 <Link
-                  to="/student/academic-session"
+                  to="/s/student/academic-session"
                   className="stu-dropdown-item"
                 >
                   Academic Session
                 </Link>
                 <Link
-                  to="/student/career-session"
+                  to="/s/student/career-session"
                   className="stu-dropdown-item"
                 >
                   Career Session

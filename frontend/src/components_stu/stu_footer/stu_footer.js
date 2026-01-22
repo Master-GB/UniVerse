@@ -31,13 +31,13 @@ const StuFooter = () => {
                     <div className="stu-footer-section">
                         <h3 className="stu-footer-title">Quick Links</h3>
                         <ul className="stu-footer-links">
-                            <li><Link to="/student/dashboard">Dashboard</Link></li>
-                            <li><Link to="/student/courses">Courses</Link></li>
-                            <li><Link to="/student/academic-resources">Resources</Link></li>
-                            <li><Link to="/student/Career & Skills">Career & Skills</Link></li>
-                            <li><Link to="/student/exam-support">Exam Support</Link></li>
-                            <li><Link to="/student/guidance">Guidance</Link></li>
-                            <li><Link to="/student/academic-session">Session</Link></li>
+                            <li><Link to="/s/student/dashboard">Dashboard</Link></li>
+                            <li><Link to="/s/student/courses">Courses</Link></li>
+                            <li><Link to="/s/student/academic-resources">Resources</Link></li>
+                            <li><Link to="/s/student/Career & Skills">Career & Skills</Link></li>
+                            <li><Link to="/s/student/exam-support">Exam Support</Link></li>
+                            <li><Link to="/s/student/guidance">Guidance</Link></li>
+                            <li><Link to="/s/student/academic-session">Session</Link></li>
                         </ul>
                     </div>
 

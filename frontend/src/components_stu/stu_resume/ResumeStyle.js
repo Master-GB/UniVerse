@@ -7,7 +7,7 @@ const ResumeStyles = () => (
       color: #e2e8f0;
       max-width: 8.5in;
       margine-top:-50px;
-   
+      background: #0b1120;
       background-image: 
         radial-gradient(1000px 600px at 10% -10%, rgba(99, 102, 241, 0.35), transparent),
         radial-gradient(1000px 600px at 100% 0%, rgba(14, 165, 233, 0.25), transparent);

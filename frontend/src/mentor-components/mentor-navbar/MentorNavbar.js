@@ -52,6 +52,7 @@ const MentorNavbar = () => {
                 break;
             default:
                 navigate('/mentor/dashboard');
+
         }
     };
 

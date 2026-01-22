@@ -166,7 +166,7 @@ useEffect(() => {
           date: formattedDate,
           category: article.article_category || "Tech News",
           duration: article.artivle_duration || "5 min read", // Note: there's a typo in your schema
-          url: `/student/articales/${article._id}`, // Fixed typo in "articles"
+          url: `/s/student/articales/${article._id}`, // Fixed typo in "articles"
           image: imageUrl,
           description: article.article_description ? 
             article.article_description.substring(0, 100) + "..." : 
@@ -349,7 +349,7 @@ useEffect(() => {
           date: formattedDate,
           category: article.article_category || "Tech News",
           duration: article.artivle_duration || "5 min read", // Note: there's a typo in your schema
-          url: `/student/articales/${article._id}`, // Fixed typo in "articles"
+          url: `/s/student/articales/${article._id}`, // Fixed typo in "articles" and prefixed with /s
           image: imageUrl,
           description: article.article_description ? 
             article.article_description.substring(0, 100) + "..." : 
@@ -966,7 +966,7 @@ useEffect(() => {
             <Timer size={16} />
             <span>{now.toLocaleTimeString()}</span>
           </div>
-          <Link to="/student/guidance" className="sd-cta">
+          <Link to="/s/student/guidance" className="sd-cta">
             <PlusCircle size={18} />
             <span className='sd-cta-text'>Request Guidance</span>
          </Link>
@@ -984,7 +984,7 @@ useEffect(() => {
           />
         </div>
         <div className="sd-actions">
-          <Link to="/student/academic-session" className="sd-chip">
+          <Link to="/s/student/session" className="sd-chip">
             <Calendar size={16} />
             <span className='sd-chip-text'>Book a Session</span>   
          </Link>
@@ -1052,7 +1052,7 @@ useEffect(() => {
               <GraduationCap size={18} />
               <h2>Academic Support</h2>
             </div>
-             <Link to="/student/academic-session" className="sd-link">
+             <Link to="/s/student/session" className="sd-link">
                  View all
                  <ChevronRight size={16} />
              </Link>
@@ -1377,7 +1377,7 @@ useEffect(() => {
               <Zap size={18} />
               <h2>Latest Articles</h2>
             </div>
-            <Link to="/student/articales" className="sd-link">
+            <Link to="/s/student/articales" className="sd-link">
               View all
               <ChevronRight size={16} />
             </Link>
