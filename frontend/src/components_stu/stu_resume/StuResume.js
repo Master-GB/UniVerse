@@ -227,7 +227,7 @@ const StuResume = () => {
         ...allData,
         template: selectedTemplate || 'modern'
       };
-      
+
       console.log('Setting preview data:', previewData);
       setPreviewData(previewData);
       setCurrentStep('preview');
@@ -463,7 +463,8 @@ const StuResume = () => {
     return (
       <div className="resume-page" style={{
         minHeight: '100vh',
-        padding: '0px',
+        padding: '-50px',
+        marginTop:'-80px',
         background: 'radial-gradient(1000px 600px at 10% -10%, rgba(91, 156, 255, 0.25), transparent), radial-gradient(1000px 600px at 100% 0%, rgba(74, 139, 245, 0.2), transparent), var(--bg)'
       }}>
         <ResumeStyles />
@@ -541,6 +542,7 @@ const StuResume = () => {
       <div className="resume-page resume-animated-bg" style={{
         minHeight: '100vh',
         padding: '0',
+        marginTop:'-80px',
         background: 'radial-gradient(1000px 600px at 10% -10%, rgba(127, 91, 255, 0.1), transparent), radial-gradient(1000px 600px at 100% 0%, rgba(91, 156, 255, 0.08), transparent), #0c0f14',
         position: 'relative',
         overflow: 'hidden'
@@ -659,12 +661,16 @@ const StuResume = () => {
 
   if (currentStep === 'preview') {
     return (
-      <div className="resume-page resume-animated-bg" style={{
+      <div className="resume-page resume-animated-bg preview-container" style={{
         minHeight: '100vh',
         padding: '0',
+        marginTop: '80px',
         background: 'radial-gradient(1000px 600px at 10% -10%, rgba(127, 91, 255, 0.1), transparent), radial-gradient(1000px 600px at 100% 0%, rgba(91, 156, 255, 0.08), transparent), #0c0f14',
-        position: 'relative',
-        overflow: 'hidden'
+        position: 'absolute',
+        top: '0',
+        left: '0',
+        right: '0',
+        overflow: 'auto'
       }}>
         <ResumeStyles />
         <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '2rem' }}>

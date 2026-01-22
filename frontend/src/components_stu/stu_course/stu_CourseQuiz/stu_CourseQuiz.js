@@ -94,7 +94,7 @@ function CourseQuiz() {
                 <div className="cert-container">
                   <h1 className="cert-title">Certificate of Achievement</h1>
                   <p className="cert-sub">This certificate is proudly presented to</p>
-                  <h2 className="student-name">Student Name</h2>
+                  <h2 className="student-name">Gihan Bandara</h2>
                   <p className="cert-text">For successfully completing the course</p>
                   <h3 className="course-name">{course.coursename || "Computing Fundamentals"}</h3>
                   <p className="cert-date">Date of Issue: {new Date().toLocaleDateString()}</p>

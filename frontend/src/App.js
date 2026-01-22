@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Outlet } from "react-router-dom";
 import React from "react";
 
 import StuNavigation from "./components_stu/stu_header/stu_header";
@@ -51,34 +51,13 @@ import MentorQuizAdd from "./mentor-components/mentor_quiz_add/MentorQuizAdd";
 
 
 
+
+
 const StudentLayout = () => (
   <div className="app-layout">
     <StuNavigation />
     <main className="main-content">
-      <Routes>
-        <Route path="/" element={<StuDashboard />} />
-        <Route path="/student/dashboard" element={<StuDashboard />} />
-        <Route path="/student/guidance" element={<StuGuidance />} />
-        <Route path="/student/academic-resources" element={<StuResources />} />
-        <Route path="/student/academic-session" element={<StuSession />} />
-        <Route path="/student/career-session" element={<StuCareerSession />} />
-        <Route path="/student/articales" element={<StuArticales />} />
-        <Route path="/student/articales/:id" element={<StuFullArticle />} />
-        <Route path="/student/resume/" element={<StuResume />} />
-        <Route path="/student/courses" element={<StuCourses />} />
-        <Route path="/all-courses" element={<Stu_AllCourses />} />
-        <Route path="/courses/:id" element={<Stu_CourseDetails />} />
-        <Route path="/courses/:id/content" element={<Stu_CourseContent />} />
-        <Route path="/courses/:id/quiz" element={<Stu_CourseQuiz />} />
-
-        <Route path="/student/interview_quiz" element={<StudentInterviewQuiz />} />
-        <Route path="/student/career-resources" element={<CareerResourceHub />} />
-        <Route path="/student/exam-support" element={<ExamPrepOverview />} />
-        <Route path="/student/exam/strategies" element={<ExamStrategies />} />
-        <Route path="/student/exam/past-papers" element={<StuExamPastPaper/>} />
-        <Route path="/student/exam/practice-tests" element={<PracticeTestsOverview/>} />
-        <Route path="/student/exam/practice-tests/quiz/:quizId" element={<StuExamQuiz/>} />
-      </Routes>
+      <Outlet />
     </main>
     <StuFooter />
   </div>
@@ -87,21 +66,7 @@ const StudentLayout = () => (
 const MentorLayout = () => (
   <div className="App">
     <React.Fragment>
-      <Routes>
-
-         <Route path="/mentor-dashboard" element={<MentorDashboard />} />
-         <Route path="/mentor-session-create" element={<MentorSessionCreate />} />
-         <Route path="/mentor-guidance" element={<MentorGuidance />} />
-         <Route path="/mentor-announcement" element={<MentorshipAnnouncementForm />} />
-         <Route path="/mentor-resourcehub" element={<MentorResourcehub />} />
-         <Route path="/mentor-manage-resources" element={<MentorManageResourses />} />
-         <Route path="/mentor-article" element={<MentorArticle />} />
-         <Route path="/mentor-career-session" element={<MentorCareerSession/>} />
-         <Route path="/mentor-career-resourcehub" element={<MentorCareerResourcehub />} />
-         <Route path="/mentor-add-passpaper" element={<MentorPasspaper />} />
-         <Route path="/mentor-add-quiz" element={<MentorQuizAdd />} />
-
-      </Routes>
+      <Outlet />
     </React.Fragment>
   </div>
 );
@@ -113,11 +78,12 @@ const LandingPageLayout = () => (
       <React.Fragment>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="about" element={<AboutUs_jcj />} />
-          <Route path="support" element={<SupportPage_jcj />} />
-          <Route path="courses_jcj" element={<Courses_jcj />} />
-          <Route path="login" element={<LoginPageJCJ />} />
-          <Route path="signup" element={<SignUp />} />
+          <Route path="/landing" element={<LandingPage />} />
+          <Route path="landing/about" element={<AboutUs_jcj />} />
+          <Route path="landing/support" element={<SupportPage_jcj />} />
+          <Route path="landing/courses_jcj" element={<Courses_jcj />} />
+          <Route path="landing/login" element={<LoginPageJCJ />} />
+          <Route path="landing/signup" element={<SignUp />} />
         </Routes>
       </React.Fragment>
     </div>
@@ -129,6 +95,7 @@ const MIPageLayout = () => (
   <div className="App">
     <StuNavigation />
     <div>
+      <Outlet />
       <React.Fragment>
         <Routes>
           <Route path="/*" element={<MIPage />} />
@@ -146,10 +113,56 @@ function App() {
   return (
     <div className="app-container">
       <Routes>
-        <Route path="/landing/" element={<LandingPageLayout />} />
-        <Route path="/h*" element={<StudentLayout />} />
-        <Route path="/*" element={<MentorLayout />} />
-        <Route path="/MIPage*" element={<MIPageLayout />} />
+        {/* Public Routes */}
+        <Route path="/*" element={<LandingPageLayout />} />
+        
+        {/* Student Routes */}
+        <Route path="/student" element={<StudentLayout />}>
+          <Route index element={<StuDashboard />} />
+          <Route path="dashboard" element={<StuDashboard />} />
+          <Route path="guidance" element={<StuGuidance />} />
+          <Route path="academic-resources" element={<StuResources />} />
+          <Route path="academic-session" element={<StuSession />} />
+          <Route path="career-session" element={<StuCareerSession />} />
+          <Route path="articales" element={<StuArticales />} />
+          <Route path="articales/:id" element={<StuFullArticle />} />
+          <Route path="resume" element={<StuResume />} />
+          <Route path="courses" element={<StuCourses />} />
+          <Route path="all-courses" element={<Stu_AllCourses />} />
+          <Route path="courses/:id" element={<Stu_CourseDetails />} />
+          <Route path="courses/:id/content" element={<Stu_CourseContent />} />
+          <Route path="courses/:id/quiz" element={<Stu_CourseQuiz />} />
+          <Route path="interview_quiz" element={<StudentInterviewQuiz />} />
+          <Route path="career-resources" element={<CareerResourceHub />} />
+          <Route path="exam-support" element={<ExamPrepOverview />} />
+          <Route path="exam/strategies" element={<ExamStrategies />} />
+          <Route path="exam/past-papers" element={<StuExamPastPaper/>} />
+          <Route path="exam/practice-tests" element={<PracticeTestsOverview/>} />
+          <Route path="exam/practice-tests/quiz/:quizId" element={<StuExamQuiz/>} />
+        </Route>
+        
+        {/* Mentor Routes */}
+        <Route path="/mentor" element={<MentorLayout />}>
+          <Route index element={<MentorDashboard />} />
+          <Route path="dashboard" element={<MentorDashboard />} />
+          <Route path="session-create" element={<MentorSessionCreate />} />
+          <Route path="guidance" element={<MentorGuidance />} />
+          <Route path="announcement" element={<MentorshipAnnouncementForm />} />
+          <Route path="resourcehub" element={<MentorResourcehub />} />
+          <Route path="manage-resources" element={<MentorManageResourses />} />
+          <Route path="article" element={<MentorArticle />} />
+          <Route path="career-session" element={<MentorCareerSession/>} />
+          <Route path="career-resourcehub" element={<MentorCareerResourcehub />} />
+          <Route path="add-passpaper" element={<MentorPasspaper />} />
+          <Route path="add-quiz" element={<MentorQuizAdd />} />
+        </Route>
+        
+        {/* Mock Interview Page */}
+        <Route path="/mi" element={<MIPageLayout />}>
+          <Route index element={<MIPage />} />
+          <Route path="landing" element={<MIPage />} />
+          <Route path="mockinterview" element={<MIDash />} />
+        </Route>
       </Routes>
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   FiEdit2,
   FiLogOut,
@@ -211,6 +211,18 @@ const StuNavigation = () => {
   const popoverRef = useRef(null);
   const avatarButtonRef = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Helper function to check if a path is active
+  const isActive = (path) => {
+    return location.pathname === path || location.pathname.startsWith(`${path}/`);
+  };
+
+  // Helper function to check if any of the dropdown paths are active
+  const isDropdownActive = (paths) => {
+    return paths.some((path) => isActive(path));
+  };
+
 
   const API_BASE_URL = (process.env.REACT_APP_API_BASE_URL || "http://localhost:8070").replace(
     /\/$/,
@@ -576,7 +588,7 @@ const StuNavigation = () => {
             </div>
 
             <div className="stu-dropdown">
-              <Link to="/s/student/Career & Skills" className="stu-nav-link">
+              <Link to="/student/career-skills" className="stu-nav-link">
                 Career & Skills
                 <svg
                   className="stu-dropdown-icon"
@@ -599,10 +611,10 @@ const StuNavigation = () => {
                 <Link to="/s/student/resume" className="stu-dropdown-item">
                   Resume Builder
                 </Link>
-                <Link to="/MIPage" className={`stu-dropdown-item ${isActive('/MIPage') ? 'active' : ''}`}>
+                <Link to="/mi/landing" className={`stu-dropdown-item ${isActive('/mi') ? 'active' : ''}`}>
                   Mock Interview
                 </Link>
-                <Link to="/s/student/interview_quiz" className="stu-dropdown-item">
+                <Link to="/student/interview_quiz" className={`stu-dropdown-item ${isActive('/student/interview_quiz') ? 'active' : ''}`}>
                   Interview Quizzes
                 </Link>
               </div>

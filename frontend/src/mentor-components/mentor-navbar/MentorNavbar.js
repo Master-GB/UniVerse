@@ -12,17 +12,17 @@ const MentorNavbar = () => {
     // Update activeTab based on current route
     useEffect(() => {
         const currentPath = location.pathname;
-        if (currentPath === '/mentor-dashboard') {
+        if (currentPath === '/mentor/dashboard') {
             setActiveTab('overview');
-        } else if (currentPath === '/mentor-session-create') {
+        } else if (currentPath === '/mentor/session-create') {
             setActiveTab('academic-sessions');
-        } else if (currentPath === '/mentor-career-session') {
+        } else if (currentPath === '/mentor/career-session') {
             setActiveTab('career-sessions');
-        } else if (currentPath === '/mentor-guidance') {
+        } else if (currentPath === '/mentor/guidance') {
             setActiveTab('guidance');
-        } else if (currentPath === '/mentor-announcement') {
+        } else if (currentPath === '/mentor/announcement') {
             setActiveTab('announcements');
-        } else if (currentPath === '/mentor-article') {
+        } else if (currentPath === '/mentor/article') {
             setActiveTab('articles');
         }
     }, [location.pathname]);
@@ -33,25 +33,26 @@ const MentorNavbar = () => {
         // Use switch statement for cleaner navigation logic
         switch(tab) {
             case 'overview':
-                navigate('/m/mentor-dashboard');
+                navigate('/mentor/dashboard');
                 break;
             case 'academic-sessions':
-                navigate('/m/mentor-session-create');
+                navigate('/mentor/session-create');
                 break;
             case 'career-sessions':
-                navigate('/m/mentor-career-session');
+                navigate('/mentor/career-session');
                 break;
             case 'guidance':
-                navigate('/m/mentor-guidance');
+                navigate('/mentor/guidance');
                 break;
             case 'announcements':
-                navigate('/m/mentor-announcement');
+                navigate('/mentor/announcement');
                 break;
             case 'articles':
-                navigate('/m/mentor-article');
+                navigate('/mentor/article');
                 break;
             default:
-                navigate('/m/mentor-dashboard');
+                navigate('/mentor/dashboard');
+
         }
     };
 

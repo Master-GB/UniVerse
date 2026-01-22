@@ -170,30 +170,108 @@
 }
 
 /* Session card */
-.academic-res-session-card {
+.session-card {
   background: var(--academic-res-card-bg);
   border: 1px solid var(--academic-res-border);
   border-radius: 8px;
   padding: 1.25rem;
   transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 400px;
+  max-height: 500px;
+  overflow: hidden;
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
 }
 
-.academic-res-session-card:hover {
+.session-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.academic-res-session-card h3 {
+.session-card h3 {
   color: var(--academic-res-text);
   margin: 0 0 0.5rem 0;
-  font-size: 1.25rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  max-height: 3em;
 }
 
-.academic-res-session-card p {
+.session-description {
   color: rgba(255, 255, 255, 0.7);
   margin: 0 0 1rem 0;
-  font-size: 0.95rem;
-  line-height: 1.5;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-grow: 1;
+  min-height: 4.2em;
+  max-height: 4.2em;
+  word-wrap: break-word;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
+
+.session-meta {
+  margin-top: auto;
+  padding-top: 1rem;
+  border-top: 1px solid var(--academic-res-border);
+  overflow-y: auto;
+  max-height: 200px;
+  padding-right: 0.5rem;
+  margin-right: -0.5rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.session-meta::-webkit-scrollbar {
+  width: 4px;
+}
+
+.session-meta::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.session-meta::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.session-meta > div {
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.session-meta > div svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.session-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
 }
 
 /* Session meta */

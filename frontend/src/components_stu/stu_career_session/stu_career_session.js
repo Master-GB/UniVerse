@@ -340,7 +340,11 @@ const StuCareerSession = () => {
                     </div>
                   )}
                 </div>
-                <p>{session.description}</p>
+                <p className="session-description">
+                  {session.description && (session.description.length > 100 
+                    ? `${session.description.substring(0, 100)}...` 
+                    : session.description)}
+                </p>
                 
                 <div className="session-meta">
                   <div><Briefcase size={16} /> {session.company || 'Company TBA'}</div>

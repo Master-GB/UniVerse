@@ -35,9 +35,9 @@ function CourseDetails() {
   const handleEnroll = async () => {
     try {
       await axios.post(`${API_URL}/api/enrollments`, { courseId: id });
-      navigate(`/s/courses/${id}/content`);
+      navigate(`/student/courses/${id}/content`);
     } catch (err) {
-      setError("Error enrolling: " + err.message);
+      setError("Error enrolling: " + (err.response?.data?.message || err.message));
     }
   };
 
@@ -51,7 +51,7 @@ function CourseDetails() {
         <div className="course-details-card">
           <div className="course-image-section">
             <img
-              src={`${API_URL}/Uploads/${course.image}`}
+              src={"/resourses/course.jpg"}
               alt={course.name}
               className="course-details-image"
             />

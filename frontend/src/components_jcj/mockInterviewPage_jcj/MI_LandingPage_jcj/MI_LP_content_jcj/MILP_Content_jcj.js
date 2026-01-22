@@ -35,7 +35,7 @@ function MILP_Content_jcj() {
           </p>
 
           <div className="milp-button-group-jcj">
-            <Link to="/MIPage/mockinterview">
+            <Link to="/mi/mockinterview">
               <button className="milp-btn-primary-jcj">Start Practice</button>
             </Link>
             <Link to="/MIPage/interview">

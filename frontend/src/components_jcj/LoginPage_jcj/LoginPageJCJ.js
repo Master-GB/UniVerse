@@ -62,7 +62,7 @@ function LoginPageJCJ() {
       // Redirect by role. Update the paths below if the team changes layouts.
       const role = data?.user?.role;
       if (role === "mentor") {
-        navigate("/m/mentor-dashboard"); // Mentor landing path hook
+        navigate("/mentor/dashboard"); // Mentor landing path hook
       } else {
         navigate("/s/student/dashboard"); // Default student landing path
       }
