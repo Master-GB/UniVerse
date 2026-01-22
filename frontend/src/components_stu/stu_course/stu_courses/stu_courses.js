@@ -44,7 +44,7 @@ function StuCourses() {
             <p className="hero-subtitle-StuCourses">
               “We are here to guide you every step of the way toward achieving your goals and unlocking your true potential.”
             </p>
-            <button className="explore-btn-StuCourses" onClick={() => navigate("/all-courses")}>
+            <button className="explore-btn-StuCourses" onClick={() => navigate("/student/all-courses")}>
               Explore All Courses →
             </button>
           </div>

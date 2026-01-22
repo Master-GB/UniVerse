@@ -70,7 +70,7 @@ const MentorDashboard = () => {
           <div className="action-grid-md">
             <div 
             className="action-card-md primary-card-md"
-            onClick={() => navigate("/mentor-session-create")}
+            onClick={() => navigate("/mentor/session-create")}
             style={{cursor:"pointer"}}
             >
               <div className="card-icon-md">
@@ -90,7 +90,7 @@ const MentorDashboard = () => {
 
             <div
             className="action-card-md secondary-card-md"
-            onClick={() => navigate("/mentor-resourcehub")}
+            onClick={() => navigate("/mentor/resourcehub")}
             style={{cursor:"pointer"}}
             >
               <div className="card-icon-md">
@@ -102,7 +102,7 @@ const MentorDashboard = () => {
             </div>
             
             <div className="action-card-md tertiary-card-md"
-            onClick={() => navigate("/mentor-career-resourcehub")}
+            onClick={() => navigate("/mentor/career-resourcehub")}
             style={{cursor:"pointer"}}
             
             >
@@ -115,7 +115,7 @@ const MentorDashboard = () => {
             </div>
             
             <div className="action-card-md quaternary-card-md"
-            onClick={() => navigate("/mentor-add-quiz")}
+            onClick={() => navigate("/mentor/add-quiz")}
             style={{cursor:"pointer"}}
             
             >

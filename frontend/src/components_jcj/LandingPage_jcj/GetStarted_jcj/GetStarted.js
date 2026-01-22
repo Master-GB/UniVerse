@@ -1,6 +1,10 @@
-import React from "react";
+import React,{useState} from "react";
+import { useNavigate } from "react-router-dom";
 import "./getstarted_jcj.css"; // <-- styles + animations
 import GSimage from "./getstartedimage.png";
+
+
+
 
 const styles = {
   outer: {
@@ -65,6 +69,11 @@ const styles = {
 
 export default function GetStarted() {
   const [hover, setHover] = React.useState(false);
+  const navigate = useNavigate();
+
+  const handleLinkClick = () => {
+    navigate('/landing/signup');
+  };
 
   return (
     <section style={styles.outer} aria-labelledby="getstarted-heading">
@@ -89,7 +98,8 @@ export default function GetStarted() {
             aria-label="Get Started"
             onMouseEnter={() => setHover(true)}
             onMouseLeave={() => setHover(false)}
-            onClick={(e) => e.preventDefault()}
+           
+            onClick={handleLinkClick}
           >
             <span className="button__icon-wrapper-jcj">
               <svg
