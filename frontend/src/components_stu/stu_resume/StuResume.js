@@ -227,7 +227,7 @@ const StuResume = () => {
         ...allData,
         template: selectedTemplate || 'modern'
       };
-      
+
       console.log('Setting preview data:', previewData);
       setPreviewData(previewData);
       setCurrentStep('preview');

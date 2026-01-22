@@ -78,10 +78,7 @@ const PracticeTestsOverview = () => {
   };
 
   const handleStartQuiz = (quizId) => {
-    // Navigate to the quiz taking interface
-    navigate(`/student/exam/practice-tests/quiz/${quizId}`, { 
-      state: { fromPracticeTests: true } 
-    });
+    navigate(`/s/student/exam/practice-tests/quiz/${quizId}`);
   };
 
   const handleBack = () => {

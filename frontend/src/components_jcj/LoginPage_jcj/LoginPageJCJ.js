@@ -64,7 +64,7 @@ function LoginPageJCJ() {
       if (role === "mentor") {
         navigate("/mentor/dashboard"); // Mentor landing path hook
       } else {
-        navigate("/student/dashboard"); // Default student landing path
+        navigate("/s/student/dashboard"); // Default student landing path
       }
     } catch (error) {
       setErrorMessage(error.message || "Unable to sign you in right now");

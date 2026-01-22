@@ -10,7 +10,7 @@ const askAI = async (req, res) => {
 
     // Pick a model (Gemini 1.5 for conversations is common)
     // Ado e meke welawkt 1.5 flash unavailable kynw ethkot pddk wenas krl blpn 2.5 wlt wge, mge credits iwrd khed
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     const prompt = `
 You are a mock interviewer. Continue this interview.
@@ -25,6 +25,21 @@ Respond with the next interview question or feedback.
     res.json({ reply: response });
   } catch (err) {
     console.error(err);
+
+    if (
+      err.status === 404 &&
+      err.message?.includes("models/gemini-1.5-flash is not found")
+    ) {
+      console.log("\n  IMPORTANT: This is NOT a code problem!");
+      console.log(" SOLUTION: Change the model name in the code");
+      console.log(
+        " Try using: 'gemini-2.0-pro' or 'gemini-pro' instead of 'gemini-1.5-flash'"
+      );
+      console.log(
+        " Check available models: https://ai.google.dev/gemini-api/docs/models/gemini\n"
+      );
+    }
+
     res.status(500).json({ error: "AI request failed" });
   }
 };

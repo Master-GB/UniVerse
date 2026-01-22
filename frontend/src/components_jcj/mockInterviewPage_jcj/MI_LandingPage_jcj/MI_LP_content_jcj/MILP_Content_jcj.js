@@ -38,15 +38,9 @@ function MILP_Content_jcj() {
             <Link to="/mi/mockinterview">
               <button className="milp-btn-primary-jcj">Start Practice</button>
             </Link>
-            <button className="milp-btn-secondary-jcj">Get a demo</button>
-          </div>
-
-          <div className="milp-trial-banner-jcj">
-            <span className="milp-new-badge-jcj">NEW</span>
-            <span className="milp-trial-text-jcj">
-              Start a 14-day premium trial FOR FREE
-            </span>
-            <span className="milp-arrow-jcj">→</span>
+            <Link to="/MIPage/interview">
+              <button className="milp-btn-secondary-jcj">Get a demo</button>
+            </Link>
           </div>
         </div>
       </div>
